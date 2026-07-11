@@ -1,0 +1,9 @@
+{
+  "model": {
+    "type": "minecraft:special",
+    "base": "lycanitesmobs:item/lyc_equipment_base",
+    "model": {
+      "type": "lycanitesmobs:equipment_part"
+    }
+  }
+}

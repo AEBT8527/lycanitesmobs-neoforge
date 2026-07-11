@@ -1,0 +1,16 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "lycanitesmobs:item/spawn_slime",
+    "tints": [
+      {
+        "type": "lycanitesmobs:spawn_egg",
+        "layer": 0
+      },
+      {
+        "type": "lycanitesmobs:spawn_egg",
+        "layer": 1
+      }
+    ]
+  }
+}
