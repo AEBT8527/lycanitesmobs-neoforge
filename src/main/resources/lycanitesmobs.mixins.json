@@ -1,0 +1,19 @@
+{
+  "required": false,
+  "minVersion": "0.8",
+  "package": "com.lycanitesmobs.core.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "CreativeModeTabRegistryMixin",
+    "EntityTypeMixin",
+    "ModifiableStructureInfoAccessor",
+    "ReloadCommandMixin",
+    "StructureAccessor"
+  ],
+  "client": [
+    "LightTextureMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

@@ -1,0 +1,33 @@
+modLoader="javafml"
+loaderVersion="[4,)"
+license="GNU GPL"
+issueTrackerURL="https://gitlab.com/Lycanite/LycanitesMobs/issues"
+
+[[mods]]
+modId="lycanitesmobs"
+version="${file.jarVersion}"
+displayName="Lycanites Mobs"
+displayURL="https://lycanitesmobs.com"
+logoFile="lycanitesmobs.png"
+credits="Created by Lycanite (Richard Nicholson)"
+authors="Lycanite (Richard Nicholson)"
+description='''
+This mod adds many new mobs to specific biomes, dimensions and more. These mobs range from peaceful Makas, farmable mammal-like reptiles with massive sails (watch out for the alphas) to horrific Grues that are made of the very shadows themselves! Expect to see angry elementals such as Cinders spawning from large fires or Spriggans from tall grass and crops!
+'''
+
+[[mixins]]
+config="lycanitesmobs.mixins.json"
+
+[[dependencies.lycanitesmobs]]
+    modId="neoforge"
+    type="required"
+    versionRange="[21.1.0,)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.lycanitesmobs]]
+    modId="minecraft"
+    type="required"
+    versionRange="[1.21.1,1.22)"
+    ordering="NONE"
+    side="BOTH"

@@ -1,0 +1,75 @@
+plugins {
+    id 'java'
+    id 'net.neoforged.moddev' version '2.0.141'
+}
+
+version = project.mod_version
+group = project.maven_group
+
+base {
+    archivesName = project.archives_base_name
+}
+
+repositories {
+    mavenCentral()
+}
+
+neoForge {
+    version = project.neoforge_version
+
+    parchment {
+        minecraftVersion = project.parchment_minecraft
+        mappingsVersion = project.parchment_version
+    }
+
+    // AccessTransformer auto-detected from src/main/resources/META-INF/accesstransformer.cfg
+
+    runs {
+        client {
+            client()
+        }
+        server {
+            server()
+        }
+        data {
+            data()
+        }
+    }
+
+    mods {
+        lycanitesmobs {
+            sourceSet sourceSets.main
+        }
+    }
+}
+
+dependencies {
+    // MixinExtras is bundled by NeoForge at runtime; provide it for compilation.
+    compileOnly "io.github.llamalad7:mixinextras-common:0.4.1"
+    annotationProcessor "io.github.llamalad7:mixinextras-common:0.4.1"
+}
+
+def targetJavaVersion = 21
+
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(targetJavaVersion)
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = "UTF-8"
+    options.release = targetJavaVersion
+    options.compilerArgs += ['-Xmaxerrs', '100000', '-Xmaxwarns', '10']
+}
+
+jar {
+    manifest {
+        attributes([
+                "Specification-Title"     : "lycanitesmobs",
+                "Specification-Vendor"    : "lycanite",
+                "Specification-Version"   : "1",
+                "Implementation-Title"    : project.name,
+                "Implementation-Version"  : project.version,
+                "Implementation-Vendor"   : "lycanite"
+        ])
+    }
+}
