@@ -1,43 +1,91 @@
 # Lycanites Mobs — NeoForge Port (1.21.1 & 26.1.2)
 
-> **Unofficial NeoForge port** of **Lycanites Mobs 0.0.9-alpha** (schism source), ported from Forge 1.20.1.
+> **Unofficial NeoForge port** of **Lycanites Mobs `0.0.9-alpha`** (schism-maintained source), converted from the Forge 1.20.1 codebase.
 
-This repository holds two NeoForge ports of Lycanites Mobs, one per Minecraft version, on separate branches:
+This repository holds two independent NeoForge ports of Lycanites Mobs — one per Minecraft version — on separate branches:
 
-| Branch | Minecraft | NeoForge | Java | Status |
-|--------|-----------|----------|------|--------|
-| [`neoforge-1.21.1`](../../tree/neoforge-1.21.1) | 1.21.1 | 21.1.x | 21 | Stable, gameplay-tested |
-| [`neoforge-26.1.2`](../../tree/neoforge-26.1.2) | 26.1.2 | 26.1.2.76 | 25 | Playable; visual/gameplay polish ongoing |
+| Branch | Minecraft | NeoForge | Java | Parchment | Status |
+|--------|-----------|----------|------|-----------|--------|
+| **[`neoforge-1.21.1`](../../tree/neoforge-1.21.1)** *(default)* | 1.21.1 | 21.1.217 | 21 | 2024.11.17 | ✅ Stable — full gameplay verified |
+| [`neoforge-26.1.2`](../../tree/neoforge-26.1.2) | 26.1.2 | 26.1.2.76 | 25 | — | ▶️ Playable — polish ongoing |
 
-## Credits & License
+Each branch is a complete, buildable source tree for that Minecraft version. The `26.1.2` branch continues from the finished `1.21.1` port.
 
-Lycanites Mobs is created by **Lycanite**. This is a community port of the schism-maintained source and is provided for personal use only. Please respect the original author's licensing terms — **keep this repository private and do not redistribute builds.**
+---
 
-## About
+## ⚠️ Credits & License
 
-Lycanites Mobs adds 100+ elemental creatures, bosses, mob events, dungeons, an equipment-forging system, and a beastiary. This port brings the schism 1.20.1 Forge source to NeoForge.
+Lycanites Mobs is created by **Lycanite**; this port is built on the community **schism** source. It is an **unofficial personal port** — please respect the original author's licensing terms:
+
+- **Keep this repository private.**
+- **Do not redistribute the compiled jars or the source.**
+- All credit for the mod's design, models, and content belongs to Lycanite and the schism contributors.
+
+---
+
+## What is Lycanites Mobs?
+
+A large creature-and-combat expansion adding:
+
+- **122 elemental creatures** across biomes, dimensions, and depths — tameable pets, mountable beasts, and bosses.
+- **73 mob events** (world-wide invasions and boss summons) and **7 procedural dungeons**.
+- **47 JSON-driven spawners** with a flexible condition/trigger/location system.
+- An **equipment forging** system (parts → tools/weapons), **beastiary** knowledge progression, elemental fluids/blocks, and a summoning-staff/pedestal minion system.
+
+Almost all content is data-driven (JSON under `assets`/`common`), so creatures, spawns, events and dungeons can be tuned without recompiling.
+
+---
 
 ## The two ports
 
-### `neoforge-1.21.1`
-Full Forge 1.20.1 → NeoForge 1.21.1 conversion:
-- Loader migration (Forge → NeoForge APIs, payload network system, data attachments replacing capabilities).
-- MC 1.20.1 → 1.21.1 vanilla API migration.
-- OBJ creature renderer rewritten for 1.21.1's render pipeline.
-- Runtime-verified: all 122 creatures spawn, all mob events run, natural spawning and textures confirmed in-game.
+### `neoforge-1.21.1` — Forge 1.20.1 → NeoForge 1.21.1
 
-### `neoforge-26.1.2`
-The 1.21.1 port carried forward to Minecraft 26.1.2 — a large MC-API migration on top of the NeoForge conversion. Highlights:
-- Whole render stack ported to 26's state/submit entity rendering and `extract*` GUI pipeline (Button/Screen/list/tooltip rewrites), OBJ meshes emitted as vanilla render-type quads.
-- Data-driven item components: every Block/Item now sets its registry id before construction; deferred item-list building until components bind.
-- Networking, SavedData (codec), block-entity & entity ValueIO save/load, weather/time, fluids, spawn-egg tints, and equipment special-model rendering all migrated to 26 APIs.
-- **RLCraft-style tuning applied** (creature stats, spawner rates, variant/level scaling) matching the RLCraft 2.10 Lycanites config, with dungeon boss levels rescaled to a sane cap.
+A complete loader + vanilla-API conversion (848 Java source files):
+
+- **Loader migration:** Forge → NeoForge APIs; `SimpleChannel` → the payload network system (all 22 message classes preserved behind a multiplexed `LycanitesPayload`); Capabilities → **Data Attachments**; `@Mod` constructor + event-bus wiring; `DeferredHolder`/`BuiltInRegistries` registration.
+- **MC 1.20.1 → 1.21.1 vanilla migration:** `MobType` removed → tag-based classification; event renames (tick/damage/sleep events); `ResourceLocation.parse`; `EntityDimensions` accessor methods; `ItemAbility`/`IShearable` changes; GUI overlay → `RegisterGuiLayersEvent`.
+- **Renderer:** the custom OBJ creature renderer rewritten for the 1.21.1 render pipeline (VBO/MeshData).
+- **Verified in-game:** all 122 creatures construct and spawn, all mob events run to completion, natural spawning works, and all textures/models load. Considered stable.
+
+### `neoforge-26.1.2` — 1.21.1 → Minecraft 26.1.2
+
+A large MC-API migration layered on top of the NeoForge conversion (≈1230 compile errors ground to zero, then runtime bring-up):
+
+- **Rendering:** whole stack ported to 26's **state/submit** entity rendering and the **`extract*`** GUI pipeline (Screen/Button/list/tooltip rewrites; `GuiGraphics.drawString` → `textRenderer().accept`; 2D `Matrix3x2f` GUI poses; 9-arg normalized-UV blit). OBJ meshes emit as vanilla render-type **quads** (triangle → degenerate-quad), fluids registered via `RegisterFluidModelsEvent`, equipment items drawn through a **`SpecialModelRenderer`**, spawn-egg tints via `ItemTintSources`.
+- **Registration/data:** every Block/Item now calls `Properties.setId(...)` before construction; item-list building deferred until data components bind; `BlockEntityType` via constructor; `EntityType.Builder.build(ResourceKey)`.
+- **Save/load & world:** codec-based `SavedData`, entity & block-entity **ValueIO** (`ValueInput`/`ValueOutput`), weather/time, `TeleportTransition`, `EntityReference` owner sync.
+- **Networking:** bidirectional payload handlers registered for both sides (client validation).
+- **RLCraft tuning applied:** creature stats, spawner rates, and variant/level scaling matched to the RLCraft 2.10 Lycanites config, with dungeon boss levels rescaled to a sane cap (≤ ~12).
+
+---
 
 ## Building
 
 ```bash
-# neoforge-1.21.1 branch → JAVA_HOME = JDK 21
-# neoforge-26.1.2 branch → JAVA_HOME = JDK 25
+# neoforge-1.21.1  →  JAVA_HOME = JDK 21
+# neoforge-26.1.2  →  JAVA_HOME = JDK 25
 ./gradlew build
-# → build/libs/lycanitesmobs-0.0.9-alpha.jar
+# output → build/libs/lycanitesmobs-0.0.9-alpha.jar
 ```
+
+Both branches use the NeoForge **moddev** Gradle plugin. The `26.1.2` branch requires **Java 25** (mandated by MC 26.x) and moddev `2.0.141`.
+
+### Repo layout
+
+```
+src/main/java/com/lycanitesmobs/   # mod source
+src/main/resources/
+├── assets/lycanitesmobs/          # textures, models, item defs, lang
+├── common/lycanitesmobs/          # data-driven creatures / spawners / events / dungeons
+├── data/lycanitesmobs/            # tags, biome modifiers, loot
+└── META-INF/neoforge.mods.toml
+```
+
+Build output (`build/`, `.gradle/`, `run/`) is git-ignored; only source is tracked.
+
+---
+
+## Notes
+
+- This port targets single-player and dedicated servers. Runtime was smoke-tested on a dedicated NeoForge server via RCON (creature summons, mob events, damage, saving).
+- Some client-only polish on `26.1.2` is still in progress (GUI entity previews, the fear light-dimming effect); these are marked with TODOs in the source and don't affect gameplay.
