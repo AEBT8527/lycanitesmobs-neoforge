@@ -107,7 +107,7 @@ public class EntityUvaraptor extends RideableCreatureEntity {
     	
     	this.playJumpSound();
         this.mountAbilityBoostTicks = MOUNT_ABILITY_BOOST_TICKS;
-        this.leap(2.0D, 3D);
+        this.leap(1.0D, 2D); // 1.15.2 parity
     	
     	this.applyStaminaCost();
     }

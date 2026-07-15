@@ -127,7 +127,7 @@ public class EntityVespid extends AgeableCreatureEntity implements Enemy {
     @Override
     public float getDamageModifier(DamageSource damageSrc) {
         if (damageSrc.is(DamageTypeTags.IS_FIRE))
-            return 2.0F;
+            return 4.0F; // 1.15.2 parity: fire vulnerability x4
         return super.getDamageModifier(damageSrc);
     }
 
