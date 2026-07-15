@@ -84,6 +84,12 @@
   "dungeonLevel": 1,
   "drops": [
     {
+      "item": "minecraft:log",
+      "minAmount": 2,
+      "maxAmount": 6,
+      "chance": 1
+    },
+    {
       "item": "minecraft:brown_mushroom",
       "minAmount": 1,
       "maxAmount": 2,
@@ -118,27 +124,6 @@
       "minAmount": 1,
       "maxAmount": 1,
       "chance": 0.25
-    },
-    {
-      "item": "minecraft:red_dye",
-      "minAmount": 1,
-      "maxAmount": 2,
-      "variant": 0,
-      "chance": 1
-    },
-    {
-      "item": "minecraft:blue_dye",
-      "minAmount": 1,
-      "maxAmount": 2,
-      "variant": 1,
-      "chance": 1
-    },
-    {
-      "item": "minecraft:purple_dye",
-      "minAmount": 1,
-      "maxAmount": 2,
-      "variant": 2,
-      "chance": 1
     }
   ],
   "sizeScale": 1,

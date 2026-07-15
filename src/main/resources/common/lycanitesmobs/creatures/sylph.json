@@ -91,12 +91,12 @@
       "item": "lycanitesmobs:cleansingcrystal",
       "minAmount": 1,
       "maxAmount": 1,
-      "chance": 0.1
+      "chance": 0.05
     },
     {
       "item": "lycanitesmobs:aetherwavecharge",
       "minAmount": 1,
-      "maxAmount": 4,
+      "maxAmount": 3,
       "chance": 1
     }
   ],

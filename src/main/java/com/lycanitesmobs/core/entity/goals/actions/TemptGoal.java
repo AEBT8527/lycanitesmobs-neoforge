@@ -137,6 +137,9 @@ public class TemptGoal extends Goal {
             return false;
         }
 
+        // 1.15.2 parity: canContinueToUse re-enters here every tick, pinning stealth at 0
+        // for the whole temptation so stealthy creatures can't fade out mid-tempt.
+        this.host.setStealth(0.0F);
         return true;
     }
 

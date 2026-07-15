@@ -3744,13 +3744,15 @@ public abstract class BaseCreatureEntity extends PathfinderMob {
         damage *= this.creatureStats.getDamage() / 2;
         double pierceDamage = noPierce ? 0 : this.creatureStats.getPierce();
 
+        // 1.15.2 parity: the pierce portion bypasses armor, resistance and protection
+        // (official setDamageBypassesArmor().setDamageIsAbsolute()) via the tagged pierce damage type.
         boolean success;
         if (damage <= pierceDamage) {
-            success = target.hurtOrSimulate(this.getDamageSource(target.level().damageSources().thrown(projectile, this)), damage);
+            success = target.hurtOrSimulate(ObjectManager.getDamageSource(target.level(), "pierce", projectile, this), damage);
         } else {
             int hurtResistantTimeBefore = target.invulnerableTime;
             if (pierceDamage > 0) {
-                target.hurt(this.getDamageSource(target.level().damageSources().thrown(projectile, this)), (float) pierceDamage);
+                target.hurt(ObjectManager.getDamageSource(target.level(), "pierce", projectile, this), (float) pierceDamage);
             }
             target.invulnerableTime = hurtResistantTimeBefore;
             damage -= pierceDamage;

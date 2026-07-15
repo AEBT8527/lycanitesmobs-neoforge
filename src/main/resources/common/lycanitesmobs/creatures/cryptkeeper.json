@@ -73,7 +73,7 @@
       ]
     }
   ],
-  "element": "arcane",
+  "element": "gravity",
   "diets": [
     "carnivore",
     "detritivore"
@@ -87,12 +87,6 @@
   "drops": [
     {
       "item": "minecraft:rotten_flesh",
-      "minAmount": 1,
-      "maxAmount": 3,
-      "chance": 1
-    },
-    {
-      "item": "minecraft:bone",
       "minAmount": 1,
       "maxAmount": 3,
       "chance": 1

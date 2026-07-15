@@ -74,9 +74,6 @@
       ]
     }
   ],
-  "elements": [
-    "shadow"
-  ],
   "diets": [
     "carnivore",
     "insectivore",
@@ -104,7 +101,13 @@
     {
       "item": "lycanitesmobs:bloodleechcharge",
       "minAmount": 1,
-      "maxAmount": 4,
+      "maxAmount": 3,
+      "chance": 1
+    },
+    {
+      "item": "minecraft:phantom_membrane",
+      "minAmount": 1,
+      "maxAmount": 1,
       "chance": 1
     },
     {
@@ -122,5 +125,6 @@
       "name": "griefing",
       "value": false
     }
-  ]
+  ],
+  "element": "void"
 }

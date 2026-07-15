@@ -160,9 +160,11 @@ public class AvoidGoal extends Goal {
     // ==================================================
     @Override
     public void tick() {
-        double distanceSq = this.host.distanceToSqr(this.avoidTarget);
+        // 1.15.2 parity: official compared LINEAR distance against the squared nearDistance,
+        // so fleeing creatures effectively always used nearSpeed while this goal is active.
+        double distance = this.host.distanceTo(this.avoidTarget);
 
-        if (distanceSq < this.nearDistance) {
+        if (distance < this.nearDistance) {
             if (!this.host.useDirectNavigator())
                 this.host.getNavigation().setSpeedModifier(this.nearSpeed);
             else

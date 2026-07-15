@@ -338,21 +338,26 @@ public class BaseProjectileEntity extends ThrowableProjectile {
                             BaseCreatureEntity creatureThrower = (BaseCreatureEntity) this.getOwner();
                             attackSuccess = creatureThrower.doRangedDamage(target, this, damage, this.isBlockedByEntity(target));
                         } else {
+                            // 1.15.2 parity: pierce portion is attributed to the thrower (aggro/kill credit)
+                            // and bypasses armor/resistance/protection via the tagged pierce damage type.
                             double pierceDamage = this.pierce;
                             if (damage <= pierceDamage)
-                                attackSuccess = target.hurtOrSimulate(this.level().damageSources().magic(), damage);
+                                attackSuccess = target.hurtOrSimulate(ObjectManager.getDamageSource(this.level(), "pierce", this, this.getOwner()), damage);
                             else {
                                 int hurtResistantTimeBefore = target.invulnerableTime;
-                                target.hurt(this.level().damageSources().magic(), (float) pierceDamage);
+                                target.hurt(ObjectManager.getDamageSource(this.level(), "pierce", this, this.getOwner()), (float) pierceDamage);
                                 target.invulnerableTime = hurtResistantTimeBefore;
                                 damage -= pierceDamage;
                                 attackSuccess = target.hurtOrSimulate(this.level().damageSources().thrown(this, this.getOwner()), damage);
                             }
                         }
 
-                        // Apply Damage Effects If Not Blocking:
-                        this.onEntityLivingDamage(target); // Old Projectiles
-                        this.onDamage(target, damageInit, attackSuccess); // JSON Projectiles
+                        // Apply Damage Effects If Not Blocking (1.15.2 parity: shields block debuffs/effects):
+                        boolean targetBlocking = target instanceof LivingEntity livingTarget && livingTarget.isBlocking();
+                        if (!targetBlocking) {
+                            this.onEntityLivingDamage(target); // Old Projectiles
+                            this.onDamage(target, damageInit, attackSuccess); // JSON Projectiles
+                        }
 
                         // Restore Knockback:
                         if (stopKnockback) {

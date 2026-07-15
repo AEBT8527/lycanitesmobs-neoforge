@@ -69,10 +69,6 @@
       ]
     }
   ],
-  "elements": [
-    "earth",
-    "quake"
-  ],
   "diets": [
     "carnivore",
     "piscivore",
@@ -85,11 +81,11 @@
   "summonable": true,
   "tameable": false,
   "mountable": false,
-  "summonCost": 4,
+  "summonCost": 6,
   "dungeonLevel": 1,
   "drops": [
     {
-      "item": "minecraft:oak_log",
+      "item": "minecraft:log",
       "minAmount": 2,
       "maxAmount": 6,
       "chance": 1
@@ -126,5 +122,6 @@
       "name": "griefing",
       "value": true
     }
-  ]
+  ],
+  "element": "order"
 }

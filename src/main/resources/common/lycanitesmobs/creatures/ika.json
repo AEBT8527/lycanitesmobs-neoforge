@@ -91,16 +91,10 @@
       "chance": 1
     },
     {
-      "item": "minecraft:bone_meal",
+      "item": "minecraft:dye",
       "minAmount": 1,
       "maxAmount": 3,
       "chance": 0.25
-    },
-    {
-      "item": "minecraft:scute",
-      "minAmount": 1,
-      "maxAmount": 2,
-      "chance": 1
     }
   ],
   "sizeScale": 1,

@@ -98,7 +98,7 @@ public class FindAvoidTargetGoal extends TargetingGoal {
         if (!this.tameTargeting && this.host.isTamed()) {
             return false;
         }
-		if (!this.host.isUpdateTickMultiple(60)) {
+		if (!this.host.isUpdateTickMultiple(20)) { // 1.15.2 parity: scan once per second, not every 3s
 			return false;
 		}
 		if(this.targetChance > 0 && this.host.getRandom().nextInt(this.targetChance) != 0) {

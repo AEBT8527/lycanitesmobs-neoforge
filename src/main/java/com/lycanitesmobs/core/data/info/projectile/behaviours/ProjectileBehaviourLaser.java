@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import com.lycanitesmobs.core.entity.base.BaseCreatureEntity;
 import com.lycanitesmobs.core.entity.base.BaseProjectileEntity;
 import com.lycanitesmobs.core.entity.projectile.generic.CustomProjectileEntity;
+import com.lycanitesmobs.core.manager.ObjectManager;
 import com.lycanitesmobs.core.util.helpers.LMHelperClass;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
@@ -183,12 +184,13 @@ public class ProjectileBehaviourLaser extends ProjectileBehaviour {
             BaseCreatureEntity creatureThrower = (BaseCreatureEntity) projectile.getOwner();
             attackSuccess = creatureThrower.doRangedDamage(target, projectile, damage, projectile.isBlockedByEntity(target));
         } else {
+            // 1.15.2 parity: pierce portion bypasses armor/resistance/protection.
             double pierceDamage = 1;
             if (damage <= pierceDamage)
-                attackSuccess = target.hurtOrSimulate(projectile.level().damageSources().thrown(projectile, projectile.getOwner()), damage);
+                attackSuccess = target.hurtOrSimulate(ObjectManager.getDamageSource(projectile.level(), "pierce", projectile, projectile.getOwner()), damage);
             else {
                 int hurtResistantTimeBefore = target.invulnerableTime;
-                target.hurt(projectile.level().damageSources().thrown(projectile, projectile.getOwner()), (float) pierceDamage);
+                target.hurt(ObjectManager.getDamageSource(projectile.level(), "pierce", projectile, projectile.getOwner()), (float) pierceDamage);
                 target.invulnerableTime = hurtResistantTimeBefore;
                 damage -= pierceDamage;
                 attackSuccess = target.hurtOrSimulate(projectile.level().damageSources().thrown(projectile, projectile.getOwner()), damage);
