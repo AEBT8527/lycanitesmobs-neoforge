@@ -40,7 +40,7 @@
   "speed": 32,
   "damage": 2,
   "attackSpeed": 1,
-  "rangedSpeed": 8,
+  "rangedSpeed": 4,
   "effectDuration": 5,
   "effectAmplifier": 0,
   "pierce": 2,
@@ -98,20 +98,14 @@
     },
     {
       "item": "minecraft:gold_ingot",
-      "minAmount": 16,
-      "maxAmount": 32,
+      "minAmount": 10,
+      "maxAmount": 20,
       "chance": 1
     },
     {
       "item": "minecraft:diamond",
       "minAmount": 10,
-      "maxAmount": 50,
-      "chance": 1
-    },
-    {
-      "item": "minecraft:netherite_scrap",
-      "minAmount": 16,
-      "maxAmount": 32,
+      "maxAmount": 20,
       "chance": 1
     },
     {
@@ -121,15 +115,15 @@
       "chance": 1
     },
     {
-      "item": "lycanitesmobs:devilstarcharge",
+      "item": "lycanitesmobs:doomfireballcharge",
       "minAmount": 10,
-      "maxAmount": 50,
+      "maxAmount": 20,
       "chance": 1
     },
     {
       "item": "lycanitesmobs:hellfireballcharge",
       "minAmount": 10,
-      "maxAmount": 50,
+      "maxAmount": 20,
       "chance": 1
     },
     {
@@ -166,6 +160,12 @@
       "item": "lycanitesmobs:soulstone_aberration",
       "minAmount": 1,
       "maxAmount": 3,
+      "chance": 1
+    },
+    {
+      "item": "lycanitesmobs:wraithsigil",
+      "minAmount": 1,
+      "maxAmount": 1,
       "chance": 1
     }
   ],

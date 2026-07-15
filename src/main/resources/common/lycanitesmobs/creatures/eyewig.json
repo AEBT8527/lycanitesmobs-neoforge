@@ -73,7 +73,8 @@
     }
   ],
   "elements": [
-    "poison"
+    "arbour",
+    "shadow"
   ],
   "diets": [
     "carnivore",
@@ -115,7 +116,7 @@
     {
       "item": "lycanitesmobs:poisonraycharge",
       "minAmount": 3,
-      "maxAmount": 4,
+      "maxAmount": 5,
       "chance": 1
     }
   ],

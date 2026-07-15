@@ -87,9 +87,9 @@
     },
     {
       "item": "lycanitesmobs:raw_concapede_meat",
-      "burningItem": "lycanitesmobs:cooked_concapede_meat",
+      "burningItem": "lycanitesmobs:concapedemeatcooked",
       "minAmount": 1,
-      "maxAmount": 2,
+      "maxAmount": 1,
       "chance": 1
     }
   ],

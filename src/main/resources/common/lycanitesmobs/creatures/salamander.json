@@ -18,8 +18,7 @@
     "dimensionIds": [],
     "dimensionListType": "blacklist",
     "ignoreBiome": false,
-    "biomeTags": [
-    ],
+    "biomeTags": [],
     "spawnWeight": 6,
     "dungeonWeight": 200,
     "spawnAreaLimit": 5,
@@ -31,7 +30,7 @@
     "despawnNatural": true,
     "despawnForced": false
   },
-  "width": 1.5,
+  "width": 2.5,
   "height": 0.9,
   "experience": 5,
   "health": 15,
@@ -98,12 +97,6 @@
       "minAmount": 1,
       "maxAmount": 2,
       "chance": 0.5
-    },
-    {
-      "item": "minecraft:magma_block",
-      "minAmount": 1,
-      "maxAmount": 2,
-      "chance": 0.1
     }
   ],
   "sizeScale": 1,

@@ -276,6 +276,7 @@ public class ItemManager extends JSONLoader {
 
         ObjectManager.addDamageType("ooze");
         ObjectManager.addDamageType("acid");
+        ObjectManager.addDamageType("pierce");
     }
 
     /**

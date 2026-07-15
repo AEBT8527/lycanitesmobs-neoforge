@@ -24,7 +24,7 @@
     "biomeTags": [
       "minecraft:is_ocean"
     ],
-    "spawnWeight": 6,
+    "spawnWeight": 4,
     "dungeonWeight": 200,
     "spawnAreaLimit": 3,
     "spawnGroupMin": 1,
@@ -41,7 +41,7 @@
   "health": 20,
   "defense": 1,
   "armor": 0,
-  "speed": 42,
+  "speed": 36,
   "damage": 2,
   "attackSpeed": 1,
   "rangedSpeed": 2,
@@ -71,10 +71,6 @@
       ]
     }
   ],
-  "elements": [
-    "arcane",
-    "water"
-  ],
   "diets": [
     "piscivore"
   ],
@@ -86,30 +82,20 @@
   "dungeonLevel": 2,
   "drops": [
     {
-      "item": "minecraft:cod",
-      "burningItem": "minecraft:cooked_cod",
+      "item": "minecraft:fish",
+      "burningItem": "minecraft:cooked_fish",
       "minAmount": 1,
-      "maxAmount": 3,
+      "maxAmount": 5,
       "chance": 1
     },
     {
-      "item": "minecraft:salmon",
-      "burningItem": "minecraft:cooked_salmon",
+      "item": "minecraft:fish",
+      "metadata": 1,
+      "burningItem": "minecraft:cooked_fish",
+      "burningMetadata": 1,
       "minAmount": 1,
       "maxAmount": 3,
       "chance": 0.5
-    },
-    {
-      "item": "minecraft:tropical_fish",
-      "minAmount": 1,
-      "maxAmount": 2,
-      "chance": 0.1
-    },
-    {
-      "item": "minecraft:pufferfish",
-      "minAmount": 1,
-      "maxAmount": 2,
-      "chance": 0.25
     },
     {
       "item": "minecraft:prismarine_shard",
@@ -124,7 +110,8 @@
       "chance": 0.5
     },
     {
-      "item": "minecraft:lapis_lazuli",
+      "item": "minecraft:dye",
+      "metadata": 4,
       "minAmount": 1,
       "maxAmount": 3,
       "chance": 1
@@ -138,10 +125,11 @@
     {
       "item": "lycanitesmobs:waterjetcharge",
       "minAmount": 1,
-      "maxAmount": 4,
+      "maxAmount": 3,
       "chance": 1
     }
   ],
   "sizeScale": 1,
-  "hitboxScale": 1
+  "hitboxScale": 1,
+  "element": "acid"
 }

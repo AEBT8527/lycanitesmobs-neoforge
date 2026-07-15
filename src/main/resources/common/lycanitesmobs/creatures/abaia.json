@@ -20,8 +20,7 @@
     ],
     "dimensionListType": "blacklist",
     "ignoreBiome": false,
-    "biomeTags": [
-    ],
+    "biomeTags": [],
     "spawnWeight": 6,
     "dungeonWeight": 200,
     "spawnAreaLimit": 5,
@@ -83,14 +82,14 @@
   "summonable": true,
   "tameable": false,
   "mountable": false,
-  "summonCost": 1,
+  "summonCost": 4,
   "dungeonLevel": 1,
   "drops": [
     {
-      "item": "minecraft:cod",
-      "burningItem": "minecraft:cooked_cod",
+      "item": "minecraft:fish",
+      "burningItem": "minecraft:cooked_fish",
       "minAmount": 1,
-      "maxAmount": 4,
+      "maxAmount": 5,
       "chance": 1
     },
     {
@@ -108,5 +107,6 @@
     }
   ],
   "sizeScale": 1,
-  "hitboxScale": 1
+  "hitboxScale": 1,
+  "perchable": true
 }

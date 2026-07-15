@@ -75,7 +75,7 @@
       ]
     }
   ],
-  "element": "earth",
+  "element": "quake",
   "diets": [
     "carnivore",
     "insectivore"
@@ -110,12 +110,6 @@
       "minAmount": 1,
       "maxAmount": 1,
       "chance": 0.1
-    },
-    {
-      "item": "minecraft:gold_ore",
-      "minAmount": 1,
-      "maxAmount": 1,
-      "chance": 0.01
     }
   ],
   "sizeScale": 1,

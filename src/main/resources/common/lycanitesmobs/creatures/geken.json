@@ -43,7 +43,7 @@
   "armor": 0,
   "speed": 24,
   "damage": 2,
-  "attackSpeed": 4,
+  "attackSpeed": 2,
   "rangedSpeed": 1,
   "effectDuration": 5,
   "effectAmplifier": -1,
@@ -70,10 +70,6 @@
       ]
     }
   ],
-  "elements": [
-    "air",
-    "poison"
-  ],
   "diets": [
     "carnivore",
     "insectivore"
@@ -93,5 +89,6 @@
     }
   ],
   "sizeScale": 1,
-  "hitboxScale": 1
+  "hitboxScale": 1,
+  "element": "fae"
 }

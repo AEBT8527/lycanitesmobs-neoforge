@@ -66,7 +66,9 @@
     }
   ],
   "elements": [
-    "nether"
+    "nether",
+    "phase",
+    "shadow"
   ],
   "diets": [
     "carnivore",
@@ -92,26 +94,20 @@
     },
     {
       "item": "minecraft:ender_pearl",
-      "minAmount": 8,
-      "maxAmount": 16,
+      "minAmount": 5,
+      "maxAmount": 10,
       "chance": 1
     },
     {
       "item": "minecraft:gold_ingot",
-      "minAmount": 16,
-      "maxAmount": 32,
+      "minAmount": 10,
+      "maxAmount": 20,
       "chance": 1
     },
     {
       "item": "minecraft:diamond",
-      "minAmount": 25,
-      "maxAmount": 50,
-      "chance": 1
-    },
-    {
-      "item": "minecraft:netherite_scrap",
-      "minAmount": 16,
-      "maxAmount": 32,
+      "minAmount": 10,
+      "maxAmount": 20,
       "chance": 1
     },
     {
@@ -123,13 +119,13 @@
     {
       "item": "lycanitesmobs:spectralboltcharge",
       "minAmount": 10,
-      "maxAmount": 50,
+      "maxAmount": 20,
       "chance": 1
     },
     {
       "item": "lycanitesmobs:lobdarklingscharge",
       "minAmount": 10,
-      "maxAmount": 50,
+      "maxAmount": 20,
       "chance": 1
     },
     {

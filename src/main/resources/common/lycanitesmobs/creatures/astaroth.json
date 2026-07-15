@@ -117,7 +117,7 @@
   "summonable": true,
   "tameable": false,
   "mountable": false,
-  "summonCost": 3,
+  "summonCost": 5,
   "dungeonLevel": 3,
   "drops": [
     {
@@ -135,7 +135,7 @@
     {
       "item": "lycanitesmobs:devilstarcharge",
       "minAmount": 3,
-      "maxAmount": 8,
+      "maxAmount": 6,
       "chance": 1
     }
   ],

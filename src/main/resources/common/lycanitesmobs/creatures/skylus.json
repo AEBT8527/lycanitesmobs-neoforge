@@ -85,7 +85,7 @@
   "dungeonLevel": 0,
   "drops": [
     {
-      "item": "minecraft:ink_sac",
+      "item": "minecraft:dye",
       "minAmount": 1,
       "maxAmount": 5,
       "chance": 1
@@ -101,12 +101,6 @@
       "minAmount": 1,
       "maxAmount": 1,
       "chance": 0.125
-    },
-    {
-      "item": "minecraft:nautilus_shell",
-      "minAmount": 1,
-      "maxAmount": 1,
-      "chance": 0.1
     }
   ],
   "sizeScale": 1,

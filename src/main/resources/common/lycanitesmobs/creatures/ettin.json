@@ -83,11 +83,11 @@
   "summonable": false,
   "tameable": true,
   "mountable": false,
-  "summonCost": 6,
+  "summonCost": 2,
   "dungeonLevel": 2,
   "drops": [
     {
-      "item": "minecraft:oak_log",
+      "item": "minecraft:log",
       "minAmount": 2,
       "maxAmount": 6,
       "chance": 1

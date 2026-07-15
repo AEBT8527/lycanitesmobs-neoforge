@@ -27,7 +27,7 @@
       "-c:is_cold",
       "-c:is_snowy"
     ],
-    "spawnWeight": 3,
+    "spawnWeight": 2,
     "dungeonWeight": 200,
     "spawnAreaLimit": 3,
     "spawnGroupMin": 1,
@@ -75,7 +75,7 @@
       ]
     }
   ],
-  "element": "earth",
+  "element": "quake",
   "diets": [
     "carnivore",
     "insectivore"
@@ -96,13 +96,13 @@
     {
       "item": "minecraft:iron_ore",
       "minAmount": 2,
-      "maxAmount": 4,
+      "maxAmount": 3,
       "chance": 0.5
     },
     {
       "item": "minecraft:gold_ore",
       "minAmount": 1,
-      "maxAmount": 4,
+      "maxAmount": 2,
       "chance": 0.25
     },
     {

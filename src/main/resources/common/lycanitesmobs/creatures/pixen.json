@@ -67,7 +67,7 @@
       ]
     }
   ],
-  "element": "fae",
+  "element": "frost",
   "diets": [
     "carnivore",
     "piscivore",
@@ -91,14 +91,20 @@
     },
     {
       "item": "minecraft:brown_mushroom",
-      "minAmount": 2,
-      "maxAmount": 3,
+      "minAmount": 1,
+      "maxAmount": 1,
       "chance": 1
     },
     {
       "item": "minecraft:red_mushroom",
       "minAmount": 2,
       "maxAmount": 3,
+      "chance": 1
+    },
+    {
+      "item": "minecraft:phantom_membrane",
+      "minAmount": 1,
+      "maxAmount": 1,
       "chance": 1
     },
     {

@@ -70,7 +70,7 @@
       ]
     }
   ],
-  "element": "arcane",
+  "element": "gravity",
   "diets": [
     "frugivore"
   ],
@@ -82,7 +82,8 @@
   "dungeonLevel": 0,
   "drops": [
     {
-      "item": "minecraft:cocoa_beans",
+      "item": "minecraft:dye",
+      "metadata": 3,
       "minAmount": 1,
       "maxAmount": 5,
       "chance": 1

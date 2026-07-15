@@ -85,7 +85,7 @@
   "dungeonLevel": 2,
   "drops": [
     {
-      "item": "minecraft:oak_log",
+      "item": "minecraft:log",
       "minAmount": 1,
       "maxAmount": 6,
       "chance": 0.5
@@ -107,19 +107,19 @@
       "item": "minecraft:wheat_seeds",
       "minAmount": 1,
       "maxAmount": 3,
-      "chance": 0.33
+      "chance": 0.1
     },
     {
       "item": "minecraft:pumpkin_seeds",
       "minAmount": 1,
       "maxAmount": 3,
-      "chance": 0.33
+      "chance": 0.1
     },
     {
       "item": "minecraft:melon_seeds",
       "minAmount": 1,
       "maxAmount": 3,
-      "chance": 0.33
+      "chance": 0.1
     }
   ],
   "sizeScale": 1,

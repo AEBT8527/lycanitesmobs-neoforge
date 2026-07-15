@@ -3,6 +3,7 @@ package com.lycanitesmobs.core.entity.projectile.generic;
 import com.lycanitesmobs.core.entity.projectile.misc.LaserEndProjectileEntity;
 import com.lycanitesmobs.core.entity.base.BaseCreatureEntity;
 import com.lycanitesmobs.core.entity.base.BaseProjectileEntity;
+import com.lycanitesmobs.core.manager.ObjectManager;
 import com.lycanitesmobs.core.manager.DeferredLevelActionManager;
 import com.lycanitesmobs.core.manager.ProjectileManager;
 import com.lycanitesmobs.core.util.helpers.LMHelperClass;
@@ -489,12 +490,13 @@ public class LaserProjectileEntity extends BaseProjectileEntity {
             BaseCreatureEntity creatureThrower = (BaseCreatureEntity) this.getOwner();
             attackSuccess = creatureThrower.doRangedDamage(target, this, damage, this.isBlockedByEntity(target));
         } else {
+            // 1.15.2 parity: pierce portion bypasses armor/resistance/protection.
             double pierceDamage = 1;
             if (damage <= pierceDamage)
-                attackSuccess = target.hurt(this.level().damageSources().thrown(this, this.getOwner()), damage);
+                attackSuccess = target.hurt(ObjectManager.getDamageSource(this.level(), "pierce", this, this.getOwner()), damage);
             else {
                 int hurtResistantTimeBefore = target.invulnerableTime;
-                target.hurt(this.level().damageSources().thrown(this, this.getOwner()), (float) pierceDamage);
+                target.hurt(ObjectManager.getDamageSource(this.level(), "pierce", this, this.getOwner()), (float) pierceDamage);
                 target.invulnerableTime = hurtResistantTimeBefore;
                 damage -= pierceDamage;
                 attackSuccess = target.hurt(this.level().damageSources().thrown(this, this.getOwner()), damage);

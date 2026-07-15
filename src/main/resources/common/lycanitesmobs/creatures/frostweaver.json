@@ -87,7 +87,7 @@
     {
       "item": "minecraft:string",
       "minAmount": 1,
-      "maxAmount": 4,
+      "maxAmount": 6,
       "chance": 1
     },
     {
@@ -99,7 +99,7 @@
     {
       "item": "lycanitesmobs:frostwebcharge",
       "minAmount": 1,
-      "maxAmount": 4,
+      "maxAmount": 3,
       "chance": 1
     }
   ],

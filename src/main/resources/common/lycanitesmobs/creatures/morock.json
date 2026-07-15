@@ -72,10 +72,6 @@
       ]
     }
   ],
-  "elements": [
-    "quake",
-    "earth"
-  ],
   "diets": [
     "carnivore",
     "piscivore",
@@ -115,10 +111,11 @@
     {
       "item": "minecraft:diamond",
       "minAmount": 1,
-      "maxAmount": 2,
+      "maxAmount": 1,
       "chance": 0.1
     }
   ],
   "sizeScale": 1,
-  "hitboxScale": 1
+  "hitboxScale": 1,
+  "element": "order"
 }

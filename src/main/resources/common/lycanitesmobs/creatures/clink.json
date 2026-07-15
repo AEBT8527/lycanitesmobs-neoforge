@@ -73,7 +73,7 @@
       ]
     }
   ],
-  "element": "earth",
+  "element": "gravity",
   "diets": [
     "carnivore",
     "insectivore"
@@ -94,7 +94,7 @@
     {
       "item": "lycanitesmobs:throwingscythecharge",
       "minAmount": 2,
-      "maxAmount": 6,
+      "maxAmount": 7,
       "chance": 1
     }
   ],

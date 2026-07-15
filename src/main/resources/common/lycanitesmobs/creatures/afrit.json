@@ -17,8 +17,7 @@
     "dimensionIds": [],
     "dimensionListType": "blacklist",
     "ignoreBiome": false,
-    "biomeTags": [
-    ],
+    "biomeTags": [],
     "spawnWeight": 8,
     "dungeonWeight": 200,
     "spawnAreaLimit": 2,
@@ -67,7 +66,8 @@
     }
   ],
   "elements": [
-    "fire"
+    "fire",
+    "acid"
   ],
   "diets": [
     "carnivore",

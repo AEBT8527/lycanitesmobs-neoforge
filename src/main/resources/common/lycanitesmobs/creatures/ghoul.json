@@ -90,12 +90,6 @@
       "chance": 1
     },
     {
-      "item": "minecraft:bone",
-      "minAmount": 1,
-      "maxAmount": 3,
-      "chance": 1
-    },
-    {
       "item": "minecraft:coal",
       "minAmount": 1,
       "maxAmount": 2,

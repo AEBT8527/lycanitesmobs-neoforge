@@ -37,7 +37,7 @@
     "despawnNatural": false,
     "despawnForced": false
   },
-  "width": 3.9,
+  "width": 4.9,
   "height": 4.2,
   "experience": 5,
   "health": 40,
@@ -88,8 +88,8 @@
     {
       "item": "lycanitesmobs:raw_arisaur_meat",
       "burningItem": "lycanitesmobs:cooked_arisaur_meat",
-      "minAmount": 3,
-      "maxAmount": 8,
+      "minAmount": 1,
+      "maxAmount": 3,
       "chance": 1
     }
   ],

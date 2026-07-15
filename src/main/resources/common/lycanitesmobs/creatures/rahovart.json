@@ -93,21 +93,9 @@
       "chance": 1
     },
     {
-      "item": "minecraft:gold_ingot",
-      "minAmount": 16,
-      "maxAmount": 32,
-      "chance": 1
-    },
-    {
       "item": "minecraft:diamond",
       "minAmount": 10,
-      "maxAmount": 50,
-      "chance": 1
-    },
-    {
-      "item": "minecraft:netherite_scrap",
-      "minAmount": 16,
-      "maxAmount": 32,
+      "maxAmount": 20,
       "chance": 1
     },
     {
@@ -156,6 +144,12 @@
       "item": "lycanitesmobs:soulstone_demon",
       "minAmount": 2,
       "maxAmount": 6,
+      "chance": 1
+    },
+    {
+      "item": "lycanitesmobs:wraithsigil",
+      "minAmount": 1,
+      "maxAmount": 1,
       "chance": 1
     }
   ],
