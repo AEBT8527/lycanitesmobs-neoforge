@@ -12,9 +12,9 @@ public class ConfigPlayer {
         builder.comment("Player stat and ability settings.");
 
         this.summoningFocusRecharge = builder
-                .comment("How much summoning focus a player regains per tick. Default is 5, was 1 in earlier RLCraft-style configs.")
+                .comment("How much summoning focus a player regains per tick. Default is 10 (official 1.15.2 rate); RLCraft-style configs used 1.")
                 .translation(CoreConfig.CONFIG_PREFIX + "player.summoningfocus.recharge")
-                .defineInRange("Summoning Focus Recharge", 5, 0, Integer.MAX_VALUE);
+                .defineInRange("Summoning Focus Recharge", 10, 0, Integer.MAX_VALUE);
 
         builder.pop();
     }

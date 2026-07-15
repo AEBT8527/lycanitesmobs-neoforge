@@ -27,12 +27,12 @@ public class ConfigMobEvent {
 		this.mobEventsRandom = builder
 				.comment("Set to false to disable random mob events for every world.")
 				.translation(CoreConfig.CONFIG_PREFIX + "mobevents.enabled")
-				.define("random.enabled", true);
+				.define("random.enabled", false); // 1.15.2 parity: random events are opt-in
 
 		this.defaultMobDuration = builder
 				.comment("The default temporary time applied to mobs spawned from events, where it will forcefully despawn after the specified time (in ticks). MobSpawns can override this.")
 				.translation(CoreConfig.CONFIG_PREFIX + "mobevents.enabled")
-				.define("duration", 6000);
+				.define("duration", 12000); // 1.15.2 parity: event mobs linger 10 minutes
 
 		this.minEventsRandomDay = builder
 				.comment("If random events are enabled, they wont occur until this day is reached. Set to 0 to have random events enabled from the start of a world.")

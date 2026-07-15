@@ -1084,10 +1084,12 @@ public abstract class BaseCreatureEntity extends PathfinderMob {
 
     private void initializePathing() {
         if (!this.canBurn()) {
+            // 1.15.2 parity: fire-immune creatures path straight through fire.
+            // (DANGER_FIRE was renamed FIRE_IN_NEIGHBOR in 26.x)
+            this.setPathfindingMalus(PathType.FIRE_IN_NEIGHBOR, 0.0F);
             if (this.canBreatheUnderlava()) {
                 this.setPathfindingMalus(PathType.LAVA, 1.0F);
                 if (!this.canBreatheAir()) {
-                this.setPathfindingMalus(PathType.WATER, 8.0F);
                     this.setPathfindingMalus(PathType.LAVA, 8.0F);
                 }
             }
