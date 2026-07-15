@@ -113,7 +113,7 @@ public class EntityVentoraptor extends RideableCreatureEntity {
     	
     	this.playJumpSound();
         this.mountAbilityBoostTicks = MOUNT_ABILITY_BOOST_TICKS;
-        this.leap(4D, 1D);
+        this.leap(4D, 0.5D); // 1.15.2 parity
     	
     	this.applyStaminaCost();
     }
