@@ -20,6 +20,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import org.joml.Vector3d;
 
+import net.minecraft.util.Mth;
+import com.lycanitesmobs.core.util.helpers.LMHelperClass;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -131,20 +133,72 @@ public class EntityIgnibus extends RideableCreatureEntity implements IGroupHeavy
     }
 
     @Override
-    public void attackRanged(Entity target, float range) {
-        // Type:
-        ProjectileInfo projectileInfo = ProjectileManager.getInstance().getProjectile("primeember");
+        public void attackRanged(Entity target, float range) {
+        // 1.15.2 parity: seven rapid-fire scorchfireballs (was a 3x3 primeember grid).
+        ProjectileInfo projectileInfo = ProjectileManager.getInstance().getProjectile("scorchfireball");
         if (projectileInfo == null) {
             return;
         }
+        List<RapidFireProjectileEntity> projectiles = new ArrayList<>();
 
-        for (int projectileX = -1; projectileX <= 1; projectileX++) {
-            for (int projectileY = -1; projectileY <= 1; projectileY++) {
-                Vector3d offset = this.getFacingPositionDouble(0, -6D + (0.5D * projectileY), 0, 4, this.yRot);
-                offset.add(this.getFacingPositionDouble(0, 0, 0, 2D * projectileX, this.yRot + 90D));
-                RapidFireProjectileEntity projectile = new RapidFireProjectileEntity(ProjectileManager.getInstance().getOldProjectileType(RapidFireProjectileEntity.class), projectileInfo, this.level(), this, 15, 3);
-                this.fireProjectile(projectile, target, range, 0, offset, 0.6f, 3f, 4F);
-            }
+        RapidFireProjectileEntity projectileEntry = new RapidFireProjectileEntity(ProjectileManager.getInstance().getOldProjectileType(RapidFireProjectileEntity.class), projectileInfo, this.level(), this, 15, 3);
+        projectiles.add(projectileEntry);
+
+        RapidFireProjectileEntity projectileEntry2 = new RapidFireProjectileEntity(ProjectileManager.getInstance().getOldProjectileType(RapidFireProjectileEntity.class), projectileInfo, this.level(), this, 15, 3);
+        projectileEntry2.addOffset(1.0D, 0, 0);
+        projectileEntry2.setProjectileScale(0.25f);
+        projectiles.add(projectileEntry2);
+
+        RapidFireProjectileEntity projectileEntry3 = new RapidFireProjectileEntity(ProjectileManager.getInstance().getOldProjectileType(RapidFireProjectileEntity.class), projectileInfo, this.level(), this, 15, 3);
+        projectileEntry3.addOffset(-1.0D, 0, 0);
+        projectileEntry3.setProjectileScale(0.25f);
+        projectiles.add(projectileEntry3);
+
+        RapidFireProjectileEntity projectileEntry4 = new RapidFireProjectileEntity(ProjectileManager.getInstance().getOldProjectileType(RapidFireProjectileEntity.class), projectileInfo, this.level(), this, 15, 3);
+        projectileEntry4.addOffset(0, 0, 1.0D);
+        projectileEntry4.setProjectileScale(0.25f);
+        projectiles.add(projectileEntry4);
+
+        RapidFireProjectileEntity projectileEntry5 = new RapidFireProjectileEntity(ProjectileManager.getInstance().getOldProjectileType(RapidFireProjectileEntity.class), projectileInfo, this.level(), this, 15, 3);
+        projectileEntry5.addOffset(0, 0, -1.0D);
+        projectileEntry5.setProjectileScale(0.25f);
+        projectiles.add(projectileEntry5);
+
+        RapidFireProjectileEntity projectileEntry6 = new RapidFireProjectileEntity(ProjectileManager.getInstance().getOldProjectileType(RapidFireProjectileEntity.class), projectileInfo, this.level(), this, 15, 3);
+        projectileEntry6.addOffset(0, 1.0D, 0);
+        projectileEntry6.setProjectileScale(0.25f);
+        projectiles.add(projectileEntry6);
+
+        RapidFireProjectileEntity projectileEntry7 = new RapidFireProjectileEntity(ProjectileManager.getInstance().getOldProjectileType(RapidFireProjectileEntity.class), projectileInfo, this.level(), this, 15, 3);
+        projectileEntry7.addOffset(0, -1.0D, 0);
+        projectileEntry7.setProjectileScale(0.25f);
+        projectiles.add(projectileEntry7);
+
+        for (RapidFireProjectileEntity projectile : projectiles) {
+            projectile.setProjectileScale(1f);
+
+            // Y Offset:
+            projectile.setPos(
+                    projectile.position().x(),
+                    projectile.position().y() - this.getDimensions(Pose.STANDING).height() / 4,
+                    projectile.position().z()
+            );
+
+            // Accuracy:
+            float accuracy = 4.0F * (this.getRandom().nextFloat() - 0.5F);
+
+            // Set Velocities:
+            double d0 = target.position().x() - this.position().x() + accuracy;
+            double d1 = target.position().y() + (double) target.getEyeHeight() - 1.1F - projectile.position().y() + accuracy;
+            double d2 = target.position().z() - this.position().z() + accuracy;
+            float f1 = Mth.sqrt(LMHelperClass.convertToFloat(d0 * d0 + d2 * d2)) * 0.2F;
+            float velocity = 1.2F;
+            projectile.shoot(d0, d1 + f1, d2, velocity, 6.0F);
+            projectile.setProjectileScale(4F);
+
+            // Launch:
+            this.playSound(projectile.getLaunchSound(), 1.0F, 1.0F / (this.getRandom().nextFloat() * 0.4F + 0.8F));
+            DeferredLevelActionManager.spawnEntity(this.level(), this.blockPosition(), null, projectile);
         }
 
         super.attackRanged(target, range);
@@ -190,7 +244,7 @@ public class EntityIgnibus extends RideableCreatureEntity implements IGroupHeavy
 
         if (rider instanceof Player) {
             Player player = (Player) rider;
-            ProjectileInfo projectileInfo = ProjectileManager.getInstance().getProjectile("primeember");
+            ProjectileInfo projectileInfo = ProjectileManager.getInstance().getProjectile("scorchfireball"); // 1.15.2 parity
             if (projectileInfo == null) {
                 return;
             }
