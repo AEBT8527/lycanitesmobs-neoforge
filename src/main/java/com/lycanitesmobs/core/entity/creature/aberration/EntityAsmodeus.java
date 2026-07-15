@@ -439,10 +439,9 @@ public class EntityAsmodeus extends BaseCreatureEntity implements Enemy, IGroupH
     // ========== Ranged Attack ==========
     @Override
     public void attackRanged(Entity target, float range) {
-        for (int i = 0; i < 5; i++) {
-            this.fireProjectile(EntityDevilGatling.class, target, range, 0, new Vector3d(0, -24, 0), 4f, 2f, 8F);
-        }
-        this.attackHitscan(target, target instanceof Player ? 1 : 10);
+        // 1.15.2 parity: a single gatling projectile per attack (no burst, no hitscan).
+        this.fireProjectile(EntityDevilGatling.class, target, range, 0, new Vector3d(0, -8, 0), 1.2f, 6f, 0F);
+        super.attackRanged(target, range);
     }
 
     // ========== Devilstars ==========
@@ -471,7 +470,7 @@ public class EntityAsmodeus extends BaseCreatureEntity implements Enemy, IGroupH
         float f1 = Mth.sqrt(LMHelperClass.convertToFloat(d0 * d0 + d2 * d2)) * 0.1F;
         float velocity = 1.2F;
         projectile.shoot(d0, d1 + (double) f1, d2, velocity, 0.0F);
-        projectile.setProjectileScale(3f);
+        projectile.setProjectileScale(4F); // 1.15.2 parity
 
         // Launch:
         this.playSound(projectile.getLaunchSound(), 1.0F, 1.0F / (this.getRandom().nextFloat() * 0.4F + 0.8F));
