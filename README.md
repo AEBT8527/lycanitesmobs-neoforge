@@ -13,13 +13,23 @@ Each branch is a complete, buildable source tree for that Minecraft version. The
 
 ---
 
-## ⚠️ Credits & License
+## Why this port exists
 
-Lycanites Mobs is created by **Lycanite**; this port is built on the community **schism** source. It is an **unofficial personal port** — please respect the original author's licensing terms:
+These ports are part of a broader effort to bring the mods that large modpacks are built around onto **NeoForge**, up to **Minecraft 26.1.2** — the same effort behind the 26.1.2 ports of Citadel, Alex's Mobs and Alex's Caves. The aim is to prove out **26.1.2 NeoForge as a viable new baseline — a new standard — for modpacks**, so pack authors are not held back on older Minecraft versions.
 
-- **Keep this repository private.**
-- **Do not redistribute the compiled jars or the source.**
-- All credit for the mod's design, models, and content belongs to Lycanite and the schism contributors.
+The official Lycanites Mobs release line currently stops at **Minecraft 1.20.1**, so these ports fill a version gap rather than duplicating anything upstream.
+
+*(This is the port maintainer's motivation, not a statement on behalf of the original author.)*
+
+---
+
+## Credits & License
+
+Lycanites Mobs is created by **Lycanite (Richard Nicholson)** — [lycanitesmobs.com](https://lycanitesmobs.com) · [GitLab](https://gitlab.com/Lycanite/LycanitesMobs) · [Modrinth](https://modrinth.com/mod/lycanites-mobs). These ports are built on the community **schism**-maintained source of `0.0.9-alpha`, converted from the Forge 1.20.1 codebase.
+
+This is an **unofficial port** — not affiliated with, nor endorsed by, the original author. All credit for the mod's design, models, and content belongs to Lycanite and the schism contributors.
+
+**License: LGPL-3.0-only**, as declared by the original author. As that licence requires, these ports stay **LGPL-3.0-only**, ship the full licence text (see [`LICENSE`](LICENSE), with the GPL base it references in [`COPYING`](COPYING)), and their complete corresponding source is public in this repository.
 
 ---
 
