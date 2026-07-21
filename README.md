@@ -13,6 +13,14 @@ Each branch is a complete, buildable source tree for that Minecraft version. The
 
 ---
 
+## Why this port exists
+
+This port was done as part of a broader effort to bring the mods that large modpacks are built around onto **NeoForge for Minecraft 26.1.2** — the same effort behind the freely-licensed 26.1.2 ports of Citadel, Alex's Mobs and Alex's Caves. The aim is to prove out **26.1.2 NeoForge as a viable new baseline — a new standard — for modpacks**, so pack authors are not held back on older Minecraft versions.
+
+**Important:** unlike those GPL/LGPL-licensed mods, this Lycanites port is **not** part of that public distribution. It is a personal port, kept **private** out of respect for the original author's licensing terms (see below). The "modpack standard" goal describes the wider effort — it is **not** an invitation to redistribute this mod.
+
+---
+
 ## ⚠️ Credits & License
 
 Lycanites Mobs is created by **Lycanite**; this port is built on the community **schism** source. It is an **unofficial personal port** — please respect the original author's licensing terms:
