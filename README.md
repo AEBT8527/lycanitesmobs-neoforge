@@ -15,19 +15,21 @@ Each branch is a complete, buildable source tree for that Minecraft version. The
 
 ## Why this port exists
 
-This port was done as part of a broader effort to bring the mods that large modpacks are built around onto **NeoForge for Minecraft 26.1.2** — the same effort behind the freely-licensed 26.1.2 ports of Citadel, Alex's Mobs and Alex's Caves. The aim is to prove out **26.1.2 NeoForge as a viable new baseline — a new standard — for modpacks**, so pack authors are not held back on older Minecraft versions.
+This port was done as part of a broader effort to bring the mods that large modpacks are built around onto **NeoForge for Minecraft 26.1.2** — the same effort behind the 26.1.2 ports of Citadel, Alex's Mobs and Alex's Caves. The aim is to prove out **26.1.2 NeoForge as a viable new baseline — a new standard — for modpacks**, so pack authors are not held back on older Minecraft versions.
 
-**Important:** unlike those GPL/LGPL-licensed mods, this Lycanites port is **not** part of that public distribution. It is a personal port, kept **private** out of respect for the original author's licensing terms (see below). The "modpack standard" goal describes the wider effort — it is **not** an invitation to redistribute this mod.
+The official Lycanites Mobs release line currently stops at **Minecraft 1.20.1**, so this port fills a version gap rather than duplicating anything upstream.
+
+*(This is the port maintainer's motivation, not a statement on behalf of the original author.)*
 
 ---
 
-## ⚠️ Credits & License
+## Credits & License
 
-Lycanites Mobs is created by **Lycanite**; this port is built on the community **schism** source. It is an **unofficial personal port** — please respect the original author's licensing terms:
+Lycanites Mobs is created by **Lycanite (Richard Nicholson)** — [lycanitesmobs.com](https://lycanitesmobs.com) · [GitLab](https://gitlab.com/Lycanite/LycanitesMobs) · [Modrinth](https://modrinth.com/mod/lycanites-mobs). This port is built on the community **schism**-maintained source of `0.0.9-alpha`, converted from the Forge 1.20.1 codebase.
 
-- **Keep this repository private.**
-- **Do not redistribute the compiled jars or the source.**
-- All credit for the mod's design, models, and content belongs to Lycanite and the schism contributors.
+This is an **unofficial port** — not affiliated with, nor endorsed by, the original author. All credit for the mod's design, models, and content belongs to Lycanite and the schism contributors.
+
+**License: LGPL-3.0-only**, as declared by the original author. As that licence requires, this port stays **LGPL-3.0-only**, ships the full licence text (see [`LICENSE`](LICENSE), with the GPL base it references in [`COPYING`](COPYING)), and its complete corresponding source is public in this repository.
 
 ---
 
