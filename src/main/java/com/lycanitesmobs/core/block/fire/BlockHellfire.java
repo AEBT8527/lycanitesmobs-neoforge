@@ -3,6 +3,7 @@ package com.lycanitesmobs.core.block.fire;
 import com.lycanitesmobs.core.manager.ObjectManager;
 import com.lycanitesmobs.core.block.base.BlockFireBase;
 import com.lycanitesmobs.core.manager.ItemManager;
+import com.lycanitesmobs.core.data.tag.LycanitesBlockTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.DustParticleOptions;
@@ -68,7 +69,7 @@ public class BlockHellfire extends BlockFireBase {
 
     @Override
     public boolean isBlockFireSource(BlockState state, LevelAccessor world, BlockPos pos, Direction side) {
-        if (state.getBlock() == Blocks.OBSIDIAN)
+        if (state.is(LycanitesBlockTags.HELLFIRE_SOURCE))
             return true;
         return false;
     }

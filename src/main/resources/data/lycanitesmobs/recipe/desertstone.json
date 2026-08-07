@@ -8,14 +8,14 @@
       "item": "minecraft:sandstone",
       "data": 0
     },
-    "minecraft:cobblestone",
-    "minecraft:cobblestone",
-    "minecraft:cobblestone",
-    "minecraft:cobblestone",
-    "minecraft:cobblestone",
-    "minecraft:cobblestone",
-    "minecraft:cobblestone",
-    "minecraft:cobblestone"
+    "#lycanitesmobs:stone_crafting_base",
+    "#lycanitesmobs:stone_crafting_base",
+    "#lycanitesmobs:stone_crafting_base",
+    "#lycanitesmobs:stone_crafting_base",
+    "#lycanitesmobs:stone_crafting_base",
+    "#lycanitesmobs:stone_crafting_base",
+    "#lycanitesmobs:stone_crafting_base",
+    "#lycanitesmobs:stone_crafting_base"
   ],
   "type": "minecraft:crafting_shapeless"
 }

@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:air",
+    "minecraft:fire",
+    "minecraft:snow",
+    "minecraft:tall_grass",
+    "lycanitesmobs:scorchfire",
+    "lycanitesmobs:doomfire"
+  ]
+}

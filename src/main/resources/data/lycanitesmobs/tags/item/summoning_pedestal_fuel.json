@@ -1,0 +1,7 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:redstone",
+    "#lycanitesmobs:summoning_pedestal_dense_fuel"
+  ]
+}

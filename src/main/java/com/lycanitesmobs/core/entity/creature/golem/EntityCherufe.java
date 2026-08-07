@@ -16,6 +16,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import com.lycanitesmobs.core.entity.LycanitesMobType;
+import com.lycanitesmobs.core.data.tag.LycanitesBlockTags;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.level.gamerules.GameRules;
@@ -78,8 +79,8 @@ public class EntityCherufe extends BaseCreatureEntity implements Enemy {
             if (this.isRareVariant())
                 trailWidth = 3;
             for (int y = 0; y < trailHeight; y++) {
-                Block block = this.level().getBlockState(this.blockPosition().offset(0, y, 0)).getBlock();
-                if (block == Blocks.AIR || block == Blocks.FIRE || block == Blocks.SNOW || block == Blocks.TALL_GRASS || block == ObjectManager.getBlock("frostfire") || block == ObjectManager.getBlock("icefire")) {
+                BlockState trailState = this.level().getBlockState(this.blockPosition().offset(0, y, 0));
+                if (trailState.is(LycanitesBlockTags.CHERUFE_FIRE_TRAIL_REPLACEABLE)) {
                     if (trailWidth == 1)
                         this.level().setBlockAndUpdate(this.blockPosition().offset(0, y, 0), Blocks.FIRE.defaultBlockState());
                     else
@@ -100,8 +101,8 @@ public class EntityCherufe extends BaseCreatureEntity implements Enemy {
             for (int w = -((int) Math.ceil(this.getDimensions(Pose.STANDING).width()) + range); w <= (Math.ceil(this.getDimensions(Pose.STANDING).width()) + range); w++)
                 for (int d = -((int) Math.ceil(this.getDimensions(Pose.STANDING).width()) + range); d <= (Math.ceil(this.getDimensions(Pose.STANDING).width()) + range); d++)
                     for (int h = 0; h <= Math.ceil(this.getDimensions(Pose.STANDING).height()); h++) {
-                        Block block = this.level().getBlockState(this.blockPosition().offset(w, h, d)).getBlock();
-                        if (block == Blocks.OBSIDIAN || block == Blocks.COBBLESTONE || block == Blocks.DIRT || block == Blocks.GRAVEL || block == Blocks.SAND) {
+                        BlockState meltState = this.level().getBlockState(this.blockPosition().offset(w, h, d));
+                        if (meltState.is(LycanitesBlockTags.CHERUFE_MELTABLE)) {
                             BlockState blockState = Blocks.LAVA.defaultBlockState().setValue(BlockStateProperties.LEVEL, 5);
                             this.level().setBlockAndUpdate(this.blockPosition().offset(w, h, d), blockState);
                         }

@@ -12,11 +12,13 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import com.lycanitesmobs.core.entity.LycanitesMobType;
+import com.lycanitesmobs.core.data.tag.LycanitesBlockTags;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import org.joml.Vector3d;
 
 public class EntityWendigo extends BaseCreatureEntity implements Enemy {
@@ -60,8 +62,8 @@ public class EntityWendigo extends BaseCreatureEntity implements Enemy {
             if (this.isRareVariant())
                 trailWidth = 3;
             for (int y = 0; y < trailHeight; y++) {
-                Block block = this.level().getBlockState(this.blockPosition().offset(0, y, 0)).getBlock();
-                if (block != null && (block == Blocks.AIR || block == Blocks.FIRE || block == Blocks.SNOW || block == Blocks.TALL_GRASS || block == ObjectManager.getBlock("scorchfire") || block == ObjectManager.getBlock("doomfire"))) {
+                BlockState trailState = this.level().getBlockState(this.blockPosition().offset(0, y, 0));
+                if (trailState.is(LycanitesBlockTags.WENDIGO_FROSTFIRE_TRAIL_REPLACEABLE)) {
                     if (trailWidth == 1)
                         this.level().setBlockAndUpdate(this.blockPosition().offset(0, y, 0), ObjectManager.getBlock("frostfire").defaultBlockState());
                     else
@@ -76,8 +78,8 @@ public class EntityWendigo extends BaseCreatureEntity implements Enemy {
 
         // Freeze Water:
         if (!this.level().isClientSide() && this.isMoving() && this.tickCount % 5 == 0) {
-            Block block = this.level().getBlockState(this.blockPosition().offset(0, -1, 0)).getBlock();
-            if (block == Blocks.WATER)
+            BlockState freezeState = this.level().getBlockState(this.blockPosition().offset(0, -1, 0));
+            if (freezeState.is(LycanitesBlockTags.WENDIGO_FREEZABLE))
                 this.level().setBlockAndUpdate(this.blockPosition().offset(0, -1, 0), Blocks.ICE.defaultBlockState());
         }
 

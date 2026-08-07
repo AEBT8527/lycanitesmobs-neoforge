@@ -8,6 +8,7 @@ import com.lycanitesmobs.core.block.Material;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.EntityType;
 import com.lycanitesmobs.core.entity.LycanitesMobType;
+import com.lycanitesmobs.core.data.tag.LycanitesBlockTags;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -61,8 +62,8 @@ public class EntityAspid extends AgeableCreatureEntity {
         	if(this.isBaby())
         		trailHeight = 1;
         	for(int y = 0; y < trailHeight; y++) {
-        		Block block = this.level().getBlockState(this.blockPosition().offset(0, y, 0)).getBlock();
-        		if(block == Blocks.AIR || block == Blocks.SNOW || block == ObjectManager.getBlock("poisoncloud"))
+        		BlockState trailState = this.level().getBlockState(this.blockPosition().offset(0, y, 0));
+        		if(trailState.is(LycanitesBlockTags.ASPID_POISON_CLOUD_REPLACEABLE))
         			this.level().setBlockAndUpdate(this.blockPosition().offset(0, y, 0), ObjectManager.getBlock("poisoncloud").defaultBlockState());
         	}
 		}

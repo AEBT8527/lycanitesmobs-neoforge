@@ -1,0 +1,15 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:obsidian",
+    "minecraft:cobblestone",
+    "minecraft:cobbled_deepslate",
+    "minecraft:andesite",
+    "minecraft:basalt",
+    "minecraft:smooth_basalt",
+    "minecraft:blackstone",
+    "minecraft:dirt",
+    "minecraft:gravel",
+    "minecraft:sand"
+  ]
+}

@@ -14,6 +14,7 @@ import com.lycanitesmobs.core.manager.ProjectileManager;
 import com.lycanitesmobs.core.network.message.MessageSummoningPedestalStats;
 import com.lycanitesmobs.core.network.message.MessageSummoningPedestalSummonSet;
 import com.lycanitesmobs.core.entity.pets.SummonSet;
+import com.lycanitesmobs.core.data.tag.LycanitesItemTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
@@ -165,7 +166,7 @@ public class TileEntitySummoningPedestal extends TileEntityBase {
                     ItemStack fuelStack = this.getItem(0);
                     if (!fuelStack.isEmpty()) {
                         int refuel = this.summoningFuelAmount;
-                        if (fuelStack.getItem() == Item.byBlock(Blocks.REDSTONE_BLOCK)) {
+                        if (isDenseSummoningFuel(fuelStack)) {
                             refuel = this.summoningFuelAmount * 9;
                         }
                         fuelStack.split(1);
@@ -417,7 +418,15 @@ public class TileEntitySummoningPedestal extends TileEntityBase {
      */
     @Override
     public boolean canPlaceItem(int index, ItemStack itemStack) {
-        return itemStack.getItem() == Items.REDSTONE || itemStack.getItem() == Item.byBlock(Blocks.REDSTONE_BLOCK);
+        return isSummoningFuel(itemStack);
+    }
+
+    private static boolean isSummoningFuel(ItemStack itemStack) {
+        return itemStack.is(LycanitesItemTags.SUMMONING_PEDESTAL_FUEL) || isDenseSummoningFuel(itemStack);
+    }
+
+    private static boolean isDenseSummoningFuel(ItemStack itemStack) {
+        return itemStack.is(LycanitesItemTags.SUMMONING_PEDESTAL_DENSE_FUEL);
     }
 
     @Override

@@ -6,6 +6,7 @@ import com.lycanitesmobs.core.manager.ObjectManager;
 import com.lycanitesmobs.core.entity.effect.EffectBase;
 import com.lycanitesmobs.core.entity.base.TameableCreatureEntity;
 import com.lycanitesmobs.core.entity.goals.actions.AttackMeleeGoal;
+import com.lycanitesmobs.core.data.tag.LycanitesBlockTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.tags.DamageTypeTags;
@@ -84,7 +85,7 @@ public class EntityEechetik extends TameableCreatureEntity implements Enemy {
                         BlockPos blockPos = this.blockPosition().offset(w, h, d);
                         BlockState blockState = this.level().getBlockState(blockPos);
                         BlockState upperBlockState = this.level().getBlockState(blockPos.above());
-                        if (upperBlockState.getBlock() == Blocks.AIR && blockState.getBlock() == Blocks.DIRT) {
+                        if (upperBlockState.isAir() && blockState.is(LycanitesBlockTags.EECHETIK_MYCELIUM_CONVERTIBLE)) {
                             this.level().setBlockAndUpdate(blockPos, Blocks.MYCELIUM.defaultBlockState());
                         }
                     }

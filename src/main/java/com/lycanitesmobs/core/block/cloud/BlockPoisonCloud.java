@@ -3,6 +3,7 @@ package com.lycanitesmobs.core.block.cloud;
 import com.lycanitesmobs.core.manager.ObjectManager;
 import com.lycanitesmobs.core.block.base.BlockBase;
 import com.lycanitesmobs.core.manager.ItemManager;
+import com.lycanitesmobs.core.data.tag.LycanitesBlockTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundSource;
@@ -73,7 +74,7 @@ public class BlockPoisonCloud extends BlockBase {
      **/
     @Override
     public boolean canRemove(Level world, BlockPos pos, BlockState state, RandomSource rand) {
-        if (world.getBlockState(pos.below()).getBlock() == Blocks.MYCELIUM)
+        if (world.getBlockState(pos.below()).is(LycanitesBlockTags.POISON_CLOUD_PERSISTENT_BASE))
             return false;
         return super.canRemove(world, pos, state, rand);
     }

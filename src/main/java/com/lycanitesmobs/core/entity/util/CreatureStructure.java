@@ -6,6 +6,7 @@ import com.lycanitesmobs.core.entity.base.BaseCreatureEntity;
 import com.lycanitesmobs.core.util.ContextUtils;
 import com.lycanitesmobs.core.util.helpers.LMHelperClass;
 import com.lycanitesmobs.core.block.Material;
+import com.lycanitesmobs.core.data.tag.LycanitesBlockTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.block.Block;
@@ -229,7 +230,8 @@ public class CreatureStructure {
 		if (Material.WATER.contains(targetBlock) || Material.LAVA.contains(targetBlock)) {
 			return true;
 		}
-		if (LMHelperClass.Materials.isPlant(targetBlock)
+		if (targetState.is(LycanitesBlockTags.CREATURE_STRUCTURE_REPLACEABLE)
+				|| LMHelperClass.Materials.isPlant(targetBlock)
 				|| Material.DIRT.contains(targetBlock)
 				|| Material.GRASS.contains(targetBlock)
 				|| Material.LEAVES.contains(targetBlock)

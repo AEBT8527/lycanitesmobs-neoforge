@@ -12,6 +12,7 @@ import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import com.lycanitesmobs.core.entity.LycanitesMobType;
+import com.lycanitesmobs.core.data.tag.LycanitesBlockTags;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -62,7 +63,7 @@ public class EntityErepede extends RideableCreatureEntity {
     public float getAISpeedModifier() {
         if (this.hasRiderTarget()) {
             BlockState blockState = this.level().getBlockState(this.blockPosition().offset(0, -1, 0));
-            if (Material.SAND.contains(blockState.getBlock()) || (Material.AIR.contains(blockState.getBlock()) && Material.SAND.contains(this.level().getBlockState(this.blockPosition().offset(0, -2, 0)).getBlock())))
+            if (blockState.is(LycanitesBlockTags.EREPEDE_SPEED_BOOST) || (blockState.isAir() && this.level().getBlockState(this.blockPosition().offset(0, -2, 0)).is(LycanitesBlockTags.EREPEDE_SPEED_BOOST)))
                 return 1.8F;
         }
         return 1.0F;

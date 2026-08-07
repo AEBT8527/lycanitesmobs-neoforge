@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:oak_planks",
+    "minecraft:bookshelf",
+    "minecraft:chest",
+    "minecraft:pumpkin",
+    "minecraft:melon",
+    "minecraft:ladder",
+    "minecraft:oak_button",
+    "minecraft:oak_pressure_plate"
+  ]
+}
