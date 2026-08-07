@@ -4,7 +4,6 @@ import com.lycanitesmobs.core.entity.IGroupHeavy;
 import com.lycanitesmobs.core.entity.base.TameableCreatureEntity;
 import com.lycanitesmobs.core.entity.goals.actions.AttackMeleeGoal;
 import com.lycanitesmobs.core.entity.goals.actions.abilities.StealthGoal;
-import com.lycanitesmobs.core.block.Material;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.EntityType;
@@ -57,18 +56,7 @@ public class EntityCrusk extends TameableCreatureEntity implements IGroupHeavy {
         if (this.isTamed() && this.isSitting())
             return false;
         BlockState blockState = this.level().getBlockState(this.blockPosition().offset(0, -1, 0));
-        if (blockState.getBlock() != Blocks.AIR) {
-            if (Material.DIRT.contains(blockState.getBlock())) return true;
-            if (Material.GRASS.contains(blockState.getBlock())) return true;
-            if (Material.LEAVES.contains(blockState.getBlock())) return true;
-            if (Material.SAND.contains(blockState.getBlock())) return true;
-            if (Material.CLAY.contains(blockState.getBlock())) return true;
-            if (Material.TOP_SNOW.contains(blockState.getBlock())) return true;
-            if (Material.SNOW.contains(blockState.getBlock())) return true;
-        }
-        if (blockState.getBlock() == Blocks.NETHERRACK)
-            return true;
-        return false;
+        return WormBurrowTerrain.isBurrowable(blockState);
     }
 
 

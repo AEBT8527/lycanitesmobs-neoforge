@@ -121,13 +121,16 @@ public class EntityMakaAlpha extends AgeableCreatureEntity {
 
     @Override
     public void setTarget(LivingEntity entity) {
-    	if(entity == null && this.getTarget() instanceof EntityMakaAlpha) {
+		// Capture the old target first and only heal if the clear actually took effect -
+		// a target change can be vetoed, in which case no bond is being broken.
+		LivingEntity previousTarget = this.getTarget();
+		super.setTarget(entity);
+		if(entity == null && previousTarget instanceof EntityMakaAlpha && this.getTarget() == null) {
     		this.heal((this.getMaxHealth() - this.getHealth()) / 2);
     		this.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 20 * 20, 2, false, false));
-			this.getTarget().heal((this.getMaxHealth() - this.getHealth()) / 2);
-			this.getTarget().addEffect(new MobEffectInstance(MobEffects.REGENERATION, 20 * 20, 2, false, false));
+			previousTarget.heal((this.getMaxHealth() - this.getHealth()) / 2);
+			previousTarget.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 20 * 20, 2, false, false));
     	}
-    	super.setTarget(entity);
     }
 
 	@Override

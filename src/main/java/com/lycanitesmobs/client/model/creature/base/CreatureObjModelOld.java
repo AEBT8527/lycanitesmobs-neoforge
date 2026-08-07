@@ -234,7 +234,7 @@ public class CreatureObjModelOld extends CreatureModel {
 
         for (ObjPart part : this.wavefrontParts) {
             if (part.getName() == null) continue;
-            String partName = part.getName().toLowerCase();
+            String partName = part.getLowerName();
 
             boolean isTrophyPart = this.isTrophyPart(partName);
             if (this.bodyIsTrophy && partName.contains("body")) isTrophyPart = true;
