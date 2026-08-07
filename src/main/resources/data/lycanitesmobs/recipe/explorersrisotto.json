@@ -1,0 +1,12 @@
+{
+  "result": {
+    "id": "lycanitesmobs:explorers_risotto"
+  },
+  "ingredients": [
+    "lycanitesmobs:cooked_jouste_meat",
+    "lycanitesmobs:cooked_yale_meat",
+    "lycanitesmobs:cooked_ika_meat",
+    "lycanitesmobs:cooked_concapede_meat"
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

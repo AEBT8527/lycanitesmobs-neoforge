@@ -1,0 +1,11 @@
+{
+  "result": {
+    "id": "lycanitesmobs:moglava_bucket",
+    "count": 1
+  },
+  "ingredients": [
+    "minecraft:lava_bucket",
+    "minecraft:ghast_tear"
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

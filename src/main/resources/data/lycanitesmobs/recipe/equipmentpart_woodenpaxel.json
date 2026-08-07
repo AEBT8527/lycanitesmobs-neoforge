@@ -1,0 +1,11 @@
+{
+  "result": {
+    "id": "lycanitesmobs:equipmentpart_woodenpaxel"
+  },
+  "ingredients": [
+    "minecraft:wooden_axe",
+    "minecraft:wooden_pickaxe",
+    "minecraft:wooden_shovel"
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

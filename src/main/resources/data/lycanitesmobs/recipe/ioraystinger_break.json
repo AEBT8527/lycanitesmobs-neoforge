@@ -1,0 +1,10 @@
+{
+  "result": {
+    "id": "lycanitesmobs:waterjetcharge",
+    "count": 4
+  },
+  "ingredients": [
+    "lycanitesmobs:equipmentpart_ioraystinger"
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

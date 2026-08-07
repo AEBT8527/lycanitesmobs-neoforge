@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": "lycanitesmobs:lushstone",
+  "result": {
+    "id": "lycanitesmobs:lushstone_slab",
+    "count": 2
+  }
+}

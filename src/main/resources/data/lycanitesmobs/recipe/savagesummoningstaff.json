@@ -1,0 +1,17 @@
+{
+  "result": {
+    "id": "lycanitesmobs:savagesummoningstaff"
+  },
+  "pattern": [
+    "LLL",
+    "BSB",
+    "GGG"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "B": "minecraft:bone",
+    "S": "lycanitesmobs:summoningstaff",
+    "G": "minecraft:ghast_tear",
+    "L": "minecraft:lapis_lazuli"
+  }
+}

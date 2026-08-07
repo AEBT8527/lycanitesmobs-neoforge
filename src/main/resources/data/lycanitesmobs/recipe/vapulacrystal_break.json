@@ -1,0 +1,10 @@
+{
+  "result": {
+    "id": "lycanitesmobs:crystalshardcharge",
+    "count": 4
+  },
+  "ingredients": [
+    "lycanitesmobs:equipmentpart_vapulacrystal"
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

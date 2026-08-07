@@ -1,0 +1,16 @@
+{
+  "result": {
+    "id": "lycanitesmobs:treat_undead",
+    "count": 4
+  },
+  "pattern": [
+    " MM",
+    "BBM",
+    " MM"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "B": "minecraft:bone",
+    "M": "#lycanitesmobs:diet_detritivore"
+  }
+}

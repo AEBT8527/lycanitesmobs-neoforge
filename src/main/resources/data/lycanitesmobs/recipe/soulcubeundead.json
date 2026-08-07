@@ -1,0 +1,15 @@
+{
+  "result": {
+    "id": "lycanitesmobs:soulcubeundead"
+  },
+  "pattern": [
+    "BBB",
+    "BSB",
+    "BBB"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "S": "lycanitesmobs:soulstone_undead",
+    "B": "lycanitesmobs:shadowstone"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smoking",
+  "ingredient": "lycanitesmobs:raw_jouste_meat",
+  "result": {
+    "id": "lycanitesmobs:cooked_jouste_meat"
+  },
+  "experience": 0.35,
+  "cookingtime": 100
+}

@@ -1,0 +1,18 @@
+{
+  "result": {
+    "id": "lycanitesmobs:shadowstone",
+    "count": 9
+  },
+  "ingredients": [
+    "minecraft:obsidian",
+    "minecraft:cobblestone",
+    "minecraft:cobblestone",
+    "minecraft:cobblestone",
+    "minecraft:cobblestone",
+    "minecraft:cobblestone",
+    "minecraft:cobblestone",
+    "minecraft:cobblestone",
+    "minecraft:cobblestone"
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

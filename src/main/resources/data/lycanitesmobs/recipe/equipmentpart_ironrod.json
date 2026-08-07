@@ -1,0 +1,15 @@
+{
+  "result": {
+    "id": "lycanitesmobs:equipmentpart_ironrod"
+  },
+  "pattern": [
+    " I ",
+    " I ",
+    " R "
+  ],
+  "key": {
+    "R": "lycanitesmobs:equipmentpart_woodenrod",
+    "I": "minecraft:iron_ingot"
+  },
+  "type": "minecraft:crafting_shaped"
+}

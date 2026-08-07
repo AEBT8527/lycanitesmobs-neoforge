@@ -1,0 +1,9 @@
+{
+  "result": {
+    "id": "lycanitesmobs:cooked_arisaur_meat"
+  },
+  "ingredients": [
+    "lycanitesmobs:paleo_salad"
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

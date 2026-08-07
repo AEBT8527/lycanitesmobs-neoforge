@@ -1,0 +1,18 @@
+{
+  "result": {
+    "id": "lycanitesmobs:aberrantstone",
+    "count": 9
+  },
+  "ingredients": [
+    "minecraft:end_stone",
+    "minecraft:cobblestone",
+    "minecraft:cobblestone",
+    "minecraft:cobblestone",
+    "minecraft:cobblestone",
+    "minecraft:cobblestone",
+    "minecraft:cobblestone",
+    "minecraft:cobblestone",
+    "minecraft:cobblestone"
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

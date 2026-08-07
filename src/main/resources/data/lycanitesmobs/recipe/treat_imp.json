@@ -1,0 +1,16 @@
+{
+  "result": {
+    "id": "lycanitesmobs:treat_imp",
+    "count": 4
+  },
+  "pattern": [
+    " MM",
+    "BBM",
+    " MM"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "B": "minecraft:bone",
+    "M": "#lycanitesmobs:cooked_mutton"
+  }
+}

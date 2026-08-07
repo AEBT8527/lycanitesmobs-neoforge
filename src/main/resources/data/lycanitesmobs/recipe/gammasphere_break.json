@@ -1,0 +1,10 @@
+{
+  "result": {
+    "id": "lycanitesmobs:lightballcharge",
+    "count": 4
+  },
+  "ingredients": [
+    "lycanitesmobs:equipmentpart_gammasphere"
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

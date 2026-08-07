@@ -1,0 +1,14 @@
+{
+  "result": {
+    "id": "lycanitesmobs:equipmentpart_woodenrod"
+  },
+  "pattern": [
+    " S ",
+    " S ",
+    " S "
+  ],
+  "key": {
+    "S": "minecraft:stick"
+  },
+  "type": "minecraft:crafting_shaped"
+}

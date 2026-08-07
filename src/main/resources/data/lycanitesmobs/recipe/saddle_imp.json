@@ -1,0 +1,17 @@
+{
+  "result": {
+    "id": "lycanitesmobs:saddle_imp",
+    "count": 1
+  },
+  "pattern": [
+    "NMM",
+    "NSM",
+    "NMM"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "S": "minecraft:saddle",
+    "M": "minecraft:bone",
+    "N": "minecraft:slime_ball"
+  }
+}

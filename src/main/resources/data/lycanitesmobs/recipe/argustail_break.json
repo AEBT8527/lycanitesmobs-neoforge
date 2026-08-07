@@ -1,0 +1,10 @@
+{
+  "result": {
+    "id": "lycanitesmobs:chaosorbcharge",
+    "count": 4
+  },
+  "ingredients": [
+    "lycanitesmobs:equipmentpart_argustail"
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

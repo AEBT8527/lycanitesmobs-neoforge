@@ -1,0 +1,10 @@
+{
+  "result": {
+    "id": "lycanitesmobs:frostwebcharge",
+    "count": 4
+  },
+  "ingredients": [
+    "lycanitesmobs:equipmentpart_frostweaverleg"
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

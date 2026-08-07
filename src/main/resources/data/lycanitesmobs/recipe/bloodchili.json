@@ -1,0 +1,11 @@
+{
+  "result": {
+    "id": "lycanitesmobs:blood_chili"
+  },
+  "ingredients": [
+    "minecraft:bowl",
+    "minecraft:cocoa_beans",
+    "lycanitesmobs:cooked_chupacabra_meat"
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

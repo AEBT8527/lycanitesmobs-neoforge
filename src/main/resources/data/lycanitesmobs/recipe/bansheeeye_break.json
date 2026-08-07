@@ -1,0 +1,10 @@
+{
+  "result": {
+    "id": "lycanitesmobs:spectralboltcharge",
+    "count": 4
+  },
+  "ingredients": [
+    "lycanitesmobs:equipmentpart_bansheeeye"
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

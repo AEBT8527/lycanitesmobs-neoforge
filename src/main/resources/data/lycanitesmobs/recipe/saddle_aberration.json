@@ -1,0 +1,17 @@
+{
+  "result": {
+    "id": "lycanitesmobs:saddle_aberration",
+    "count": 1
+  },
+  "pattern": [
+    "NNN",
+    "MSM",
+    "NNN"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "S": "minecraft:saddle",
+    "M": "minecraft:ender_pearl",
+    "N": "minecraft:string"
+  }
+}

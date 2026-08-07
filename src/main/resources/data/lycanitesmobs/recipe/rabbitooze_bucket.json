@@ -1,0 +1,11 @@
+{
+  "result": {
+    "id": "lycanitesmobs:rabbitooze_bucket",
+    "count": 1
+  },
+  "ingredients": [
+    "lycanitesmobs:ooze_bucket",
+    "minecraft:ghast_tear"
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

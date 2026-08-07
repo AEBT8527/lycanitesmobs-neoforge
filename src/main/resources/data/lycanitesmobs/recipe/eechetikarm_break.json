@@ -1,0 +1,10 @@
+{
+  "result": {
+    "id": "lycanitesmobs:venomshotcharge",
+    "count": 4
+  },
+  "ingredients": [
+    "lycanitesmobs:equipmentpart_eechetikarm"
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

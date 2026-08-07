@@ -1,0 +1,16 @@
+{
+  "result": {
+    "id": "lycanitesmobs:sturdysummoningstaff"
+  },
+  "pattern": [
+    "III",
+    "ISI",
+    " O "
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "S": "lycanitesmobs:summoningstaff",
+    "I": "minecraft:iron_ingot",
+    "O": "minecraft:obsidian"
+  }
+}

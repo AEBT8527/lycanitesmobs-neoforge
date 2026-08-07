@@ -1,0 +1,10 @@
+{
+  "result": {
+    "id": "lycanitesmobs:blizzardcharge",
+    "count": 4
+  },
+  "ingredients": [
+    "lycanitesmobs:equipmentpart_serpixmandible"
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

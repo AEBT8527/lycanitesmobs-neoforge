@@ -1,0 +1,10 @@
+{
+  "result": {
+    "id": "lycanitesmobs:demonicblastcharge",
+    "count": 4
+  },
+  "ingredients": [
+    "lycanitesmobs:equipmentpart_malwratheye"
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

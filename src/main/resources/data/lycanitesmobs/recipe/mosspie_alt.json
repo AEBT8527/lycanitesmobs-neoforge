@@ -1,0 +1,11 @@
+{
+  "result": {
+    "id": "lycanitesmobs:moss_pie"
+  },
+  "ingredients": [
+    "minecraft:vine",
+    "minecraft:brown_mushroom",
+    "lycanitesmobs:cooked_aspid_meat"
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

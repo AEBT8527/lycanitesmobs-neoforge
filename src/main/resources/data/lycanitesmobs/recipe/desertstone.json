@@ -1,0 +1,21 @@
+{
+  "result": {
+    "id": "lycanitesmobs:desertstone",
+    "count": 9
+  },
+  "ingredients": [
+    {
+      "item": "minecraft:sandstone",
+      "data": 0
+    },
+    "minecraft:cobblestone",
+    "minecraft:cobblestone",
+    "minecraft:cobblestone",
+    "minecraft:cobblestone",
+    "minecraft:cobblestone",
+    "minecraft:cobblestone",
+    "minecraft:cobblestone",
+    "minecraft:cobblestone"
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

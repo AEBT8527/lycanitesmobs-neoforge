@@ -1,0 +1,10 @@
+{
+  "result": {
+    "id": "lycanitesmobs:frostboltcharge",
+    "count": 4
+  },
+  "ingredients": [
+    "lycanitesmobs:equipmentpart_reiverhorns"
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

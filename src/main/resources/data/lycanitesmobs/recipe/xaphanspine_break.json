@@ -1,0 +1,10 @@
+{
+  "result": {
+    "id": "lycanitesmobs:acidsplashcharge",
+    "count": 4
+  },
+  "ingredients": [
+    "lycanitesmobs:equipmentpart_xaphanspine"
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

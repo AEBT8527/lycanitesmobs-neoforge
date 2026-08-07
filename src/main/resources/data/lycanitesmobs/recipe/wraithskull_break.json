@@ -1,0 +1,10 @@
+{
+  "result": {
+    "id": "lycanitesmobs:hellfireballcharge",
+    "count": 4
+  },
+  "ingredients": [
+    "lycanitesmobs:equipmentpart_wraithskull"
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

@@ -1,0 +1,10 @@
+{
+  "result": {
+    "id": "lycanitesmobs:scorchfireballcharge",
+    "count": 4
+  },
+  "ingredients": [
+    "lycanitesmobs:equipmentpart_afritlung"
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

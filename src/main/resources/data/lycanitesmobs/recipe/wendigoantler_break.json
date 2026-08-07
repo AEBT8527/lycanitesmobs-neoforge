@@ -1,0 +1,10 @@
+{
+  "result": {
+    "id": "lycanitesmobs:tundracharge",
+    "count": 4
+  },
+  "ingredients": [
+    "lycanitesmobs:equipmentpart_wendigoantler"
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

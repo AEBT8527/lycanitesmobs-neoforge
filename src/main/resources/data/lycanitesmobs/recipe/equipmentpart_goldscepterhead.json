@@ -1,0 +1,15 @@
+{
+  "result": {
+    "id": "lycanitesmobs:equipmentpart_goldscepterhead"
+  },
+  "pattern": [
+    " I ",
+    "IHI",
+    " I "
+  ],
+  "key": {
+    "H": "lycanitesmobs:equipmentpart_woodenguard",
+    "I": "minecraft:gold_ingot"
+  },
+  "type": "minecraft:crafting_shaped"
+}

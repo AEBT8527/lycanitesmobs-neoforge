@@ -1,0 +1,9 @@
+{
+  "result": {
+    "id": "lycanitesmobs:cooked_concapede_meat"
+  },
+  "ingredients": [
+    "lycanitesmobs:tropical_curry"
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

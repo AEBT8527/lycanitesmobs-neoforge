@@ -1,0 +1,10 @@
+{
+  "result": {
+    "id": "lycanitesmobs:poisonraycharge",
+    "count": 4
+  },
+  "ingredients": [
+    "lycanitesmobs:equipmentpart_eyewigeye"
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

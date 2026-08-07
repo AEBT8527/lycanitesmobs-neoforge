@@ -1,0 +1,10 @@
+{
+  "result": {
+    "id": "lycanitesmobs:embercharge",
+    "count": 4
+  },
+  "ingredients": [
+    "lycanitesmobs:equipmentpart_cinderblade"
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

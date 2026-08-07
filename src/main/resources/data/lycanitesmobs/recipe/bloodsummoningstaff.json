@@ -1,0 +1,18 @@
+{
+  "result": {
+    "id": "lycanitesmobs:bloodsummoningstaff"
+  },
+  "pattern": [
+    "RRR",
+    "BSB",
+    "NDN"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "R": "minecraft:redstone",
+    "B": "minecraft:bone",
+    "S": "lycanitesmobs:summoningstaff",
+    "D": "minecraft:diamond",
+    "N": "minecraft:nether_wart"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "result": {
+    "id": "lycanitesmobs:soulkeydiamond"
+  },
+  "pattern": [
+    "DDD",
+    "DSD",
+    "DDD"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "S": "lycanitesmobs:soulkey",
+    "D": "minecraft:diamond"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "result": {
+    "id": "lycanitesmobs:doomfireballcharge",
+    "count": 4
+  },
+  "ingredients": [
+    "lycanitesmobs:equipmentpart_apollyonclaw"
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

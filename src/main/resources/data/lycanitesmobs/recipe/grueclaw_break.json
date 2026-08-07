@@ -1,0 +1,10 @@
+{
+  "result": {
+    "id": "minecraft:ender_pearl",
+    "count": 1
+  },
+  "ingredients": [
+    "lycanitesmobs:equipmentpart_grueclaw"
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

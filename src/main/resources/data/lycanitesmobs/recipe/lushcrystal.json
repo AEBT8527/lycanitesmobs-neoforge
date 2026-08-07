@@ -1,0 +1,10 @@
+{
+  "result": {
+    "id": "lycanitesmobs:lushcrystal"
+  },
+  "ingredients": [
+    "lycanitesmobs:lushstone",
+    "minecraft:glowstone"
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

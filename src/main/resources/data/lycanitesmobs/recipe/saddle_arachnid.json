@@ -1,0 +1,17 @@
+{
+  "result": {
+    "id": "lycanitesmobs:saddle_arachnid",
+    "count": 1
+  },
+  "pattern": [
+    "MMM",
+    "NSN",
+    "MMM"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "S": "minecraft:saddle",
+    "M": "minecraft:string",
+    "N": "minecraft:spider_eye"
+  }
+}

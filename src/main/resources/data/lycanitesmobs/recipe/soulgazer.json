@@ -1,0 +1,16 @@
+{
+  "result": {
+    "id": "lycanitesmobs:soulgazer"
+  },
+  "pattern": [
+    "GBG",
+    "BDB",
+    "GBG"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "B": "minecraft:bone",
+    "D": "minecraft:diamond",
+    "G": "minecraft:gold_ingot"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "result": {
+    "id": "lycanitesmobs:shadowstonebrick_wall",
+    "count": 6
+  },
+  "pattern": [
+    "BBB",
+    "BBB"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "B": "lycanitesmobs:shadowstonebrick"
+  }
+}

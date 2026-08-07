@@ -1,0 +1,10 @@
+{
+  "result": {
+    "id": "minecraft:clay_ball",
+    "count": 4
+  },
+  "ingredients": [
+    "lycanitesmobs:propolis"
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

@@ -1,0 +1,16 @@
+{
+  "result": {
+    "id": "lycanitesmobs:treat_aberration",
+    "count": 4
+  },
+  "pattern": [
+    " MM",
+    "BBM",
+    " MM"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "B": "minecraft:bone",
+    "M": "minecraft:ender_pearl"
+  }
+}

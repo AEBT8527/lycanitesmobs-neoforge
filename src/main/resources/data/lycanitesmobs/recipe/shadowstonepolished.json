@@ -1,0 +1,13 @@
+{
+  "result": {
+    "id": "lycanitesmobs:shadowstonepolished",
+    "count": 2
+  },
+  "pattern": [
+    "BB"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "B": "lycanitesmobs:shadowstone"
+  }
+}

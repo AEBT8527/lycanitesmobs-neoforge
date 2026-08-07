@@ -1,0 +1,10 @@
+{
+  "result": {
+    "id": "lycanitesmobs:equipmentforge_master"
+  },
+  "ingredients": [
+    "lycanitesmobs:equipmentforge_greater",
+    "minecraft:diamond_block"
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

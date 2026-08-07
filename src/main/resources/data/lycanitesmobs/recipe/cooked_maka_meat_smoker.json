@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smoking",
+  "ingredient": "lycanitesmobs:raw_maka_meat",
+  "result": {
+    "id": "lycanitesmobs:cooked_maka_meat"
+  },
+  "experience": 0.35,
+  "cookingtime": 100
+}

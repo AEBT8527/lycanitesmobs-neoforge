@@ -1,0 +1,10 @@
+{
+  "result": {
+    "id": "lycanitesmobs:arcanelaserstormcharge",
+    "count": 4
+  },
+  "ingredients": [
+    "lycanitesmobs:equipmentpart_naxiriseye"
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

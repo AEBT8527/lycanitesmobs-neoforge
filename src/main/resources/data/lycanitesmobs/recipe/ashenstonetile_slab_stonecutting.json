@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": "lycanitesmobs:ashenstonetile",
+  "result": {
+    "id": "lycanitesmobs:ashenstonetile_slab",
+    "count": 2
+  }
+}

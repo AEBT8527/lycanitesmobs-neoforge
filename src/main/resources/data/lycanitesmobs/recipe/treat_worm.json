@@ -1,0 +1,17 @@
+{
+  "result": {
+    "id": "lycanitesmobs:treat_worm",
+    "count": 4
+  },
+  "pattern": [
+    " PM",
+    "BBM",
+    " PM"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "B": "minecraft:bone",
+    "M": "#lycanitesmobs:cooked_beef",
+    "P": "#lycanitesmobs:cooked_pork"
+  }
+}

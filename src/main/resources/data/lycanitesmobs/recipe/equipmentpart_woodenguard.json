@@ -1,0 +1,14 @@
+{
+  "result": {
+    "id": "lycanitesmobs:equipmentpart_woodenguard"
+  },
+  "pattern": [
+    "   ",
+    "SSS",
+    "   "
+  ],
+  "key": {
+    "S": "minecraft:stick"
+  },
+  "type": "minecraft:crafting_shaped"
+}

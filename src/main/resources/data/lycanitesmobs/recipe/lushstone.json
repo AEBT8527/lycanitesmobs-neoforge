@@ -1,0 +1,18 @@
+{
+  "result": {
+    "id": "lycanitesmobs:lushstone",
+    "count": 9
+  },
+  "ingredients": [
+    "minecraft:grass",
+    "minecraft:cobblestone",
+    "minecraft:cobblestone",
+    "minecraft:cobblestone",
+    "minecraft:cobblestone",
+    "minecraft:cobblestone",
+    "minecraft:cobblestone",
+    "minecraft:cobblestone",
+    "minecraft:cobblestone"
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

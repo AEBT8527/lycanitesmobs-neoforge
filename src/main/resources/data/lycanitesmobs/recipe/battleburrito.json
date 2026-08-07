@@ -1,0 +1,13 @@
+{
+  "result": {
+    "id": "lycanitesmobs:battle_burrito"
+  },
+  "ingredients": [
+    "lycanitesmobs:cooked_kathoga_meat",
+    "lycanitesmobs:cooked_maka_meat",
+    "lycanitesmobs:cooked_arisaur_meat",
+    "lycanitesmobs:cooked_bobeko_meat",
+    "lycanitesmobs:cooked_aspid_meat"
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

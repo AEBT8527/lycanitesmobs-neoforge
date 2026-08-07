@@ -1,0 +1,10 @@
+{
+  "result": {
+    "id": "lycanitesmobs:streamcrystal"
+  },
+  "ingredients": [
+    "lycanitesmobs:streamstone",
+    "minecraft:glowstone"
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

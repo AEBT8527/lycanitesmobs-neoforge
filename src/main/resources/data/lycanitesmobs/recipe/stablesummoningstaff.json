@@ -1,0 +1,16 @@
+{
+  "result": {
+    "id": "lycanitesmobs:stablesummoningstaff"
+  },
+  "pattern": [
+    " D ",
+    " S ",
+    " G "
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "S": "lycanitesmobs:summoningstaff",
+    "D": "minecraft:diamond",
+    "G": "minecraft:gold_ingot"
+  }
+}

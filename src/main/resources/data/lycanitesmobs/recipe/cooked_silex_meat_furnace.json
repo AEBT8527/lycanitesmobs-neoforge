@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": "lycanitesmobs:raw_silex_meat",
+  "result": {
+    "id": "lycanitesmobs:cooked_silex_meat"
+  },
+  "experience": 0.35,
+  "cookingtime": 200
+}

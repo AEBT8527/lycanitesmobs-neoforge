@@ -1,0 +1,10 @@
+{
+  "result": {
+    "id": "lycanitesmobs:demoncrystal"
+  },
+  "ingredients": [
+    "lycanitesmobs:demonstone",
+    "minecraft:glowstone"
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

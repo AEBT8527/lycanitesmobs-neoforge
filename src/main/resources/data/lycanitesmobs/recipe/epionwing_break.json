@@ -1,0 +1,10 @@
+{
+  "result": {
+    "id": "lycanitesmobs:bloodleechcharge",
+    "count": 4
+  },
+  "ingredients": [
+    "lycanitesmobs:equipmentpart_epionwing"
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

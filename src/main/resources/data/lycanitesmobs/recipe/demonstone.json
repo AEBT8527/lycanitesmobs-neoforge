@@ -1,0 +1,18 @@
+{
+  "result": {
+    "id": "lycanitesmobs:demonstone",
+    "count": 9
+  },
+  "ingredients": [
+    "minecraft:nether_wart",
+    "minecraft:cobblestone",
+    "minecraft:cobblestone",
+    "minecraft:cobblestone",
+    "minecraft:cobblestone",
+    "minecraft:cobblestone",
+    "minecraft:cobblestone",
+    "minecraft:cobblestone",
+    "minecraft:cobblestone"
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

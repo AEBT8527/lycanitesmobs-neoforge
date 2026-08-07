@@ -1,0 +1,10 @@
+{
+  "result": {
+    "id": "lycanitesmobs:immunizer"
+  },
+  "ingredients": [
+    "minecraft:quartz",
+    "lycanitesmobs:poisongland"
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

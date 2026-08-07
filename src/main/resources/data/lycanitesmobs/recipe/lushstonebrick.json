@@ -1,0 +1,14 @@
+{
+  "result": {
+    "id": "lycanitesmobs:lushstonebrick",
+    "count": 4
+  },
+  "pattern": [
+    "BB",
+    "BB"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "B": "lycanitesmobs:lushstone"
+  }
+}

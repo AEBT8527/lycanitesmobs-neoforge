@@ -1,0 +1,16 @@
+{
+  "result": {
+    "id": "lycanitesmobs:saddle_aquatic",
+    "count": 1
+  },
+  "pattern": [
+    "MMM",
+    "MSM",
+    "MMM"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "S": "minecraft:saddle",
+    "M": "minecraft:lapis_lazuli"
+  }
+}

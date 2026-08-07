@@ -1,0 +1,11 @@
+{
+  "result": {
+    "id": "lycanitesmobs:amber_cake"
+  },
+  "ingredients": [
+    "minecraft:sugar",
+    "minecraft:green_dye",
+    "lycanitesmobs:cooked_jouste_meat"
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

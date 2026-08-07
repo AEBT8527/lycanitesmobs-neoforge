@@ -1,0 +1,10 @@
+{
+  "result": {
+    "id": "lycanitesmobs:whirlwindcharge",
+    "count": 4
+  },
+  "ingredients": [
+    "lycanitesmobs:equipmentpart_ventoraptorskull"
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

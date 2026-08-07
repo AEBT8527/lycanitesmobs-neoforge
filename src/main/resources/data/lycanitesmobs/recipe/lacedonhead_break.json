@@ -1,0 +1,10 @@
+{
+  "result": {
+    "id": "lycanitesmobs:aquapulsecharge",
+    "count": 4
+  },
+  "ingredients": [
+    "lycanitesmobs:equipmentpart_lacedonhead"
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

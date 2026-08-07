@@ -1,0 +1,10 @@
+{
+  "result": {
+    "id": "lycanitesmobs:quillcharge",
+    "count": 4
+  },
+  "ingredients": [
+    "lycanitesmobs:equipmentpart_bruchaquill"
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

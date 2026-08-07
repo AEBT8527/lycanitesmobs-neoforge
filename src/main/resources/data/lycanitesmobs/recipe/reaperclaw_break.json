@@ -1,0 +1,10 @@
+{
+  "result": {
+    "id": "lycanitesmobs:spectralboltcharge",
+    "count": 4
+  },
+  "ingredients": [
+    "lycanitesmobs:equipmentpart_reaperclaw"
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

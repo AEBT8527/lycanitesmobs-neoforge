@@ -1,0 +1,10 @@
+{
+  "result": {
+    "id": "lycanitesmobs:boulderblastcharge",
+    "count": 4
+  },
+  "ingredients": [
+    "lycanitesmobs:equipmentpart_geonachfist"
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

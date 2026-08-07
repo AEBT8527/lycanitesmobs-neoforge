@@ -1,0 +1,17 @@
+{
+  "result": {
+    "id": "lycanitesmobs:saddle_reptile",
+    "count": 1
+  },
+  "pattern": [
+    "MMM",
+    "MSM",
+    "NNN"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "S": "minecraft:saddle",
+    "M": "minecraft:leather",
+    "N": "minecraft:clay_ball"
+  }
+}

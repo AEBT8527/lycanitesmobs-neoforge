@@ -1,0 +1,11 @@
+{
+  "result": {
+    "id": "lycanitesmobs:seashell_maki"
+  },
+  "ingredients": [
+    "minecraft:kelp",
+    "minecraft:wheat",
+    "lycanitesmobs:cooked_ika_meat"
+  ],
+  "type": "minecraft:crafting_shapeless"
+}
