@@ -3,6 +3,7 @@ package com.lycanitesmobs.core.block.fire;
 import com.lycanitesmobs.core.manager.ObjectManager;
 import com.lycanitesmobs.core.block.base.BlockFireBase;
 import com.lycanitesmobs.core.manager.ItemManager;
+import com.lycanitesmobs.core.data.tag.LycanitesBlockTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -72,7 +73,7 @@ public class BlockSmitefire extends BlockFireBase {
 
     @Override
     public boolean isBlockFireSource(BlockState state, LevelAccessor world, BlockPos pos, Direction side) {
-        if (state.getBlock() == Blocks.DIAMOND_BLOCK || state.getBlock() == Blocks.GOLD_BLOCK) {
+        if (state.is(LycanitesBlockTags.SMITEFIRE_SOURCE)) {
             return true;
         }
         return super.isBlockFireSource(state, world, pos, side);

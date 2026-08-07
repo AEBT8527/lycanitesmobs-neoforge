@@ -8,28 +8,28 @@
       "item": "minecraft:magma_block"
     },
     {
-      "item": "minecraft:cobblestone"
+      "tag": "lycanitesmobs:stone_crafting_base"
     },
     {
-      "item": "minecraft:cobblestone"
+      "tag": "lycanitesmobs:stone_crafting_base"
     },
     {
-      "item": "minecraft:cobblestone"
+      "tag": "lycanitesmobs:stone_crafting_base"
     },
     {
-      "item": "minecraft:cobblestone"
+      "tag": "lycanitesmobs:stone_crafting_base"
     },
     {
-      "item": "minecraft:cobblestone"
+      "tag": "lycanitesmobs:stone_crafting_base"
     },
     {
-      "item": "minecraft:cobblestone"
+      "tag": "lycanitesmobs:stone_crafting_base"
     },
     {
-      "item": "minecraft:cobblestone"
+      "tag": "lycanitesmobs:stone_crafting_base"
     },
     {
-      "item": "minecraft:cobblestone"
+      "tag": "lycanitesmobs:stone_crafting_base"
     }
   ],
   "type": "minecraft:crafting_shapeless"

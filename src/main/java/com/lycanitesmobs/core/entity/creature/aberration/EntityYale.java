@@ -19,6 +19,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.EntityType;
 import com.lycanitesmobs.core.entity.LycanitesMobType;
+import com.lycanitesmobs.core.data.tag.LycanitesBlockTags;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.TransientCraftingContainer;
@@ -85,7 +86,7 @@ public class EntityYale extends AgeableCreatureEntity implements IShearable {
 
     @Override
     protected void registerGoals() {
-		this.goalSelector.addGoal(this.claimIdleGoalIndex(), new EatBlockGoal(this).setBlocks(Blocks.GRASS_BLOCK).setReplaceBlock(Blocks.DIRT));
+		this.goalSelector.addGoal(this.claimIdleGoalIndex(), new EatBlockGoal(this).setBlockTag(LycanitesBlockTags.YALE_GRAZABLE).setReplaceBlock(Blocks.DIRT));
 		super.registerGoals();
 		this.goalSelector.addGoal(this.claimDistractionGoalIndex(), new TemptGoal(this).setIncludeDiet(true));
 		this.goalSelector.addGoal(this.claimCombatGoalIndex(), new AttackMeleeGoal(this).setLongMemory(false));
@@ -223,9 +224,9 @@ public class EntityYale extends AgeableCreatureEntity implements IShearable {
         BlockState blockState = this.getCommandSenderWorld().getBlockState(new BlockPos(x, y - 1, z));
         Block block = blockState.getBlock();
         if(block != Blocks.AIR) {
-            if(Material.GRASS.contains(blockState.getBlock()))
+            if(blockState.is(LycanitesBlockTags.CREATURE_PATH_GRASS_PREFERRED))
                 return 10F;
-            if(Material.DIRT.contains(blockState.getBlock()))
+            if(blockState.is(LycanitesBlockTags.CREATURE_PATH_DIRT_PREFERRED))
                 return 7F;
         }
         return super.getBlockPathWeight(x, y, z);

@@ -12,6 +12,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import com.lycanitesmobs.core.entity.LycanitesMobType;
+import com.lycanitesmobs.core.data.tag.LycanitesBlockTags;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -78,9 +79,9 @@ public class EntityMaka extends AgeableCreatureEntity {
         BlockState blockState = this.getCommandSenderWorld().getBlockState(new BlockPos(x, y - 1, z));
         Block block = blockState.getBlock();
 		if(block != Blocks.AIR) {
-			if(Material.GRASS.contains(blockState.getBlock()))
+			if(blockState.is(LycanitesBlockTags.CREATURE_PATH_GRASS_PREFERRED))
 				return 10F;
-			if(Material.DIRT.contains(blockState.getBlock()))
+			if(blockState.is(LycanitesBlockTags.CREATURE_PATH_DIRT_PREFERRED))
 				return 7F;
 		}
         return super.getBlockPathWeight(x, y, z);

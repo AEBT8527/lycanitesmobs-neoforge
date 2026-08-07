@@ -11,6 +11,7 @@ import com.lycanitesmobs.core.manager.ProjectileManager;
 import com.lycanitesmobs.core.item.base.BaseItem;
 import com.lycanitesmobs.core.entity.pets.SummonSet;
 import com.lycanitesmobs.core.network.packet.MessageScreenRequest;
+import com.lycanitesmobs.core.data.tag.LycanitesItemTags;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -244,7 +245,7 @@ public class ItemStaffSummoning extends BaseItem {
     // ==================================================
     @Override
     public boolean isValidRepairItem(ItemStack itemStack, ItemStack repairStack) {
-        if (repairStack.getItem() == Items.GOLD_INGOT) return true;
+        if (repairStack.is(LycanitesItemTags.SUMMONING_STAFF_REPAIR)) return true;
         return super.isValidRepairItem(itemStack, repairStack);
     }
 }

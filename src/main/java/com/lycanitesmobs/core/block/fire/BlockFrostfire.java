@@ -2,6 +2,7 @@ package com.lycanitesmobs.core.block.fire;
 
 import com.lycanitesmobs.core.block.base.BlockFireBase;
 import com.lycanitesmobs.core.manager.ItemManager;
+import com.lycanitesmobs.core.data.tag.LycanitesBlockTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -50,7 +51,7 @@ public class BlockFrostfire extends BlockFireBase {
     @Override
     public boolean canCatchFire(BlockGetter world, BlockPos pos, Direction face) {
         Block block = world.getBlockState(pos).getBlock();
-        if (block == Blocks.ICE || block == Blocks.PACKED_ICE)
+        if (world.getBlockState(pos).is(LycanitesBlockTags.FROSTFIRE_CATCHABLE))
             return true;
         return false;
     }
@@ -58,7 +59,7 @@ public class BlockFrostfire extends BlockFireBase {
 
     @Override
     public boolean isBlockFireSource(BlockState state, LevelAccessor world, BlockPos pos, Direction side) {
-        if (state.getBlock() == Blocks.PACKED_ICE || state.getBlock() == Blocks.SNOW_BLOCK)
+        if (state.is(LycanitesBlockTags.FROSTFIRE_SOURCE))
             return true;
         return false;
     }
@@ -66,7 +67,7 @@ public class BlockFrostfire extends BlockFireBase {
     @Override
     public int getBlockFlammability(BlockGetter world, BlockPos pos, Direction face) {
         Block block = world.getBlockState(pos).getBlock();
-        if (block == Blocks.ICE)
+        if (world.getBlockState(pos).is(LycanitesBlockTags.FROSTFIRE_PACKABLE))
             return 20;
         return 0;
     }
@@ -78,7 +79,7 @@ public class BlockFrostfire extends BlockFireBase {
 
     @Override
     public void burnBlockReplace(Level world, BlockPos pos, int newFireAge) {
-        if (world.getBlockState(pos).getBlock() == Blocks.ICE) {
+        if (world.getBlockState(pos).is(LycanitesBlockTags.FROSTFIRE_PACKABLE)) {
             world.setBlock(pos, Blocks.PACKED_ICE.defaultBlockState(), 3);
             return;
         }
@@ -87,7 +88,7 @@ public class BlockFrostfire extends BlockFireBase {
 
     @Override
     public void burnBlockDestroy(Level world, BlockPos pos) {
-        if (world.getBlockState(pos).getBlock() == Blocks.ICE) {
+        if (world.getBlockState(pos).is(LycanitesBlockTags.FROSTFIRE_PACKABLE)) {
             world.setBlock(pos, Blocks.PACKED_ICE.defaultBlockState(), 3);
             return;
         }

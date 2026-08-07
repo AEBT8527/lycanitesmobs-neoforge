@@ -2,6 +2,7 @@ package com.lycanitesmobs.core.entity.goals.actions;
 
 import com.lycanitesmobs.core.entity.base.BaseCreatureEntity;
 import net.minecraft.core.BlockPos;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.level.block.Block;
@@ -17,6 +18,7 @@ public class EatBlockGoal extends Goal {
     // Properties:
     private Block[] blocks = new Block[0];
     private Block[] materials = new Block[0];
+    private TagKey<Block> blockTag;
     private Block replaceBlock = Blocks.AIR;
     private int eatTime = 40;
     private int eatTimeMax = 40;
@@ -29,6 +31,11 @@ public class EatBlockGoal extends Goal {
 
      public EatBlockGoal setBlocks(Block... setBlocks) {
     	this.blocks = setBlocks;
+     	return this;
+     }
+
+     public EatBlockGoal setBlockTag(TagKey<Block> tag) {
+    	this.blockTag = tag;
      	return this;
      }
 
@@ -61,6 +68,9 @@ public class EatBlockGoal extends Goal {
      }
 
      public boolean isValidBlock(BlockState blockState) {
+         if(this.blockTag != null && blockState.is(this.blockTag))
+        	 return true;
+
          for(Block edibleBlock : this.blocks) {
         	 if(edibleBlock == blockState.getBlock())
         		 return true;

@@ -15,10 +15,12 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import com.lycanitesmobs.core.entity.LycanitesMobType;
+import com.lycanitesmobs.core.data.tag.LycanitesBlockTags;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import org.joml.Vector3d;
 
 import java.util.ArrayList;
@@ -82,8 +84,8 @@ public class EntityBehemophet extends TameableCreatureEntity implements Enemy {
             if (this.isRareVariant())
                 trailWidth = 3;
             for (int y = 0; y < trailHeight; y++) {
-                Block block = this.getCommandSenderWorld().getBlockState(this.blockPosition().offset(0, y, 0)).getBlock();
-                if (block != null && (block == Blocks.AIR || block == Blocks.FIRE || block == Blocks.SNOW || block == Blocks.TALL_GRASS || block == ObjectManager.getBlock("frostfire") || block == ObjectManager.getBlock("icefire") || block == ObjectManager.getBlock("scorchfire") || block == ObjectManager.getBlock("doomfire"))) {
+                BlockState trailState = this.getCommandSenderWorld().getBlockState(this.blockPosition().offset(0, y, 0));
+                if (trailState.is(LycanitesBlockTags.BEHEMOPHET_HELLFIRE_TRAIL_REPLACEABLE)) {
                     if (trailWidth == 1)
                         this.getCommandSenderWorld().setBlockAndUpdate(this.blockPosition().offset(0, y, 0), ObjectManager.getBlock("hellfire").defaultBlockState());
                     else

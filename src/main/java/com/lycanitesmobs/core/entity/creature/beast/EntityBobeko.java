@@ -14,6 +14,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EntityType;
 import com.lycanitesmobs.core.entity.LycanitesMobType;
+import com.lycanitesmobs.core.data.tag.LycanitesBlockTags;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -54,8 +55,8 @@ public class EntityBobeko extends AgeableCreatureEntity {
             if (this.isBaby())
                 trailHeight = 1;
             for (int y = 0; y < trailHeight; y++) {
-                Block block = this.getCommandSenderWorld().getBlockState(this.blockPosition().offset(0, y, 0)).getBlock();
-                if (block == Blocks.AIR || block == Blocks.SNOW || block == ObjectManager.getBlock("frostcloud"))
+                BlockState trailState = this.getCommandSenderWorld().getBlockState(this.blockPosition().offset(0, y, 0));
+                if (trailState.is(LycanitesBlockTags.BOBEKO_FROST_CLOUD_REPLACEABLE))
                     this.getCommandSenderWorld().setBlockAndUpdate(this.blockPosition().offset(0, y, 0), ObjectManager.getBlock("frostcloud").defaultBlockState());
             }
         }
@@ -72,9 +73,9 @@ public class EntityBobeko extends AgeableCreatureEntity {
         BlockState blockState = this.getCommandSenderWorld().getBlockState(new BlockPos(x, y - 1, z));
         Block block = blockState.getBlock();
         if (block != Blocks.AIR) {
-            if (Material.GRASS.contains(blockState.getBlock()) || Material.TOP_SNOW.contains(blockState.getBlock()))
+            if (blockState.is(LycanitesBlockTags.CREATURE_PATH_GRASS_PREFERRED) || blockState.is(LycanitesBlockTags.CREATURE_PATH_SNOW_PREFERRED))
                 return 10F;
-            if (Material.DIRT.contains(blockState.getBlock()) || Material.ICE.contains(blockState.getBlock()))
+            if (blockState.is(LycanitesBlockTags.CREATURE_PATH_DIRT_PREFERRED) || blockState.is(LycanitesBlockTags.CREATURE_PATH_ICE_PREFERRED))
                 return 7F;
         }
         return super.getBlockPathWeight(x, y, z);

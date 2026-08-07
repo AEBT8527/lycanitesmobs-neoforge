@@ -1,0 +1,30 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:activator_rail",
+    "minecraft:coal_ore",
+    "minecraft:cobblestone",
+    "minecraft:detector_rail",
+    "minecraft:diamond_block",
+    "minecraft:diamond_ore",
+    "minecraft:powered_rail",
+    "minecraft:gold_block",
+    "minecraft:gold_ore",
+    "minecraft:ice",
+    "minecraft:iron_block",
+    "minecraft:iron_ore",
+    "minecraft:lapis_block",
+    "minecraft:lapis_ore",
+    "minecraft:mossy_cobblestone",
+    "minecraft:netherrack",
+    "minecraft:packed_ice",
+    "minecraft:rail",
+    "minecraft:redstone_ore",
+    "minecraft:sandstone",
+    "minecraft:red_sandstone",
+    "minecraft:stone",
+    "minecraft:stone_slab",
+    "minecraft:stone_button",
+    "minecraft:stone_pressure_plate"
+  ]
+}

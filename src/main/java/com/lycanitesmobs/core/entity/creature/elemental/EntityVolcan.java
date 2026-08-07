@@ -3,6 +3,7 @@ package com.lycanitesmobs.core.entity.creature.elemental;
 import com.lycanitesmobs.core.entity.LycanitesMobType;
 import com.lycanitesmobs.core.entity.base.TameableCreatureEntity;
 import com.lycanitesmobs.core.entity.goals.actions.AttackMeleeGoal;
+import com.lycanitesmobs.core.data.tag.LycanitesBlockTags;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.InteractionHand;
@@ -81,8 +82,8 @@ public class EntityVolcan extends TameableCreatureEntity implements Enemy {
             for (int w = -((int) Math.ceil(this.getDimensions(Pose.STANDING).width()) + range); w <= (Math.ceil(this.getDimensions(Pose.STANDING).width()) + range); w++) {
                 for (int d = -((int) Math.ceil(this.getDimensions(Pose.STANDING).width()) + range); d <= (Math.ceil(this.getDimensions(Pose.STANDING).width()) + range); d++) {
                     for (int h = -((int) Math.ceil(this.getDimensions(Pose.STANDING).height()) + range); h <= Math.ceil(this.getDimensions(Pose.STANDING).height()); h++) {
-                        Block block = this.getCommandSenderWorld().getBlockState(this.blockPosition().offset(w, h, d)).getBlock();
-                        if (block == Blocks.COBBLESTONE || block == Blocks.GRAVEL) {
+                        BlockState meltState = this.getCommandSenderWorld().getBlockState(this.blockPosition().offset(w, h, d));
+                        if (meltState.is(LycanitesBlockTags.VOLCAN_MELTABLE)) {
                             BlockState blockState = Blocks.LAVA.defaultBlockState().setValue(BlockStateProperties.LEVEL, 5);
                             this.getCommandSenderWorld().setBlockAndUpdate(this.blockPosition().offset(w, h, d), blockState);
                         }
