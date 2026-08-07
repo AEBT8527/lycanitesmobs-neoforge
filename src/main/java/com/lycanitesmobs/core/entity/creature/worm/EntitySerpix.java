@@ -10,7 +10,6 @@ import com.lycanitesmobs.core.manager.DeferredLevelActionManager;
 import com.lycanitesmobs.core.manager.ObjectManager;
 import com.lycanitesmobs.core.manager.ProjectileManager;
 import com.lycanitesmobs.core.util.helpers.LMHelperClass;
-import com.lycanitesmobs.core.block.Material;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
@@ -160,18 +159,7 @@ public class EntitySerpix extends TameableCreatureEntity implements IGroupHeavy 
         if (this.isTamed() && this.isSitting())
             return false;
         BlockState blockState = this.getCommandSenderWorld().getBlockState(this.blockPosition().offset(0, -1, 0));
-        if (blockState.getBlock() != Blocks.AIR) {
-            if (Material.DIRT.contains(blockState.getBlock())) return true;
-            if (Material.GRASS.contains(blockState.getBlock())) return true;
-            if (Material.LEAVES.contains(blockState.getBlock())) return true;
-            if (Material.SAND.contains(blockState.getBlock())) return true;
-            if (Material.CLAY.contains(blockState.getBlock())) return true;
-            if (Material.TOP_SNOW.contains(blockState.getBlock())) return true;
-            if (Material.SNOW.contains(blockState.getBlock())) return true;
-        }
-        if (blockState.getBlock() == Blocks.NETHERRACK)
-            return true;
-        return false;
+        return WormBurrowTerrain.isBurrowable(blockState);
     }
 
 

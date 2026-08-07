@@ -12,6 +12,7 @@ public class AnimationPart {
      * The name of this model part.
      **/
     public String name;
+    public boolean cullBackfaces;
     /**
      * The parent part of this model part, null if this part has no parent. This will do all animations that the parent does.
      **/
@@ -78,6 +79,10 @@ public class AnimationPart {
             this.rotationY = Float.parseFloat(jsonObject.get("rotationY").getAsString());
         if (jsonObject.has("rotationZ"))
             this.rotationZ = Float.parseFloat(jsonObject.get("rotationZ").getAsString());
+        if (jsonObject.has("cullBackfaces"))
+            this.cullBackfaces = jsonObject.get("cullBackfaces").getAsBoolean();
+        else if (jsonObject.has("cull"))
+            this.cullBackfaces = jsonObject.get("cull").getAsBoolean();
     }
 
 

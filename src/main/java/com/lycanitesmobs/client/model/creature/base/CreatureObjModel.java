@@ -338,8 +338,9 @@ public class CreatureObjModel extends CreatureModel {
         }
 
         for (ObjPart part : this.objParts) {
-            String partName = part.getName().toLowerCase();
+            String partName = part.getLowerName();
             this.currentAnimationPart = this.animationParts.get(partName);
+        part.setCullBackfaces(this.currentAnimationPart != null && this.currentAnimationPart.cullBackfaces);
             if (this.currentAnimationPart == null)
                 continue;
 
@@ -423,11 +424,12 @@ public class CreatureObjModel extends CreatureModel {
         }
 
         for (ObjPart part : this.objParts) {
-            String partName = part.getName().toLowerCase();
+            String partName = part.getLowerName();
             if (!this.canRenderPart(partName, entity, layer, renderAsTrophy))
                 continue;
 
             this.currentAnimationPart = this.animationParts.get(partName);
+        part.setCullBackfaces(this.currentAnimationPart != null && this.currentAnimationPart.cullBackfaces);
             if (this.currentAnimationPart == null) {
                 continue;
             }

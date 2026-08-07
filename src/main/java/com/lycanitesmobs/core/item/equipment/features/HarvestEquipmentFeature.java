@@ -2,7 +2,6 @@ package com.lycanitesmobs.core.item.equipment.features;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
-import com.google.common.collect.Sets;
 import com.google.gson.JsonObject;
 import com.lycanitesmobs.core.util.helpers.JSONHelper;
 import com.lycanitesmobs.core.util.helpers.LMHelperClass;
@@ -33,15 +32,13 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.Set;
+import com.lycanitesmobs.core.data.tag.LycanitesBlockTags;
+import net.minecraft.tags.BlockTags;
 
 public class HarvestEquipmentFeature extends EquipmentFeature {
     /**
      * List of blocks by harvest type. These are checked after Materials are checked.
      **/
-    private static final Set<Block> SPADE_HARVEST = Sets.newHashSet(Blocks.CLAY, Blocks.DIRT, Blocks.FARMLAND, Blocks.GRASS_BLOCK, Blocks.GRAVEL, Blocks.MYCELIUM, Blocks.SAND, Blocks.SNOW, Blocks.SOUL_SAND, Blocks.DIRT_PATH, Blocks.GRAY_CONCRETE_POWDER);
-    private static final Set<Block> PICKAXE_HARVEST = Sets.newHashSet(Blocks.ACTIVATOR_RAIL, Blocks.COAL_ORE, Blocks.COBBLESTONE, Blocks.DETECTOR_RAIL, Blocks.DIAMOND_BLOCK, Blocks.DIAMOND_ORE, Blocks.POWERED_RAIL, Blocks.GOLD_BLOCK, Blocks.GOLD_ORE, Blocks.ICE, Blocks.IRON_BLOCK, Blocks.IRON_ORE, Blocks.LAPIS_BLOCK, Blocks.LAPIS_ORE, Blocks.MOSSY_COBBLESTONE, Blocks.NETHERRACK, Blocks.PACKED_ICE, Blocks.RAIL, Blocks.REDSTONE_ORE, Blocks.SANDSTONE, Blocks.RED_SANDSTONE, Blocks.STONE, Blocks.STONE_SLAB, Blocks.STONE_BUTTON, Blocks.STONE_PRESSURE_PLATE);
-    private static final Set<Block> AXE_HARVEST = Sets.newHashSet(Blocks.OAK_PLANKS, Blocks.BOOKSHELF, Blocks.CHEST, Blocks.PUMPKIN, Blocks.MELON, Blocks.LADDER, Blocks.OAK_BUTTON, Blocks.OAK_PRESSURE_PLATE);
     private static final Map<Block, BlockState> HOE_LOOKUP = Maps.newHashMap(ImmutableMap.of(Blocks.GRASS_BLOCK, Blocks.FARMLAND.defaultBlockState(), Blocks.DIRT_PATH, Blocks.FARMLAND.defaultBlockState(), Blocks.DIRT, Blocks.FARMLAND.defaultBlockState(), Blocks.COARSE_DIRT, Blocks.DIRT.defaultBlockState()));
 
     /**
@@ -160,12 +157,13 @@ public class HarvestEquipmentFeature extends EquipmentFeature {
         Block block = blockState.getBlock();
         MapColor material = blockState.getBlock().defaultMapColor();
         // Stone:
-        if (material == MapColor.METAL || material == MapColor.STONE || PICKAXE_HARVEST.contains(block)) {
+        if (material == MapColor.METAL || material == MapColor.STONE || blockState.is(BlockTags.MINEABLE_WITH_PICKAXE)
+                || blockState.is(LycanitesBlockTags.EQUIPMENT_HARVEST_PICKAXE)) {
             return this.harvestType.equalsIgnoreCase("pickaxe");
         }
 
         // Wood:
-        if (material == MapColor.WOOD || AXE_HARVEST.contains(block)) {
+        if (material == MapColor.WOOD || blockState.is(BlockTags.MINEABLE_WITH_AXE) || blockState.is(LycanitesBlockTags.EQUIPMENT_HARVEST_AXE)) {
             return this.harvestType.equalsIgnoreCase("axe");
         }
 
@@ -175,12 +173,13 @@ public class HarvestEquipmentFeature extends EquipmentFeature {
         }
 
         // Web and Leaves:
-        if (block == Blocks.COBWEB || LMHelperClass.Materials.isLeaves(block) || LMHelperClass.Materials.isUnderwaterPlant(block)) {
+        if (blockState.is(BlockTags.SWORD_EFFICIENT) || block == Blocks.COBWEB || LMHelperClass.Materials.isLeaves(block) || LMHelperClass.Materials.isUnderwaterPlant(block)) {
             return this.harvestType.equalsIgnoreCase("sword") || this.harvestType.equalsIgnoreCase("shears");
         }
 
         // Dirt:
-        if (LMHelperClass.Materials.isDirt(block) || block == Blocks.CLAY || block == Blocks.SAND || block == Blocks.SHORT_GRASS || block == Blocks.SNOW_BLOCK || block == Blocks.SNOW || SPADE_HARVEST.contains(block)) {
+        if (LMHelperClass.Materials.isDirt(block) || blockState.is(BlockTags.MINEABLE_WITH_SHOVEL)
+                || blockState.is(LycanitesBlockTags.EQUIPMENT_HARVEST_SHOVEL)) {
             return this.harvestType.equalsIgnoreCase("shovel");
         }
 

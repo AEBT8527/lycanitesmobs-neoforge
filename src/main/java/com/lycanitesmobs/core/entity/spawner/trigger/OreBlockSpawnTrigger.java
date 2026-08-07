@@ -50,6 +50,12 @@ public class OreBlockSpawnTrigger extends BlockSpawnTrigger {
 		if(block instanceof InfestedBlock) {
 			return this.ores;
 		}
+		if(blockState.is(com.lycanitesmobs.core.data.tag.LycanitesBlockTags.SPAWNER_ORE_TRIGGER_ORES)) {
+			return this.ores;
+		}
+		if(blockState.is(com.lycanitesmobs.core.data.tag.LycanitesBlockTags.SPAWNER_ORE_TRIGGER_GEMS)) {
+			return this.gems;
+		}
 		if(block == Blocks.COAL_ORE || block == Blocks.NETHER_GOLD_ORE) {
 			return this.ores;
 		}

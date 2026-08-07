@@ -235,10 +235,11 @@ public abstract class ItemObjModel implements IAnimationModel {
 
         // Render Parts:
         for (ObjPart part : this.objParts) {
-            String partName = part.getName().toLowerCase();
+            String partName = part.getLowerName();
             if (!this.canRenderPart(partName, itemStack, layer))
                 continue;
             this.currentAnimationPart = this.animationParts.get(partName);
+        part.setCullBackfaces(this.currentAnimationPart != null && this.currentAnimationPart.cullBackfaces);
 
             // Begin Rendering Part:
             matrixStack.pushPose();
@@ -311,10 +312,11 @@ public abstract class ItemObjModel implements IAnimationModel {
      **/
     public void generateAnimationFrames(ItemStack itemStack, LayerItem layer, float loop, AnimationPart offsetObjPart) {
         for (ObjPart part : this.objParts) {
-            String partName = part.getName().toLowerCase();
+            String partName = part.getLowerName();
             if (!this.canRenderPart(partName, itemStack, layer))
                 continue;
             this.currentAnimationPart = this.animationParts.get(partName);
+        part.setCullBackfaces(this.currentAnimationPart != null && this.currentAnimationPart.cullBackfaces);
 
             // Animate:
             this.animatePart(partName, itemStack, loop);

@@ -212,10 +212,11 @@ public class ProjectileObjModel extends ProjectileModel {
     @Override
     public void generateAnimationFrames(BaseProjectileEntity entity, float time, float distance, float loop, float lookY, float lookX, float scale, int brightness) {
         for (ObjPart part : this.objParts) {
-            String partName = part.getName().toLowerCase();
+            String partName = part.getLowerName();
             //if(!this.canRenderPart(partName, entity, layer, renderAsTrophy))
             //continue;
             this.currentAnimationPart = this.animationParts.get(partName);
+        part.setCullBackfaces(this.currentAnimationPart != null && this.currentAnimationPart.cullBackfaces);
             if (this.currentAnimationPart == null)
                 continue;
 
@@ -274,10 +275,11 @@ public class ProjectileObjModel extends ProjectileModel {
 
         // Render Parts:
         for (ObjPart part : this.objParts) {
-            String partName = part.getName().toLowerCase();
+            String partName = part.getLowerName();
             if (!this.canRenderPart(partName, entity, layer))
                 continue;
             this.currentAnimationPart = this.animationParts.get(partName);
+        part.setCullBackfaces(this.currentAnimationPart != null && this.currentAnimationPart.cullBackfaces);
             if (this.currentAnimationPart == null) {
                 continue;
             }
