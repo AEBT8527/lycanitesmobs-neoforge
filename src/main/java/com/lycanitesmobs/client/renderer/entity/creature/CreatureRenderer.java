@@ -187,9 +187,13 @@ public class CreatureRenderer<T extends BaseCreatureEntity> extends MobRenderer<
         matrixStack.mulPose(com.mojang.math.Axis.YP.rotationDegrees(180.0F - renderYaw));
     }
 
+    /**
+     * Stands in for vanilla's LivingEntityRenderer scale hook, which the legacy render loop calls
+     * here and which is empty. It must stay empty: CreatureObjModel already multiplies the model
+     * scale by {@code entity.getScale()}, so scaling the pose here too squares it (a 2.5x minion
+     * rendered at 6.25x).
+     */
     protected void scaleLegacy(BaseCreatureEntity entity, PoseStack matrixStack, float partialTick) {
-        float sizeScale = entity.getScale();
-        matrixStack.scale(sizeScale, sizeScale, sizeScale);
     }
 
     protected float getBobLegacy(BaseCreatureEntity creatureEntity, float partialTicks) {

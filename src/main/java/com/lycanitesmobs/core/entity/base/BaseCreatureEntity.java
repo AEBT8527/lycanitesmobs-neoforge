@@ -2137,7 +2137,10 @@ public abstract class BaseCreatureEntity extends PathfinderMob {
         if (this.creatureSize == null) {
             this.creatureSize = this.getType().getDimensions();
         }
-        return this.creatureSize.scale(this.getScale());
+        // Vanilla's getDimensions() is final and already multiplies this by getScale(); applying
+        // the scale here too squares it (a 2.5x minion got a 6.25x hitbox). On 1.20.1 the mod
+        // overrode getDimensions() itself, which is where the scale belonged.
+        return this.creatureSize;
     }
 
     /**
