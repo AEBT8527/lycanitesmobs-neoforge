@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smoking",
+  "ingredient": {
+    "item": "lycanitesmobs:raw_aspid_meat"
+  },
+  "result": {
+    "id": "lycanitesmobs:cooked_aspid_meat"
+  },
+  "experience": 0.35,
+  "cookingtime": 100
+}

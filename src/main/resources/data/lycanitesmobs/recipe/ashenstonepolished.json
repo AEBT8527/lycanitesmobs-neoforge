@@ -1,0 +1,15 @@
+{
+  "result": {
+    "id": "lycanitesmobs:ashenstonepolished",
+    "count": 2
+  },
+  "pattern": [
+    "BB"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "B": {
+      "item": "lycanitesmobs:ashenstone"
+    }
+  }
+}

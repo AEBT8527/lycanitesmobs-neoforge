@@ -1,0 +1,14 @@
+{
+  "result": {
+    "id": "lycanitesmobs:ashencrystal"
+  },
+  "ingredients": [
+    {
+      "item": "lycanitesmobs:ashenstone"
+    },
+    {
+      "item": "minecraft:glowstone"
+    }
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

@@ -1,0 +1,11 @@
+{
+  "result": {
+    "id": "lycanitesmobs:cooked_cephignis_meat"
+  },
+  "ingredients": [
+    {
+      "item": "lycanitesmobs:searing_taco"
+    }
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

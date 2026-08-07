@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "lycanitesmobs:demonstonetile"
+  },
+  "result": {
+    "id": "lycanitesmobs:demonstonetile_slab",
+    "count": 2
+  }
+}

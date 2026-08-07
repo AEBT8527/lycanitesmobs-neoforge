@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "lycanitesmobs:streamstonetile"
+  },
+  "result": {
+    "id": "lycanitesmobs:streamstonetile_slab",
+    "count": 2
+  }
+}

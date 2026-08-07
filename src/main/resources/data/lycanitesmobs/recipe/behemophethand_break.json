@@ -1,0 +1,12 @@
+{
+  "result": {
+    "id": "lycanitesmobs:hellfireballcharge",
+    "count": 4
+  },
+  "ingredients": [
+    {
+      "item": "lycanitesmobs:equipmentpart_behemophethand"
+    }
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

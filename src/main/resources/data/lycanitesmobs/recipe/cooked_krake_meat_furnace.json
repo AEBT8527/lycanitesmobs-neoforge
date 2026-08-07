@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "lycanitesmobs:raw_krake_meat"
+  },
+  "result": {
+    "id": "lycanitesmobs:cooked_krake_meat"
+  },
+  "experience": 0.35,
+  "cookingtime": 200
+}

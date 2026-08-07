@@ -1,0 +1,11 @@
+{
+  "result": {
+    "id": "lycanitesmobs:cooked_kathoga_meat"
+  },
+  "ingredients": [
+    {
+      "item": "lycanitesmobs:devil_lasagna"
+    }
+  ],
+  "type": "minecraft:crafting_shapeless"
+}

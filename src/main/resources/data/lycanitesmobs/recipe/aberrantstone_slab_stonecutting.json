@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "lycanitesmobs:aberrantstone"
+  },
+  "result": {
+    "id": "lycanitesmobs:aberrantstone_slab",
+    "count": 2
+  }
+}

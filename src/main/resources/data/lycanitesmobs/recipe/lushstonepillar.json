@@ -1,0 +1,16 @@
+{
+  "result": {
+    "id": "lycanitesmobs:lushstonepillar",
+    "count": 2
+  },
+  "pattern": [
+    "B ",
+    "B "
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "B": {
+      "item": "lycanitesmobs:lushstone"
+    }
+  }
+}
