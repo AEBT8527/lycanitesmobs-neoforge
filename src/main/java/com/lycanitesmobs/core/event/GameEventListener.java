@@ -529,4 +529,16 @@ public class GameEventListener {
             event.setCanceled(true);
         }
     }
+
+    @SubscribeEvent
+    public void onPlayerChangedDimension(PlayerEvent.PlayerChangedDimensionEvent event) {
+        Player player = event.getEntity();
+        if (player.getCommandSenderWorld().isClientSide) {
+            return;
+        }
+        ExtendedPlayer extendedPlayer = ExtendedPlayer.getForPlayer(player);
+        if (extendedPlayer != null) {
+            extendedPlayer.sendFullStateToClient();
+        }
+    }
 }

@@ -22,6 +22,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.IdentityHashMap;
 
 public class ExtendedEntity {
     /** Serializes this attachment via the existing NBT read/write methods. */
@@ -41,7 +42,8 @@ public class ExtendedEntity {
         }
     };
 
-    protected static Map<Entity, ExtendedEntity> clientExtendedEntities = new HashMap<>();
+    // IdentityHashMap: entities are identity-compared, and this map is hit per render frame.
+    protected static Map<Entity, ExtendedEntity> clientExtendedEntities = new IdentityHashMap<>();
     protected static List<? extends String> forceRemoveEntityIds;
     protected static final int FORCE_REMOVE_ENTITY_TICKS = 40;
 
@@ -87,14 +89,8 @@ public class ExtendedEntity {
 
         // Client Side:
         if (entity.getCommandSenderWorld().isClientSide) {
-            if (clientExtendedEntities.containsKey(entity)) {
-                ExtendedEntity extendedEntity = clientExtendedEntities.get(entity);
-                extendedEntity.setEntity(entity);
-                return extendedEntity;
-            }
-            ExtendedEntity extendedEntity = new ExtendedEntity();
+            ExtendedEntity extendedEntity = clientExtendedEntities.computeIfAbsent(entity, ignored -> new ExtendedEntity());
             extendedEntity.setEntity(entity);
-            clientExtendedEntities.put(entity, extendedEntity);
             return extendedEntity;
         }
 

@@ -249,6 +249,11 @@ public abstract class TameableCreatureEntity extends AgeableCreatureEntity {
         if (this.getCommandSenderWorld().isClientSide) {
             return;
         }
+        // Re-applied buffs last much longer than a tick; refreshing every tick was pure overhead.
+        int ownerEffectUpdateInterval = 20;
+        if (this.updateTick % ownerEffectUpdateInterval != 0L) {
+            return;
+        }
         if (!this.isPet()) {
             return;
         }
