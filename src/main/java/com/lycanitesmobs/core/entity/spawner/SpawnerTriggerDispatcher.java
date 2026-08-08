@@ -62,6 +62,10 @@ public class SpawnerTriggerDispatcher {
     @SuppressWarnings("unused")
     private final List<BlockReference> mixingWatchList = new ArrayList<>();
 
+    /** Diagnostics only, see the /lm debug spawners command. **/
+    private long worldTicks = 0;
+    private long worldTriggerCalls = 0;
+
     public static SpawnerTriggerDispatcher getInstance() {
         if (INSTANCE == null) {
             INSTANCE = new SpawnerTriggerDispatcher();
@@ -143,6 +147,7 @@ public class SpawnerTriggerDispatcher {
             return;
         }
         long spawnerTick = worldExt.getLastSpawnerTime();
+        this.worldTicks++;
 
         List<BlockPos> triggerPositions = new ArrayList<>();
         for (Player player : world.players()) {
@@ -165,6 +170,7 @@ public class SpawnerTriggerDispatcher {
 
         for (BlockPos triggerPosition : triggerPositions) {
             for (WorldSpawnTrigger spawnTrigger : this.worldSpawnTriggers) {
+                this.worldTriggerCalls++;
                 spawnTrigger.onTick(world, triggerPosition, spawnerTick);
             }
         }
@@ -375,6 +381,66 @@ public class SpawnerTriggerDispatcher {
         synchronized (this.freshChunks) {
             return this.freshChunks.computeIfAbsent(dimensionId, key -> new LinkedHashSet<>());
         }
+    }
+
+    /**
+     * Reports how many triggers of each kind are registered and how much dispatch work has
+     * actually happened. Spawning here is data driven and fails silently, so being able to tell
+     * "no trigger is registered" apart from "triggers registered but never dispatched" apart from
+     * "dispatched but every spawn was rejected" is the whole diagnosis.
+     */
+    public List<String> getDispatchSummary() {
+        List<String> lines = new ArrayList<>();
+        lines.add("level ticks dispatched: " + this.worldTicks + ", world trigger calls: " + this.worldTriggerCalls);
+        lines.add("triggers: world=" + this.worldSpawnTriggers.size()
+                + " player=" + this.playerSpawnTriggers.size()
+                + " chunk=" + this.chunkSpawnTriggers.size()
+                + " block=" + this.blockSpawnTriggers.size()
+                + " kill=" + this.killSpawnTriggers.size()
+                + " entitySpawned=" + this.entitySpawnedSpawnTriggers.size()
+                + " sleep=" + this.sleepSpawnTriggers.size()
+                + " fishing=" + this.fishingSpawnTriggers.size()
+                + " explosion=" + this.explosionSpawnTriggers.size()
+                + " mix=" + this.mixBlockSpawnTriggers.size()
+                + " mobEvent=" + this.mobEventSpawnTriggers.size());
+        int pending = 0;
+        synchronized (this.freshChunks) {
+            for (Set<ChunkPos> chunks : this.freshChunks.values()) {
+                synchronized (chunks) {
+                    pending += chunks.size();
+                }
+            }
+        }
+        lines.add("fresh chunks pending: " + pending);
+        return lines;
+    }
+
+    /**
+     * Fires every world trigger once at the given position, ignoring tick rate and chance. Used by
+     * the debug command to exercise the spawn pipeline on demand instead of waiting out the
+     * tick rate, so the per-stage JSONSpawner debug output can be read immediately.
+     */
+    public List<String> debugTriggerWorldSpawners(Level world, BlockPos position) {
+        List<String> results = new ArrayList<>();
+        for (WorldSpawnTrigger spawnTrigger : this.worldSpawnTriggers) {
+            Spawner spawner = spawnTrigger.getSpawner();
+            String name = spawner.getName();
+            if (spawner.hasEventName()) {
+                continue;
+            }
+            boolean spawned;
+            try {
+                // Same entry point WorldSpawnTrigger.onTick uses, so trigger-level conditions and
+                // cooldowns are exercised too - only the tick rate and chance rolls are skipped.
+                spawned = spawnTrigger.trigger(world, null, position, 0, 0);
+            }
+            catch (Exception e) {
+                results.add(name + ": EXCEPTION " + e);
+                continue;
+            }
+            results.add(name + ": " + (spawned ? "spawned" : "nothing"));
+        }
+        return results;
     }
 
     /**

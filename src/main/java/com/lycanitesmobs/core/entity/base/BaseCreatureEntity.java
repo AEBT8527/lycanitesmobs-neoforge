@@ -1493,7 +1493,11 @@ public abstract class BaseCreatureEntity extends PathfinderMob {
         double height = this.creatureInfo.getHeight();
         AABB spawnBoundries = new AABB(pos.getX() - radius, pos.getY(), pos.getZ() - radius, pos.getX() + radius, pos.getY() + height, pos.getZ() + radius);
         boolean lycNoCollision = world.noCollision(spawnBoundries);
-        if (!this.spawnsInBlock && !lycNoCollision) {
+        // Gated on the channel being on: this branch is the common case for a failed spawn attempt
+        // and re-queries block collisions, entity collisions and noBlockCollision purely to build a
+        // log line, which is far too expensive to do on every rejected candidate position.
+        if (!this.spawnsInBlock && !lycNoCollision
+                && com.lycanitesmobs.core.data.config.ConfigDebug.INSTANCE.isEnabled("jsonspawner")) {
             StringBuilder lycShapes = new StringBuilder();
             for (net.minecraft.world.phys.shapes.VoxelShape lycShape : world.getBlockCollisions(null, spawnBoundries)) {
                 lycShapes.append(lycShape.toAabbs()).append(" | ");

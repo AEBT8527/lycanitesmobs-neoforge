@@ -24,7 +24,7 @@
       "all",
       "-c:is_swamp",
       "-minecraft:is_jungle",
-      "-c:is_dense"
+      "-c:is_dense_vegetation"
     ],
     "spawnWeight": 1,
     "dungeonWeight": 0,
