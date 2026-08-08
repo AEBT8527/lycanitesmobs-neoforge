@@ -41,6 +41,7 @@ import net.neoforged.neoforge.common.NeoForgeMod;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.IdentityHashMap;
 
 public class ExtendedPlayer {
     /** Serializes this attachment via the existing NBT read/write methods. */
@@ -61,7 +62,7 @@ public class ExtendedPlayer {
         }
     };
 
-    protected static Map<Player, ExtendedPlayer> clientExtendedPlayers = new HashMap<>();
+    protected static Map<Player, ExtendedPlayer> clientExtendedPlayers = new IdentityHashMap<>();
     protected static Map<Player, ExtendedPlayer> serverExtendedPlayers = new HashMap<>();
     protected static Map<UUID, CompoundTag> backupNBTTags = new HashMap<>();
 
@@ -146,14 +147,8 @@ public class ExtendedPlayer {
 
         // Client Side:
         if (player.level().isClientSide()) {
-            if (clientExtendedPlayers.containsKey(player)) {
-                ExtendedPlayer extendedPlayer = clientExtendedPlayers.get(player);
-                extendedPlayer.setPlayer(player);
-                return extendedPlayer;
-            }
-            ExtendedPlayer extendedPlayer = new ExtendedPlayer();
+            ExtendedPlayer extendedPlayer = clientExtendedPlayers.computeIfAbsent(player, ignored -> new ExtendedPlayer());
             extendedPlayer.setPlayer(player);
-            clientExtendedPlayers.put(player, extendedPlayer);
             return extendedPlayer;
         }
 
@@ -925,5 +920,21 @@ public class ExtendedPlayer {
         extTagCompound.put("SummonSets", nbtSummonSets);
 
         nbtTagCompound.put("LycanitesMobsPlayer", extTagCompound);
+    }
+
+    /**
+     * Re-sends everything the client needs to rebuild its view of this player. Used after a
+     * dimension change, where the client player entity is recreated and would otherwise keep
+     * an empty beastiary / summon sets / pet list until relog.
+     */
+    public void sendFullStateToClient() {
+        if (!(this.player instanceof ServerPlayer serverPlayer)) {
+            return;
+        }
+        this.beastiary.sendAllToClient();
+        this.sendAllSummonSetsToPlayer();
+        LycanitesMobs.PACKET_MANAGER.sendToPlayer(new MessageSummonSetSelection(this), serverPlayer);
+        this.sendPetEntriesToPlayer("");
+        LycanitesMobs.PACKET_MANAGER.sendToPlayer(new MessagePlayerStats(this), serverPlayer);
     }
 }
