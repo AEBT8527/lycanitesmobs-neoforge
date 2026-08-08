@@ -50,6 +50,21 @@ import net.neoforged.bus.api.SubscribeEvent;
 public class MobEventListener {
     private static MobEventListener INSTANCE;
 
+    // Resolved once - these are registry lookups and this listener runs per entity per tick.
+    private boolean tickEffectsResolved;
+    private EffectBase paralysisEffect;
+    private EffectBase weightEffect;
+    private EffectBase fearEffect;
+    private EffectBase instabilityEffect;
+    private EffectBase plagueEffect;
+    private EffectBase smitedEffect;
+    private EffectBase bleedEffect;
+    private EffectBase smoulderingEffect;
+    private EffectBase swiftswimmingEffect;
+    private EffectBase immunizationEffect;
+    private EffectBase cleansedEffect;
+
+
     private final List<RandomMobEventTrigger> randomMobEventTriggers = new ArrayList<>();
     private final List<TickMobEventTrigger> tickMobEventTriggers = new ArrayList<>();
 
@@ -211,9 +226,16 @@ public class MobEventListener {
             return;
         }
 
+        this.resolveTickEffects();
+
         this.clearNullEffects(entity);
         this.clearBlindnessForNightVision(entity);
         this.removeDisabledNausea(event, entity);
+        this.handleSwiftswimming(entity);
+
+        if (!this.hasLycanitesTickEffect(entity)) {
+            return;
+        }
 
         boolean invulnerable = this.isInvulnerable(entity);
 
@@ -226,7 +248,6 @@ public class MobEventListener {
         this.handleBleed(event, entity, invulnerable);
         this.handleSmouldering(entity, invulnerable);
 
-        this.handleSwiftswimming(entity);
         this.handleImmunization(entity);
         this.handleCleansed(entity);
     }
@@ -381,7 +402,7 @@ public class MobEventListener {
     }
 
     private void handleParalysis(LivingEntity entity, boolean invulnerable) {
-        EffectBase paralysis = ObjectManager.getEffect("paralysis");
+        EffectBase paralysis = this.paralysisEffect;
         if (paralysis != null && !invulnerable && entity.hasEffect(ObjectManager.holder(paralysis))) {
             entity.setDeltaMovement(0, entity.getDeltaMovement().y() > 0 ? 0 : entity.getDeltaMovement().y(), 0);
             entity.setOnGround(false);
@@ -389,7 +410,7 @@ public class MobEventListener {
     }
 
     private void handleWeight(LivingEntity entity, boolean invulnerable) {
-        EffectBase weight = ObjectManager.getEffect("weight");
+        EffectBase weight = this.weightEffect;
         if (weight != null && !invulnerable && entity.hasEffect(ObjectManager.holder(weight)) && !entity.hasEffect(MobEffects.DAMAGE_BOOST)) {
             if (entity.getDeltaMovement().y() > -0.2D) {
                 entity.setDeltaMovement(entity.getDeltaMovement().add(0, -0.2D, 0));
@@ -398,14 +419,14 @@ public class MobEventListener {
     }
 
     private void handleFear(LivingEntity entity, boolean invulnerable) {
-        EffectBase fear = ObjectManager.getEffect("fear");
+        EffectBase fear = this.fearEffect;
         if (fear != null && !entity.getCommandSenderWorld().isClientSide && !invulnerable && entity.hasEffect(ObjectManager.holder(fear)) && entity instanceof Player player) {
             EntityFear.spawnForPlayer(player, null);
         }
     }
 
     private void handleInstability(LivingEntity entity, boolean invulnerable) {
-        EffectBase instability = ObjectManager.getEffect("instability");
+        EffectBase instability = this.instabilityEffect;
         if (instability == null || entity.getCommandSenderWorld().isClientSide || entity instanceof IGroupBoss) {
             return;
         }
@@ -436,7 +457,7 @@ public class MobEventListener {
     }
 
     private void handlePlague(LivingEntity entity, boolean invulnerable) {
-        EffectBase plague = ObjectManager.getEffect("plague");
+        EffectBase plague = this.plagueEffect;
         if (plague == null || entity.getCommandSenderWorld().isClientSide || invulnerable || !entity.hasEffect(ObjectManager.holder(plague))) {
             return;
         }
@@ -474,7 +495,7 @@ public class MobEventListener {
     }
 
     private void handleSmited(LivingEntity entity, boolean invulnerable) {
-        EffectBase smited = ObjectManager.getEffect("smited");
+        EffectBase smited = this.smitedEffect;
         if (smited != null && !entity.getCommandSenderWorld().isClientSide && !invulnerable && entity.hasEffect(ObjectManager.holder(smited)) && entity.getCommandSenderWorld().getGameTime() % 20 == 0) {
             float brightness = LMHelperClass.getBrightness(entity);
             if (brightness > 0.5F && entity.getCommandSenderWorld().canSeeSkyFromBelowWater(entity.blockPosition())) {
@@ -484,7 +505,7 @@ public class MobEventListener {
     }
 
     private void handleBleed(EntityTickEvent.Pre event, LivingEntity entity, boolean invulnerable) {
-        EffectBase bleed = ObjectManager.getEffect("bleed");
+        EffectBase bleed = this.bleedEffect;
         if (bleed != null && !entity.getCommandSenderWorld().isClientSide && !invulnerable && entity.hasEffect(ObjectManager.holder(bleed)) && entity.getCommandSenderWorld().getGameTime() % 20 == 0 && entity.getVehicle() == null) {
             if (entity.walkDistO != entity.walkDist) {
                 entity.hurt(event.getEntity().level().damageSources().magic(), entity.getEffect(ObjectManager.holder(bleed)).getAmplifier() + 1);
@@ -493,7 +514,7 @@ public class MobEventListener {
     }
 
     private void handleSmouldering(LivingEntity entity, boolean invulnerable) {
-        EffectBase smouldering = ObjectManager.getEffect("smouldering");
+        EffectBase smouldering = this.smoulderingEffect;
         if (smouldering != null && !entity.getCommandSenderWorld().isClientSide && !invulnerable && entity.hasEffect(ObjectManager.holder(smouldering)) && entity.getCommandSenderWorld().getGameTime() % 20 == 0) {
             entity.igniteForSeconds(4 + (4 * entity.getEffect(ObjectManager.holder(smouldering)).getAmplifier()));
         }
@@ -504,7 +525,7 @@ public class MobEventListener {
             return;
         }
 
-        EffectBase swiftswimming = ObjectManager.getEffect("swiftswimming");
+        EffectBase swiftswimming = this.swiftswimmingEffect;
         if (swiftswimming == null) {
             return;
         }
@@ -534,7 +555,7 @@ public class MobEventListener {
     }
 
     private void handleImmunization(LivingEntity entity) {
-        EffectBase immunization = ObjectManager.getEffect("immunization");
+        EffectBase immunization = this.immunizationEffect;
         if (immunization == null || entity.getCommandSenderWorld().isClientSide || !entity.hasEffect(ObjectManager.holder(immunization))) {
             return;
         }
@@ -552,14 +573,14 @@ public class MobEventListener {
             entity.removeEffect(MobEffects.CONFUSION);
         }
 
-        EffectBase paralysis = ObjectManager.getEffect("paralysis");
+        EffectBase paralysis = this.paralysisEffect;
         if (paralysis != null && entity.hasEffect(ObjectManager.holder(paralysis))) {
             entity.removeEffect(ObjectManager.holder(paralysis));
         }
     }
 
     private void handleCleansed(LivingEntity entity) {
-        EffectBase cleansed = ObjectManager.getEffect("cleansed");
+        EffectBase cleansed = this.cleansedEffect;
         if (cleansed == null || entity.getCommandSenderWorld().isClientSide || !entity.hasEffect(ObjectManager.holder(cleansed))) {
             return;
         }
@@ -571,7 +592,7 @@ public class MobEventListener {
             entity.removeEffect(MobEffects.UNLUCK);
         }
 
-        EffectBase fear = ObjectManager.getEffect("fear");
+        EffectBase fear = this.fearEffect;
         if (fear != null && entity.hasEffect(ObjectManager.holder(fear))) {
             entity.removeEffect(ObjectManager.holder(fear));
         }
@@ -600,7 +621,8 @@ public class MobEventListener {
     }
 
     private void handleFearWallCollision(LivingIncomingDamageEvent event, LivingEntity target) {
-        EffectBase fear = ObjectManager.getEffect("fear");
+        this.resolveTickEffects();
+        EffectBase fear = this.fearEffect;
         if (fear != null && target.hasEffect(ObjectManager.holder(fear)) && "inWall".equals(event.getSource().getMsgId())) {
             event.setAmount(0);
             event.setCanceled(true);
@@ -662,5 +684,51 @@ public class MobEventListener {
                 "Dungeon",
                 "[BiomeDebug] World biome at " + pos + " is " + biomeId
         );
+    }
+
+    /**
+     * Effects are registered after this listener is constructed, so resolve lazily and keep
+     * retrying until at least one resolves.
+     */
+    private void resolveTickEffects() {
+        if (this.tickEffectsResolved) {
+            return;
+        }
+        this.paralysisEffect = ObjectManager.getEffect("paralysis");
+        this.weightEffect = ObjectManager.getEffect("weight");
+        this.fearEffect = ObjectManager.getEffect("fear");
+        this.instabilityEffect = ObjectManager.getEffect("instability");
+        this.plagueEffect = ObjectManager.getEffect("plague");
+        this.smitedEffect = ObjectManager.getEffect("smited");
+        this.bleedEffect = ObjectManager.getEffect("bleed");
+        this.smoulderingEffect = ObjectManager.getEffect("smouldering");
+        this.swiftswimmingEffect = ObjectManager.getEffect("swiftswimming");
+        this.immunizationEffect = ObjectManager.getEffect("immunization");
+        this.cleansedEffect = ObjectManager.getEffect("cleansed");
+        this.tickEffectsResolved = this.paralysisEffect != null || this.weightEffect != null
+                || this.fearEffect != null || this.instabilityEffect != null
+                || this.plagueEffect != null || this.smitedEffect != null
+                || this.bleedEffect != null || this.smoulderingEffect != null
+                || this.swiftswimmingEffect != null || this.immunizationEffect != null
+                || this.cleansedEffect != null;
+    }
+
+    /** Cheap gate: skip the whole per-effect block for entities carrying none of ours. */
+    private boolean hasLycanitesTickEffect(LivingEntity entity) {
+        return this.hasEffect(entity, this.paralysisEffect)
+                || this.hasEffect(entity, this.weightEffect)
+                || this.hasEffect(entity, this.fearEffect)
+                || this.hasEffect(entity, this.instabilityEffect)
+                || this.hasEffect(entity, this.plagueEffect)
+                || this.hasEffect(entity, this.smitedEffect)
+                || this.hasEffect(entity, this.bleedEffect)
+                || this.hasEffect(entity, this.smoulderingEffect)
+                || this.hasEffect(entity, this.immunizationEffect)
+                || this.hasEffect(entity, this.cleansedEffect);
+    }
+
+    private boolean hasEffect(LivingEntity entity, EffectBase effect) {
+        // EffectBase is the mod-side effect; vanilla wants a Holder<MobEffect>.
+        return effect != null && entity.hasEffect(ObjectManager.holder(effect));
     }
 }

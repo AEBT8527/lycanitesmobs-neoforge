@@ -165,10 +165,18 @@ public class SectorConnector {
 		}
 
 		// Build Entrance:
-		for(int x = startX; x <= stopX; x++) {
-			for(int y = startY; y <= stopY; y++) {
-				for(int z = startZ; z <= stopZ; z++) {
-					sectorInstance.placeBlock(worldWriter, chunkPos, new BlockPos(x, y, z), Blocks.CAVE_AIR.defaultBlockState(), this.facing, random);
+		// Clip the corridor carve to the chunk being generated; the raw span routinely
+		// crosses chunk borders and writing there forces neighbouring chunks to load.
+		int clippedStartX = Math.max(startX, chunkPos.getMinBlockX());
+		int clippedStopX = Math.min(stopX, chunkPos.getMaxBlockX());
+		int clippedStartZ = Math.max(startZ, chunkPos.getMinBlockZ());
+		int clippedStopZ = Math.min(stopZ, chunkPos.getMaxBlockZ());
+		if(clippedStartX <= clippedStopX && clippedStartZ <= clippedStopZ) {
+			for(int x = clippedStartX; x <= clippedStopX; x++) {
+				for(int y = startY; y <= stopY; y++) {
+					for(int z = clippedStartZ; z <= clippedStopZ; z++) {
+						sectorInstance.placeBlock(worldWriter, chunkPos, new BlockPos(x, y, z), Blocks.CAVE_AIR.defaultBlockState(), this.facing, random);
+					}
 				}
 			}
 		}
