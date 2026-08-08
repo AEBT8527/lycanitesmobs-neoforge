@@ -14,6 +14,7 @@ import net.minecraft.world.level.Level;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import com.lycanitesmobs.core.data.config.ConfigStatKeyAliases;
 
 public class Variant {
     // ========== Global ==========
@@ -138,7 +139,10 @@ public class Variant {
 		STAT_MULTIPLIERS = new HashMap<>();
         for(String subspeciesName : SUBSPECIES_NAMES) {
             for(String statName : CreatureStats.STAT_NAMES) {
-                STAT_MULTIPLIERS.put((subspeciesName + "-" + statName).toUpperCase(Locale.ENGLISH), ConfigCreatureSubspecies.INSTANCE.variantMultipliers.get(subspeciesName).get(statName).get());
+                STAT_MULTIPLIERS.put((subspeciesName + "-" + statName).toUpperCase(Locale.ENGLISH),
+                        ConfigStatKeyAliases.resolveCanonicalOrAlias(
+                                ConfigCreatureSubspecies.INSTANCE.variantMultipliers.get(subspeciesName).get(statName),
+                                ConfigCreatureSubspecies.INSTANCE.getLegacyRangedSpeedVariantMultiplier(subspeciesName, statName)));
             }
         }
 
