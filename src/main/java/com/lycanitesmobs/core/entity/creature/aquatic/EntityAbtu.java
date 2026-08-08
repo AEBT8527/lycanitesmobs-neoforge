@@ -140,8 +140,14 @@ public class EntityAbtu extends TameableCreatureEntity implements Enemy {
     // ==================================================
     @Override
     public void die(DamageSource par1DamageSource) {
-    	allyUpdate();
+        // Guard the not-dead -> dead transition; this override runs before super.die(),
+        // so a re-entered die() would fire the death side effect twice.
+        boolean wasDead = this.dead;
         super.die(par1DamageSource);
+        if (wasDead || !this.dead) {
+            return;
+        }
+    	allyUpdate();
     }
     
     

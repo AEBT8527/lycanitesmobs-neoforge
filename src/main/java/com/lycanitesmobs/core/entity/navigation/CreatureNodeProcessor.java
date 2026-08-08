@@ -20,6 +20,7 @@ import net.minecraft.world.level.pathfinder.*;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 import javax.annotation.Nullable;
+import net.minecraft.world.level.block.Block;
 
 public class CreatureNodeProcessor extends WalkNodeEvaluator implements ICreatureNodeProcessor {
 
@@ -198,7 +199,17 @@ public class CreatureNodeProcessor extends WalkNodeEvaluator implements ICreatur
     }
 
     protected PathType isSwimmablePathNode(int x, int y, int z) {
+        // The checks below dereference entityCreature unconditionally, so bail out here rather
+        // than NPE - the old first condition tolerated null and the ones after it did not.
+        if (this.entityCreature == null) {
+            return PathType.BLOCKED;
+        }
         BlockPos centerPos = new BlockPos(x, y, z);
+        // Hoisted out of the triple loop; these are fixed for the whole probe.
+        boolean waterDamages = this.entityCreature.waterDamage();
+        boolean lavaDamages = this.entityCreature.canBurn();
+        boolean canFreeze = this.entityCreature.canFreeze();
+        Block oozeBlock = ObjectManager.getBlock("ooze");
         for (int i = 0; i <= this.entityWidth; ++i) {
             for (int j = 0; j <= Math.min(this.entityHeight, 2); ++j) {
                 for (int k = 0; k <= this.entityDepth; ++k) {
@@ -207,7 +218,7 @@ public class CreatureNodeProcessor extends WalkNodeEvaluator implements ICreatur
                     // Block State Checks:
                     BlockState blockState = this.currentContext.getBlockState(blockPos);
 
-                    if(this.entityCreature == null || !blockState.isPathfindable(PathComputationType.WATER)) {
+                    if(!blockState.isPathfindable(PathComputationType.WATER)) {
                         if(j == y) { // Y must be water.
                             return PathType.BLOCKED;
                         }
@@ -217,17 +228,17 @@ public class CreatureNodeProcessor extends WalkNodeEvaluator implements ICreatur
                     }
 
                     // Water Damages:
-                    if (this.entityCreature.waterDamage() && blockState.getBlock() == Blocks.WATER) {
+                    if (waterDamages && blockState.getBlock() == Blocks.WATER) {
                         return PathType.BLOCKED;
                     }
 
                     // Lava Damages:
-                    if (this.entityCreature.canBurn() && blockState.getBlock() == Blocks.LAVA) {
+                    if (lavaDamages && blockState.getBlock() == Blocks.LAVA) {
                         return PathType.BLOCKED;
                     }
 
                     // Ooze Swimming (With Water Damage):
-                    if(!this.entityCreature.canFreeze() && ObjectManager.getBlock("ooze") != null && blockState.getBlock() == ObjectManager.getBlock("ooze")) {
+                    if(!canFreeze && oozeBlock != null && blockState.getBlock() == oozeBlock) {
                         return PathType.WATER;
                     }
 
@@ -236,12 +247,12 @@ public class CreatureNodeProcessor extends WalkNodeEvaluator implements ICreatur
                         FluidState fluidState = this.currentContext.level().getFluidState(blockPos);
 
                         // Water Damages:
-                        if (this.entityCreature.waterDamage() && fluidState.is(FluidTags.WATER)) {
+                        if (waterDamages && fluidState.is(FluidTags.WATER)) {
                             return PathType.BLOCKED;
                         }
 
                         // Lava Damages:
-                        if (this.entityCreature.canBurn() && fluidState.is(FluidTags.LAVA)) {
+                        if (lavaDamages && fluidState.is(FluidTags.LAVA)) {
                             return PathType.BLOCKED;
                         }
                     }
