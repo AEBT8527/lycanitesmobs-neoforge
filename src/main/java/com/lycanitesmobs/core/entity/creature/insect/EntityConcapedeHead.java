@@ -18,6 +18,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import com.lycanitesmobs.core.data.tag.LycanitesBlockTags;
 
 public class EntityConcapedeHead extends AgeableCreatureEntity {
 	
@@ -150,9 +151,9 @@ public class EntityConcapedeHead extends AgeableCreatureEntity {
         BlockState blockState = this.getCommandSenderWorld().getBlockState(new BlockPos(x, y - 1, z));
         Block block = blockState.getBlock();
         if(block != Blocks.AIR) {
-            if(Material.GRASS.contains(blockState.getBlock()))
+            if(blockState.is(LycanitesBlockTags.CREATURE_PATH_GRASS_PREFERRED))
                 return 10F;
-            if(Material.DIRT.contains(blockState.getBlock()))
+            if(blockState.is(LycanitesBlockTags.CREATURE_PATH_DIRT_PREFERRED))
                 return 7F;
         }
         return super.getBlockPathWeight(x, y, z);

@@ -24,6 +24,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.joml.Vector3d;
 
 import java.util.UUID;
+import com.lycanitesmobs.core.data.tag.LycanitesBlockTags;
 
 public class EntityConcapedeSegment extends AgeableCreatureEntity {
 
@@ -213,9 +214,9 @@ public class EntityConcapedeSegment extends AgeableCreatureEntity {
         BlockState blockState = this.getCommandSenderWorld().getBlockState(new BlockPos(x, y - 1, z));
         Block block = blockState.getBlock();
         if (block != Blocks.AIR) {
-            if (Material.GRASS.contains(blockState.getBlock()))
+            if (blockState.is(LycanitesBlockTags.CREATURE_PATH_GRASS_PREFERRED))
                 return 10F;
-            if (Material.DIRT.contains(blockState.getBlock()))
+            if (blockState.is(LycanitesBlockTags.CREATURE_PATH_DIRT_PREFERRED))
                 return 7F;
         }
         return super.getBlockPathWeight(x, y, z);

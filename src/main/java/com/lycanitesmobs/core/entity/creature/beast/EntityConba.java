@@ -162,9 +162,15 @@ public class EntityConba extends TameableCreatureEntity implements Enemy {
     // ==================================================
     @Override
     public void die(DamageSource damageSource) {
+        // Guard the not-dead -> dead transition; this override runs before super.die(),
+        // so a re-entered die() would fire the death side effect twice.
+        boolean wasDead = this.dead;
+        super.die(damageSource);
+        if (wasDead || !this.dead) {
+            return;
+        }
         if (!this.getCommandSenderWorld().isClientSide && this.vespidInfection)
             this.spawnVespidSwarm();
-        super.die(damageSource);
     }
 
     public void spawnVespidSwarm() {

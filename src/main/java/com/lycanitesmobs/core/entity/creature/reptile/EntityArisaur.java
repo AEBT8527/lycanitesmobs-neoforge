@@ -14,6 +14,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import com.lycanitesmobs.core.data.tag.LycanitesBlockTags;
 
 public class EntityArisaur extends AgeableCreatureEntity implements IGroupHeavy {
 
@@ -43,9 +44,9 @@ public class EntityArisaur extends AgeableCreatureEntity implements IGroupHeavy 
     public float getBlockPathWeight(int x, int y, int z) {
         if (this.getCommandSenderWorld().getBlockState(new BlockPos(x, y - 1, z)).getBlock() != Blocks.AIR) {
             BlockState blocState = this.getCommandSenderWorld().getBlockState(new BlockPos(x, y - 1, z));
-            if (Material.GRASS.contains(blocState.getBlock()))
+            if (blocState.is(LycanitesBlockTags.CREATURE_PATH_GRASS_PREFERRED))
                 return 10F;
-            if (Material.DIRT.contains(blocState.getBlock()))
+            if (blocState.is(LycanitesBlockTags.CREATURE_PATH_DIRT_PREFERRED))
                 return 7F;
         }
         return super.getBlockPathWeight(x, y, z);

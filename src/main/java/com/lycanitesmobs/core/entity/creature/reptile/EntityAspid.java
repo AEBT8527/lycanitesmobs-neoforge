@@ -78,9 +78,9 @@ public class EntityAspid extends AgeableCreatureEntity {
 	public float getBlockPathWeight(int x, int y, int z) {
         if(this.getCommandSenderWorld().getBlockState(new BlockPos(x, y - 1, z)).getBlock() != Blocks.AIR) {
             BlockState blockState = this.getCommandSenderWorld().getBlockState(new BlockPos(x, y - 1, z));
-            if(Material.GRASS.contains(blockState.getBlock()))
+            if(blockState.is(LycanitesBlockTags.CREATURE_PATH_GRASS_PREFERRED))
                 return 10F;
-            if(Material.DIRT.contains(blockState.getBlock()))
+            if(blockState.is(LycanitesBlockTags.CREATURE_PATH_DIRT_PREFERRED))
                 return 7F;
         }
         return super.getBlockPathWeight(x, y, z);

@@ -18,6 +18,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import com.lycanitesmobs.core.data.tag.LycanitesBlockTags;
 
 public class EntityJouste extends AgeableCreatureEntity {
     public EntityJouste(EntityType<? extends EntityJouste> entityType, Level world) {
@@ -62,11 +63,11 @@ public class EntityJouste extends AgeableCreatureEntity {
     public float getBlockPathWeight(int x, int y, int z) {
         BlockState blockState = this.getCommandSenderWorld().getBlockState(new BlockPos(x, y - 1, z));
         if (blockState.getBlock() != Blocks.AIR) {
-            if (Material.SAND.contains(blockState.getBlock()))
+            if (blockState.is(LycanitesBlockTags.CREATURE_PATH_SAND_PREFERRED))
                 return 10F;
-            if (Material.CLAY.contains(blockState.getBlock()))
+            if (blockState.is(LycanitesBlockTags.CREATURE_PATH_CLAY_PREFERRED))
                 return 7F;
-            if (Material.STONE.contains(blockState.getBlock()))
+            if (blockState.is(LycanitesBlockTags.CREATURE_PATH_STONE_PREFERRED))
                 return 5F;
         }
         return super.getBlockPathWeight(x, y, z);
