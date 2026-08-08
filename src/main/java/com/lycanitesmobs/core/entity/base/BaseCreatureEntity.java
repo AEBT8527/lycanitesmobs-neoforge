@@ -399,6 +399,9 @@ public abstract class BaseCreatureEntity extends PathfinderMob {
     /**
      * Is this mob a minion? (Minions don't drop items and other things).
      **/
+    private long packCheckTick = Long.MIN_VALUE;
+    private boolean cachedInPack = false;
+    private MutableComponent cachedFullName;
     protected boolean isMinion = false;
     /**
      * If true, this mob is temporary and will eventually despawn once the temporaryDuration is at or below 0.
@@ -1136,7 +1139,20 @@ public abstract class BaseCreatureEntity extends PathfinderMob {
     /**
      * Returns the display title of this entity.
      **/
+    @Override
+    public void setCustomName(@javax.annotation.Nullable Component name) {
+        super.setCustomName(name);
+        this.clearCachedFullName();
+        this.refreshBossHealthName();
+    }
+
     public Component getFullName() {
+        // Rebuilt from 5 translated components on every call, and it is called per frame for
+        // name tags. Cached until level/subspecies/variant/custom-name changes; callers get a
+        // copy so they cannot mutate the cached instance.
+        if (this.cachedFullName != null) {
+            return this.cachedFullName.copy();
+        }
         String nameFormatting = Component.translatable("entity.lycanitesmobs.creature.name.format").getString();
         String[] nameParts = nameFormatting.split("\\|");
         if (nameParts.length < 4 || nameFormatting.equals("entity.lycanitesmobs.creature.name.format")) {
@@ -1177,7 +1193,12 @@ public abstract class BaseCreatureEntity extends PathfinderMob {
             name.append(nameComponent);
         }
 
-        return name;
+        this.cachedFullName = name;
+        return name.copy();
+    }
+
+    private void clearCachedFullName() {
+        this.cachedFullName = null;
     }
 
     // ========== Item Drops ==========
@@ -1264,6 +1285,9 @@ public abstract class BaseCreatureEntity extends PathfinderMob {
     @Override
     public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
         super.onSyncedDataUpdated(key);
+        if (key == LEVEL || key == SUBSPECIES || key == VARIANT) {
+            this.clearCachedFullName();
+        }
     }
 
     public boolean getBoolFromDataManager(EntityDataAccessor<Boolean> key) {
@@ -2211,6 +2235,7 @@ public abstract class BaseCreatureEntity extends PathfinderMob {
      * Sets the level of this mob without refreshing stats, used when loading from NBT or from applyLevel(). If a level is changed use applyLevel() instead.
      **/
     public void setLevel(int level) {
+        this.clearCachedFullName();
         this.mobLevel = level;
         this.getEntityData().set(LEVEL, level);
     }
@@ -2369,6 +2394,7 @@ public abstract class BaseCreatureEntity extends PathfinderMob {
      * Sets the subspecies of this mob by index, if invalid, defaults to base subspecies.
      **/
     public void setSubspecies(int subspeciesIndex) {
+        this.clearCachedFullName();
         this.subspecies = this.creatureInfo.getSubspecies(subspeciesIndex);
     }
 
@@ -2384,6 +2410,7 @@ public abstract class BaseCreatureEntity extends PathfinderMob {
      * Sets the variant of this mob by index without refreshing stats, use applyVariant() if changing to a new variant. If not a valid ID or 0 it will be set to null which is for the base variant.
      **/
     public void setVariant(int variantIndex) {
+        this.clearCachedFullName();
         this.variant = this.getSubspecies().getVariant(variantIndex);
         if (this.variant != null) {
             if (this.level() instanceof net.minecraft.server.level.ServerLevel lycSrv) this.getBaseExperienceReward(lycSrv);
@@ -4619,7 +4646,19 @@ public abstract class BaseCreatureEntity extends PathfinderMob {
      * @return True if in a pack.
      */
     public boolean isInPack() {
-        return this.creatureInfo.getPackSize() <= 1 || this.countAllies(10) >= this.creatureInfo.getPackSize();
+        int packSize = this.creatureInfo.getPackSize();
+        if (packSize <= 1) {
+            return true;
+        }
+        // countAllies() is an entity-area scan and this is polled from several AI paths every
+        // tick; re-check at most every 10 ticks.
+        int packCheckInterval = 10;
+        if (this.packCheckTick != Long.MIN_VALUE && this.updateTick - this.packCheckTick < packCheckInterval) {
+            return this.cachedInPack;
+        }
+        this.cachedInPack = this.countAllies(10) >= packSize;
+        this.packCheckTick = this.updateTick;
+        return this.cachedInPack;
     }
 
     UUID getFixateUUIDBase() {

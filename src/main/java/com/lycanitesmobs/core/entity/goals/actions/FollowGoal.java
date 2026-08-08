@@ -17,8 +17,8 @@ public abstract class FollowGoal extends Goal {
     double speed = 1.0D;
     Class targetClass;
     private int updateRate;
-    double strayDistance = 4 * 4;
-    double lostDistance = 32 * 32;
+    double strayDistance = 4;
+    double lostDistance = 32;
     double behindDistance = 0;
     
 	

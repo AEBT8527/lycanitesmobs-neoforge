@@ -180,6 +180,8 @@ public class ForceGoal extends Goal {
 						(yDist * factor * 0.25D) + (entity.getDeltaMovement().y() * factor * 0.25D),
 						((zDist / xzDist) * factor) + (entity.getDeltaMovement().z() * factor)
 				);
+				// without this the server never syncs the push and the client snaps back
+				entity.hurtMarked = true;
 			}
 			if(this.dismountTargets && entity.getVehicle() != null) {
 				entity.stopRiding();
