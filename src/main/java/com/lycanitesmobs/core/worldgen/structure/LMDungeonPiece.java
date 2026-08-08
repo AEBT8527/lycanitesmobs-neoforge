@@ -19,6 +19,9 @@ import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
 
 public class LMDungeonPiece extends StructurePiece {
+    private boolean placementChecked;
+    private boolean placementAllowed;
+
 
     private String schematicName;
     private DungeonLayout layout;
@@ -129,7 +132,17 @@ public class LMDungeonPiece extends StructurePiece {
         return newLayout;
     }
 
-    private boolean canPlaceInWorld(WorldGenLevel worldGenLevel) {
+    private synchronized boolean canPlaceInWorld(WorldGenLevel worldGenLevel) {
+        // Asked once per chunk of the structure; the answer cannot change mid-generation.
+        if (this.placementChecked) {
+            return this.placementAllowed;
+        }
+        this.placementAllowed = this.computePlaceInWorld(worldGenLevel);
+        this.placementChecked = true;
+        return this.placementAllowed;
+    }
+
+    private boolean computePlaceInWorld(WorldGenLevel worldGenLevel) {
         DungeonSchematic schematic = DungeonManager.getInstance().getSchematic(this.schematicName);
         if (schematic == null || !schematic.isEnabled()) {
             return false;

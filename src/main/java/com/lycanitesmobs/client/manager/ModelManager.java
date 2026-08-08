@@ -22,6 +22,7 @@ import javax.annotation.Nullable;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
+import net.minecraft.world.entity.Entity;
 
 public class ModelManager {
     private static ModelManager INSTANCE;
@@ -197,5 +198,39 @@ public class ModelManager {
 
     public int getLoadedModelCount() {
         return creatureModels.size();
+    }
+
+    /**
+     * Drops per-entity animation state across every loaded model. Without this the modelStates
+     * maps grow for the whole session as creatures come and go.
+     */
+    public void removeEntityModelState(Entity entity) {
+        if (entity == null) {
+            return;
+        }
+        for (CreatureModel model : this.creatureModels.values()) {
+            removeEntityModelState(model, entity);
+        }
+        for (CreatureModel model : this.creatureSubspeciesModels.values()) {
+            removeEntityModelState(model, entity);
+        }
+        for (ProjectileModel model : this.projectileModels.values()) {
+            removeEntityModelState(model, entity);
+        }
+        for (ProjectileModel model : this.oldProjectileModels.values()) {
+            removeEntityModelState(model, entity);
+        }
+    }
+
+    private static void removeEntityModelState(CreatureModel model, Entity entity) {
+        if (model instanceof CreatureObjModel objModel) {
+            objModel.removeModelState(entity);
+        }
+    }
+
+    private static void removeEntityModelState(ProjectileModel model, Entity entity) {
+        if (model instanceof ProjectileObjModel objModel) {
+            objModel.removeModelState(entity);
+        }
     }
 }

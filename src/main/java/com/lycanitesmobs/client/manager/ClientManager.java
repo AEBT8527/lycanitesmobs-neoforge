@@ -52,6 +52,7 @@ public class ClientManager {
         NeoForge.EVENT_BUS.addListener(clientEventListener::onBlockOverlay);
         NeoForge.EVENT_BUS.addListener(clientEventListener::onRenderLevelStage);
         NeoForge.EVENT_BUS.addListener(clientEventListener::onPlaySound);
+        NeoForge.EVENT_BUS.addListener(clientEventListener::onEntityLeaveLevel);
     }
 
 

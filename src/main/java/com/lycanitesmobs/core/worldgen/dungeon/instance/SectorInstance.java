@@ -41,6 +41,8 @@ import java.util.Map;
 import java.util.Objects;
 
 public class SectorInstance {
+    private boolean bossRoomSpawnQueued = false;
+
     /** Sector Instances makeup an entire Dungeon Layout. **/
 
     /**
@@ -978,6 +980,13 @@ public class SectorInstance {
         }
 
         if (dimKey != null) {
+            // Chunk build can reach this sector more than once; only the first queues the boss.
+            synchronized (this) {
+                if (this.bossRoomSpawnQueued) {
+                    return;
+                }
+                this.bossRoomSpawnQueued = true;
+            }
             DeferredBossSpawner.enqueue(dimKey, bossPos, mobSpawn, radius, serverLevel);
         }
     }

@@ -387,4 +387,15 @@ public class ProjectileObjModel extends ProjectileModel {
     public void scale(float scaleX, float scaleY, float scaleZ) {
         this.currentAnimationPart.addAnimationFrame(new ModelObjAnimationFrame("scale", 1, scaleX, scaleY, scaleZ));
     }
+
+    /** Frees this entity's cached animation state; called when it leaves the client level. */
+    public void removeModelState(Entity entity) {
+        if (entity == null) {
+            return;
+        }
+        this.modelStates.remove(entity);
+        if (this.currentModelState != null && this.currentModelState.entity == entity) {
+            this.currentModelState = null;
+        }
+    }
 }
