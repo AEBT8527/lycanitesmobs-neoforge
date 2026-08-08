@@ -13,6 +13,7 @@ public class ConfigCreatureSubspecies {
 	public final ModConfigSpec.ConfigValue<Integer> baseWeight;
 	public Map<String,ModConfigSpec.ConfigValue<Integer>> commonWeights = new HashMap<>();
 	public Map<String, Map<String, ModConfigSpec.ConfigValue<Double>>> variantMultipliers = new HashMap<>();
+	public Map<String, ModConfigSpec.ConfigValue<Double>> legacyRangedSpeedVariantMultipliers = new HashMap<>();
 
 	public final ModConfigSpec.ConfigValue<Integer> uncommonDropScale;
 	public final ModConfigSpec.ConfigValue<Integer> rareDropScale;
@@ -72,6 +73,12 @@ public class ConfigCreatureSubspecies {
 						.translation(CoreConfig.CONFIG_PREFIX + "creature.variant.multipliers." + variantName + "." + statName)
 						.define("multipliers." + variantName + "." + statName, defaultValue));
 			}
+			if (ConfigStatKeyAliases.shouldDefineRangedSpeedAlias()) {
+				this.legacyRangedSpeedVariantMultipliers.put(variantName, builder
+						.comment("Deprecated migration alias for the rangedSpeed multiplier for " + variantName + " variant.")
+						.translation(CoreConfig.CONFIG_PREFIX + "creature.variant.multipliers." + variantName + "." + ConfigStatKeyAliases.BROKEN_RANGED_SPEED)
+						.define("multipliers." + variantName + "." + ConfigStatKeyAliases.BROKEN_RANGED_SPEED, 1.0D));
+			}
 			this.variantMultipliers.put(variantName, statMultipliers);
 		}
 
@@ -105,5 +112,12 @@ public class ConfigCreatureSubspecies {
 				.define("rareHealthBars", true);
 
 		builder.pop();
+	}
+
+	public ModConfigSpec.ConfigValue<Double> getLegacyRangedSpeedVariantMultiplier(String variantName, String statName) {
+		if (!ConfigStatKeyAliases.isRangedSpeed(statName)) {
+			return null;
+		}
+		return this.legacyRangedSpeedVariantMultipliers.get(variantName);
 	}
 }

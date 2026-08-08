@@ -16,7 +16,7 @@ public class CreatureStats {
 	public static final int BASE_LEVELUP_EXPERIENCE = 100;
 
 	/** A static array of all stat names used by configs, etc. **/
-	public static final List<String> STAT_NAMES = List.of("health", "defense", "armor", "speed", "damage", "attackSpeed", "ranged_speed", "effect", "amplifier", "pierce", "sight");
+	public static final List<String> STAT_NAMES = List.of("health", "defense", "armor", "speed", "damage", "attackSpeed", "rangedSpeed", "effect", "amplifier", "pierce", "sight");
 
 	/** The entity using these stats. **/
 	public BaseCreatureEntity entity;
@@ -156,7 +156,7 @@ public class CreatureStats {
 	 * @return Attack speed.
 	 */
 	public double getRangedSpeed() {
-		String statName = "ranged_speed";
+		String statName = "rangedSpeed";
 		double statValue = this.entity.getCreatureInfo().getRangedSpeed();
 
 		// Wild:

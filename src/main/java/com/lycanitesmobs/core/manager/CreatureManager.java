@@ -25,6 +25,7 @@ import java.util.*;
 import java.util.function.Consumer;
 
 import static com.lycanitesmobs.core.tabs.LMCreaturesGroup.creatureNames;
+import com.lycanitesmobs.core.data.config.ConfigStatKeyAliases;
 
 public class CreatureManager extends JSONLoader {
     private static CreatureManager INSTANCE;
@@ -253,13 +254,19 @@ public class CreatureManager extends JSONLoader {
         this.difficultyMultipliers = new HashMap<>();
         for (String difficultyName : getDifficultyNames()) {
             for (String statName : CreatureStats.STAT_NAMES) {
-                this.difficultyMultipliers.put((difficultyName + "-" + statName).toUpperCase(Locale.ENGLISH), ConfigCreatures.INSTANCE.difficultyMultipliers.get(difficultyName).get(statName).get());
+                this.difficultyMultipliers.put((difficultyName + "-" + statName).toUpperCase(Locale.ENGLISH),
+                        ConfigStatKeyAliases.resolveCanonicalOrAlias(
+                                ConfigCreatures.INSTANCE.difficultyMultipliers.get(difficultyName).get(statName),
+                                ConfigCreatures.INSTANCE.getLegacyRangedSpeedDifficultyMultiplier(difficultyName, statName)));
             }
         }
 
         // Level:
         for (String statName : CreatureStats.STAT_NAMES) {
-            this.levelMultipliers.put(statName.toUpperCase(Locale.ENGLISH), ConfigCreatures.INSTANCE.levelMultipliers.get(statName).get());
+            this.levelMultipliers.put(statName.toUpperCase(Locale.ENGLISH),
+                    ConfigStatKeyAliases.resolveCanonicalOrAlias(
+                            ConfigCreatures.INSTANCE.levelMultipliers.get(statName),
+                            ConfigCreatures.INSTANCE.getLegacyRangedSpeedLevelMultiplier(statName)));
         }
     }
 

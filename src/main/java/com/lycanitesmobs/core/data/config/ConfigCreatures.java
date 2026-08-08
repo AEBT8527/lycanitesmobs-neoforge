@@ -12,6 +12,9 @@ public class ConfigCreatures {
 
 	public Map<String, Map<String, ModConfigSpec.ConfigValue<Double>>> difficultyMultipliers = new HashMap<>();
 	public Map<String, ModConfigSpec.ConfigValue<Double>> levelMultipliers = new HashMap<>();
+	// Deprecated ranged_speed spellings, only defined when an existing config still uses them.
+	public Map<String, ModConfigSpec.ConfigValue<Double>> legacyRangedSpeedDifficultyMultipliers = new HashMap<>();
+	public ModConfigSpec.ConfigValue<Double> legacyRangedSpeedLevelMultiplier;
 
 	public final ModConfigSpec.ConfigValue<Boolean> subspeciesTags;
 	public final ModConfigSpec.ConfigValue<Integer> idleSoundTicks;
@@ -215,6 +218,13 @@ public class ConfigCreatures {
 						.translation(CoreConfig.CONFIG_PREFIX + "difficulty.multipliers." + difficultyName + "." + statName)
 						.define("difficulty.multipliers." + difficultyName + "." + statName, defaultValue));
 			}
+			if (ConfigStatKeyAliases.shouldDefineRangedSpeedAlias()) {
+				double aliasDefault = CreatureManager.getDifficultyDefault(difficultyName, ConfigStatKeyAliases.RANGED_SPEED);
+				this.legacyRangedSpeedDifficultyMultipliers.put(difficultyName, builder
+						.comment("Deprecated migration alias for rangedSpeed on " + difficultyName + " difficulty.")
+						.translation(CoreConfig.CONFIG_PREFIX + "difficulty.multipliers." + difficultyName + "." + ConfigStatKeyAliases.BROKEN_RANGED_SPEED)
+						.define("difficulty.multipliers." + difficultyName + "." + ConfigStatKeyAliases.BROKEN_RANGED_SPEED, aliasDefault));
+			}
 			this.difficultyMultipliers.put(difficultyName, statMultipliers);
 		}
 
@@ -246,6 +256,27 @@ public class ConfigCreatures {
 					.define("level.multipliers." + statName, levelValue));
 		}
 
+		if (ConfigStatKeyAliases.shouldDefineRangedSpeedAlias()) {
+			this.legacyRangedSpeedLevelMultiplier = builder
+					.comment("Deprecated migration alias for the rangedSpeed level multiplier.")
+					.translation(CoreConfig.CONFIG_PREFIX + "level.multipliers." + ConfigStatKeyAliases.BROKEN_RANGED_SPEED)
+					.define("level.multipliers." + ConfigStatKeyAliases.BROKEN_RANGED_SPEED, 0.01D);
+		}
+
 		builder.pop();
+	}
+
+	public ModConfigSpec.ConfigValue<Double> getLegacyRangedSpeedDifficultyMultiplier(String difficultyName, String statName) {
+		if (!ConfigStatKeyAliases.isRangedSpeed(statName)) {
+			return null;
+		}
+		return this.legacyRangedSpeedDifficultyMultipliers.get(difficultyName);
+	}
+
+	public ModConfigSpec.ConfigValue<Double> getLegacyRangedSpeedLevelMultiplier(String statName) {
+		if (!ConfigStatKeyAliases.isRangedSpeed(statName)) {
+			return null;
+		}
+		return this.legacyRangedSpeedLevelMultiplier;
 	}
 }
