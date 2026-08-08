@@ -3,10 +3,7 @@ package com.lycanitesmobs.client.model.creature.quadruped;
 import com.lycanitesmobs.LycanitesMobs;
 import com.lycanitesmobs.client.model.template.ModelTemplateQuadruped;
 import net.minecraft.world.entity.LivingEntity;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
-@OnlyIn(Dist.CLIENT)
 public class ModelChupacabra extends ModelTemplateQuadruped {
 
     public ModelChupacabra() {

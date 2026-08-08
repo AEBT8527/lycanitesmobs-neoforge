@@ -10,8 +10,6 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
 public class EntityHellfireOrb extends BaseProjectileEntity {
 
@@ -97,7 +95,6 @@ public class EntityHellfireOrb extends BaseProjectileEntity {
         return 1.0F;
     }
 
-    @OnlyIn(Dist.CLIENT)
     public int getBrightnessForRender() {
         return 15728880;
     }

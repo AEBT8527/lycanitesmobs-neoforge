@@ -9,8 +9,6 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.player.Player;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
 /**
  * Client-side handler for fear visual effects.
@@ -38,7 +36,6 @@ import net.neoforged.api.distmarker.OnlyIn;
  * attack/decay lerp speeds. Red-dominant creature texture pixels glow fullbright
  * via the {@code FearRedGlow} shader uniform, scaling with overall darkness.
  */
-@OnlyIn(Dist.CLIENT)
 public class FearVisualHandler {
 
     private static float currentBlockDim = 0.0F;

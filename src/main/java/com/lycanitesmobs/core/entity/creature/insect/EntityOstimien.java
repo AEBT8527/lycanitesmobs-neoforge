@@ -13,8 +13,6 @@ import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
 public class EntityOstimien extends TameableCreatureEntity {
     
@@ -137,7 +135,6 @@ public class EntityOstimien extends TameableCreatureEntity {
     // ==================================================
     //                       Visuals
     // ==================================================
-    @OnlyIn(Dist.CLIENT)
     @Override
     public boolean isInvisibleTo(Player player) {
     	if(this.isTamed() && this.getOwner() == player)

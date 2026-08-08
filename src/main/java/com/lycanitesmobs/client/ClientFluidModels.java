@@ -4,8 +4,6 @@ import com.lycanitesmobs.core.block.fluid.type.BaseFluidType;
 import com.lycanitesmobs.core.manager.FluidManager;
 import net.minecraft.client.renderer.block.FluidModel;
 import net.minecraft.client.resources.model.sprite.Material;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.client.event.RegisterFluidModelsEvent;
 import net.neoforged.neoforge.client.event.RegisterSpecialModelRendererEvent;
 import net.neoforged.neoforge.client.fluid.FluidTintSources;
@@ -14,7 +12,6 @@ import net.neoforged.neoforge.client.fluid.FluidTintSources;
  * 26.x: fluid still/flowing textures are no longer supplied through
  * IClientFluidTypeExtensions; they are fluid models registered on the mod bus.
  */
-@OnlyIn(Dist.CLIENT)
 public class ClientFluidModels {
 
     public static void onRegisterItemTintSources(net.neoforged.neoforge.client.event.RegisterColorHandlersEvent.ItemTintSources event) {

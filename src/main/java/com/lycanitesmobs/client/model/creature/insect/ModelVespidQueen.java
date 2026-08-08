@@ -3,10 +3,7 @@ package com.lycanitesmobs.client.model.creature.insect;
 import com.lycanitesmobs.LycanitesMobs;
 import com.lycanitesmobs.client.model.template.ModelTemplateInsect;
 
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
-@OnlyIn(Dist.CLIENT)
 public class ModelVespidQueen extends ModelTemplateInsect {
 
     public ModelVespidQueen() {

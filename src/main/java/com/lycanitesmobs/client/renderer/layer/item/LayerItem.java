@@ -3,15 +3,12 @@ package com.lycanitesmobs.client.renderer.layer.item;
 import com.lycanitesmobs.client.renderer.item.IItemModelRenderer;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@OnlyIn(Dist.CLIENT)
 public class LayerItem {
     public IItemModelRenderer renderer;
     public String name;

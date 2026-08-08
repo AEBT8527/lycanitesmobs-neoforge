@@ -9,11 +9,8 @@ import com.lycanitesmobs.client.renderer.layer.creature.LayerCreatureEffect;
 import com.lycanitesmobs.core.entity.base.BaseCreatureEntity;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import org.joml.Vector4f;
 
-@OnlyIn(Dist.CLIENT)
 public class ModelAegis extends ModelTemplateElemental {
 
     // ==================================================

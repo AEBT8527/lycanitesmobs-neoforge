@@ -2,10 +2,7 @@ package com.lycanitesmobs.client.model.creature.quadruped;
 
 import com.lycanitesmobs.LycanitesMobs;
 import com.lycanitesmobs.client.model.template.ModelTemplateQuadruped;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
-@OnlyIn(Dist.CLIENT)
 public class ModelMaka extends ModelTemplateQuadruped {
 
     public ModelMaka() {

@@ -35,8 +35,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import org.joml.Vector3d;
 
 import java.util.ArrayList;
@@ -123,7 +121,6 @@ public class EntityRahovart extends BaseCreatureEntity implements Enemy, IGroupH
     /**
      * Returns a larger bounding box for rendering this large entity.
      **/
-    @OnlyIn(Dist.CLIENT)
     public AABB getBoundingBoxForCulling() {
         return this.getBoundingBox().inflate(200, 50, 200).move(0, -25, 0);
     }
@@ -738,7 +735,6 @@ public class EntityRahovart extends BaseCreatureEntity implements Enemy, IGroupH
         return 1.0F;
     }
 
-    @OnlyIn(Dist.CLIENT)
     public int getBrightnessForRender() {
         return 15728880;
     }

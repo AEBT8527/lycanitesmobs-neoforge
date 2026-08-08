@@ -24,8 +24,6 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraft.world.ticks.TickPriority;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -107,7 +105,6 @@ public class BlockBase extends Block implements BlockTypeGetter {
         return Component.translatable(this.lycDescriptionId());
     }
 
-    @OnlyIn(Dist.CLIENT)
         public void appendHoverTextLegacy(ItemStack stack, net.minecraft.world.item.Item.TooltipContext world, List<Component> tooltip, TooltipFlag flag) {
         tooltip.add(this.getDescription(stack, world));
     }

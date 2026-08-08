@@ -5,10 +5,7 @@ import com.lycanitesmobs.client.model.template.ModelTemplateQuadruped;
 import com.lycanitesmobs.core.entity.base.BaseCreatureEntity;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
-@OnlyIn(Dist.CLIENT)
 public class ModelJouste extends ModelTemplateQuadruped {
     public ModelJouste() {
         this(1.0F);

@@ -3,8 +3,6 @@ package com.lycanitesmobs.client.obj.geometry;
 
 import com.lycanitesmobs.client.loader.OBJLoader;
 import com.lycanitesmobs.core.util.math.Vector3o;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 
@@ -68,7 +66,6 @@ public class IndexedModel {
         mesh.indices = indicesArrayInt;
     }
 
-    @OnlyIn(Dist.CLIENT)
     public Vector3o copy(Vector3o vector3f) {
         return new Vector3o(vector3f.x, vector3f.y, vector3f.z);
     }

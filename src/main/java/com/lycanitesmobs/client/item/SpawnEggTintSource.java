@@ -10,15 +10,12 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.util.ARGB;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import org.jspecify.annotations.Nullable;
 
 /**
  * 26.x replacement for the old ItemColor handler: tints the spawn egg layers with the
  * creature's egg colors (layer 0 = background, layer 1 = foreground overlay).
  */
-@OnlyIn(Dist.CLIENT)
 public record SpawnEggTintSource(int layer) implements ItemTintSource {
 
     public static final MapCodec<SpawnEggTintSource> MAP_CODEC = RecordCodecBuilder.mapCodec(

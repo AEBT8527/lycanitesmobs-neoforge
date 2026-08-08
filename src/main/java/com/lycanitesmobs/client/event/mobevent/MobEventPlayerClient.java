@@ -18,8 +18,6 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import org.lwjgl.opengl.GL11;
 
 public class MobEventPlayerClient {
@@ -104,7 +102,6 @@ public class MobEventPlayerClient {
     // ==================================================
     //                       GUI
     // ==================================================
-    @OnlyIn(Dist.CLIENT)
     public void onGUIUpdate(GuiGraphicsExtractor matrixStack, BaseOverlayScreen gui, int sWidth, int sHeight) {
         Player player = ClientManager.getInstance().getClientPlayer();
         if (player.getAbilities().instabuild && !MobEventPlayerServer.shouldTestOnCreative() && "world".equalsIgnoreCase(this.mobEvent.getChannel())) {
@@ -143,7 +140,6 @@ public class MobEventPlayerClient {
     }
 
 
-    @OnlyIn(Dist.CLIENT)
     public Identifier getTexture() {
         if (TextureManager.getTexture("guimobevent" + this.mobEvent.getTitleName()) == null)
             TextureManager.addTexture("guimobevent" + this.mobEvent.getTitleName(), "textures/mobevents/" + this.mobEvent.getTitleName().toLowerCase() + ".png");

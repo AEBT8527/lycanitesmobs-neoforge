@@ -8,10 +8,7 @@ import com.lycanitesmobs.client.renderer.layer.creature.LayerCreatureEffect;
 import com.lycanitesmobs.core.entity.base.BaseCreatureEntity;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
-@OnlyIn(Dist.CLIENT)
 public class ModelShade extends ModelTemplateBiped {
     public ModelShade() {
         this(1.0F);

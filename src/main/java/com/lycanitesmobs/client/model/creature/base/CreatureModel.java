@@ -12,14 +12,11 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.world.entity.Entity;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import org.joml.AxisAngle4f;
 import org.joml.Quaternionf;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 
-@OnlyIn(Dist.CLIENT)
 public abstract class CreatureModel<T extends BaseCreatureEntity> extends EntityModel<net.minecraft.client.renderer.entity.state.LivingEntityRenderState> implements IAnimationModel {
 
     /** OBJ models have no vanilla part tree; EntityModel just needs a root to exist. */

@@ -6,11 +6,8 @@ import com.lycanitesmobs.core.entity.creature.aberration.EntityYale;
 
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.DyeColor;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import org.joml.Vector4f;
 
-@OnlyIn(Dist.CLIENT)
 public class LayerCreatureDye extends LayerCreatureBase {
     public String textureSuffix;
     public boolean subspecies = true;

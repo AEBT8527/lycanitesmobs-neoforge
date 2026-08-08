@@ -4,10 +4,7 @@ package com.lycanitesmobs.client.model.creature.quadruped;
 import com.lycanitesmobs.LycanitesMobs;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
-@OnlyIn(Dist.CLIENT)
 public class ModelAstarothVoid extends ModelAstaroth {
 
 	// ==================================================

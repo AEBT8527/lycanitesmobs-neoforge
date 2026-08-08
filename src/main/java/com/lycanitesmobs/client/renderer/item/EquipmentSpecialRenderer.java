@@ -7,8 +7,6 @@ import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.special.SpecialModelRenderer;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import org.joml.Vector3f;
 import org.joml.Vector3fc;
 
@@ -19,7 +17,6 @@ import java.util.function.Consumer;
  * a SpecialModelRenderer that drives the legacy OBJ equipment renderers and replays
  * their geometry through the submit pipeline.
  */
-@OnlyIn(Dist.CLIENT)
 public class EquipmentSpecialRenderer implements SpecialModelRenderer<ItemStack> {
 
     protected final boolean partMode;
@@ -60,7 +57,6 @@ public class EquipmentSpecialRenderer implements SpecialModelRenderer<ItemStack>
         return stack;
     }
 
-    @OnlyIn(Dist.CLIENT)
     public record Unbaked(boolean part) implements SpecialModelRenderer.Unbaked<ItemStack> {
         public static final MapCodec<Unbaked> EQUIPMENT_CODEC = MapCodec.unit(new Unbaked(false));
         public static final MapCodec<Unbaked> PART_CODEC = MapCodec.unit(new Unbaked(true));

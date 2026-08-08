@@ -17,13 +17,10 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.MissingTextureAtlasSprite;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import org.joml.*;
 
 import java.lang.Math;
 
-@OnlyIn(Dist.CLIENT)
 public class ProjectileSpriteRenderer extends EntityRenderer<BaseProjectileEntity, ProjectileRenderState> {
     private Class projectileClass;
 

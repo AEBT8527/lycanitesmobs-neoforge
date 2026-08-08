@@ -9,8 +9,6 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.player.Player;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
 /**
  * Client-side handler for fear audio muffling and heartbeat lifecycle.
@@ -33,7 +31,6 @@ import net.neoforged.api.distmarker.OnlyIn;
  * The heartbeat amplitude envelope (decoded from the OGG by {@link HeartbeatAmplitudeMap})
  * is exposed via {@link #getHeartbeatAmplitude()} for the visual flicker system.
  */
-@OnlyIn(Dist.CLIENT)
 public class FearAudioHandler {
 
     private static float currentMuffle = 0.0F;

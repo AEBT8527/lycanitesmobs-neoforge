@@ -2,10 +2,7 @@ package com.lycanitesmobs.client.model.creature.biped;
 
 import com.lycanitesmobs.LycanitesMobs;
 import com.lycanitesmobs.client.model.template.ModelTemplateBiped;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
-@OnlyIn(Dist.CLIENT)
 public class ModelKathogaMoloch extends ModelTemplateBiped {
 
 	// ==================================================

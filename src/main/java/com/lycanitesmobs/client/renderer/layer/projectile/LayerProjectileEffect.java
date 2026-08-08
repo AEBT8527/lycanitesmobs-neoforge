@@ -3,12 +3,9 @@ package com.lycanitesmobs.client.renderer.layer.projectile;
 import com.lycanitesmobs.client.renderer.entity.projectile.ProjectileModelRenderer;
 import com.lycanitesmobs.core.entity.base.BaseProjectileEntity;
 import net.minecraft.resources.Identifier;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 
-@OnlyIn(Dist.CLIENT)
 public class LayerProjectileEffect extends LayerProjectileBase {
 
     public String textureSuffix;

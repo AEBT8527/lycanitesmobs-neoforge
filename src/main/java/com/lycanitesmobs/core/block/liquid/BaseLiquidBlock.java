@@ -20,8 +20,6 @@ import net.minecraft.tags.FluidTags;
 import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.ticks.ScheduledTick;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
 import java.util.Objects;
 import java.util.function.Supplier;
@@ -137,7 +135,6 @@ public class BaseLiquidBlock extends LiquidBlock implements BlockTypeGetter {
     /**
      * Client side animation and sounds.
      **/
-    @OnlyIn(Dist.CLIENT)
     public void animateTick(BlockState state, Level world, BlockPos pos, RandomSource random) {
         double x = pos.getX();
         double y = pos.getY();
