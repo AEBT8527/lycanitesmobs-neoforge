@@ -303,7 +303,7 @@ public class DungeonInstance {
 
         List<DungeonSchematic> schematics = new ArrayList<>();
         for (DungeonSchematic schematic : DungeonManager.getInstance().getSchematics()) {
-            if (schematic.canBuild(world, this.originPos)) {
+            if (schematic.canBuild(world, this.originPos, DungeonLayout.getMaximumReferenceRadius())) {
                 schematics.add(schematic);
             }
         }

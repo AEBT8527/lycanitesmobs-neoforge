@@ -22,6 +22,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
 
 import java.util.UUID;
+import com.lycanitesmobs.core.worldgen.dungeon.instance.DungeonLayout;
 
 @EventBusSubscriber(modid = LycanitesMobs.MODID)
 public class StructureSpawnEvents {
@@ -152,7 +153,7 @@ public class StructureSpawnEvents {
                     if (!condition.isMet(level, null, candidate)) {
                         continue;
                     }
-                    if (!schematic.canBuild(level, candidate)) {
+                    if (!schematic.canBuild(level, candidate, DungeonLayout.getMaximumReferenceRadius())) {
                         continue;
                     }
 

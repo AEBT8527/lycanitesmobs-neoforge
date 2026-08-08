@@ -45,6 +45,7 @@ public class DungeonSchematic {
      * The minimum amount of sectors this dungeon should have in total.
      **/
     protected int sectorCountMin = 10;
+    protected int minDistanceFromSpawn = 500;
 
     /**
      * The maximum amount of sectors this dungeon should have in total.
@@ -188,6 +189,8 @@ public class DungeonSchematic {
     public void loadFromJSON(JsonObject json) {
         this.name = json.get("name").getAsString().toLowerCase();
 
+        if (json.has("minDistanceFromSpawn"))
+            this.minDistanceFromSpawn = Math.max(0, json.get("minDistanceFromSpawn").getAsInt());
         if (json.has("enabled"))
             this.enabled = json.get("enabled").getAsBoolean();
 
@@ -367,6 +370,13 @@ public class DungeonSchematic {
      * @return
      */
     public boolean canBuild(Level world, BlockPos pos) {
+        return this.canBuild(world, pos, 0);
+    }
+
+    public boolean canBuild(Level world, BlockPos pos, int horizontalFootprintRadius) {
+        if (!this.isFootprintFarEnoughFromSpawn(world, pos, horizontalFootprintRadius)) {
+            return false;
+        }
         if (!this.enabled) {
             return false;
         }
@@ -666,4 +676,47 @@ public class DungeonSchematic {
         return null;
     }
 
+
+    public int getMinDistanceFromSpawn() {
+        return this.minDistanceFromSpawn;
+    }
+
+    public BlockPos getWorldSpawnPosition(Level world) {
+        return world.getRespawnData().globalPos().pos();
+    }
+
+    /**
+     * Distance is measured from the dungeon FOOTPRINT, not its origin: a large dungeon can have
+     * an origin outside the radius while its sectors still reach back over world spawn.
+     */
+    public boolean isFootprintFarEnoughFromSpawn(Level world, BlockPos pos, int horizontalFootprintRadius) {
+        if (this.minDistanceFromSpawn <= 0) {
+            return true;
+        }
+        BlockPos spawnPos = this.getWorldSpawnPosition(world);
+        double xDistance = this.getAxisDistanceFromSpawnToFootprint(spawnPos.getX(), pos.getX(), horizontalFootprintRadius);
+        double zDistance = this.getAxisDistanceFromSpawnToFootprint(spawnPos.getZ(), pos.getZ(), horizontalFootprintRadius);
+        double minDistance = this.minDistanceFromSpawn;
+        return xDistance * xDistance + zDistance * zDistance >= minDistance * minDistance;
+    }
+
+    public double getHorizontalDistanceFromSpawn(Level world, BlockPos pos) {
+        BlockPos spawnPos = this.getWorldSpawnPosition(world);
+        double xDistance = pos.getX() - spawnPos.getX();
+        double zDistance = pos.getZ() - spawnPos.getZ();
+        return Math.sqrt(xDistance * xDistance + zDistance * zDistance);
+    }
+
+    private double getAxisDistanceFromSpawnToFootprint(int spawnCoordinate, int originCoordinate, int horizontalFootprintRadius) {
+        int radius = Math.max(0, horizontalFootprintRadius);
+        int min = originCoordinate - radius;
+        int max = originCoordinate + radius;
+        if (spawnCoordinate < min) {
+            return min - spawnCoordinate;
+        }
+        if (spawnCoordinate > max) {
+            return spawnCoordinate - max;
+        }
+        return 0.0D;
+    }
 }
