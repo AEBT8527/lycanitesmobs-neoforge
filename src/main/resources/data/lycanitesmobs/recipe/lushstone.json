@@ -5,7 +5,7 @@
   },
   "ingredients": [
     {
-      "item": "minecraft:grass"
+      "item": "minecraft:short_grass"
     },
     {
       "tag": "lycanitesmobs:stone_crafting_base"

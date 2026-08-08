@@ -5,8 +5,7 @@
   },
   "ingredients": [
     {
-      "item": "minecraft:sandstone",
-      "data": 0
+      "item": "minecraft:sandstone"
     },
     {
       "tag": "lycanitesmobs:stone_crafting_base"

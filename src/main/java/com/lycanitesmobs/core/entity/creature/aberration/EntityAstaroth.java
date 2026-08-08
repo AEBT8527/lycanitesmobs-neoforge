@@ -98,6 +98,14 @@ public class EntityAstaroth extends TameableCreatureEntity implements Enemy {
     // ==================================================
     @Override
     public void die(DamageSource damageSource) {
+        // Vanilla guards its own death handling behind `dead`, but this override ran
+        // BEFORE super.die(), so a re-entered die() would spawn/explode a second time.
+        // Run super first and act only on the not-dead -> dead transition.
+        boolean wasDead = this.dead;
+        super.die(damageSource);
+        if (wasDead || !this.dead) {
+            return;
+        }
         if (!this.getCommandSenderWorld().isClientSide && CreatureManager.getInstance().getCreature("trite").isEnabled()) {
             int j = 2 + this.random.nextInt(5) + getCommandSenderWorld().getDifficulty().getId() - 1;
             if (this.isTamed()) {
@@ -111,7 +119,6 @@ public class EntityAstaroth extends TameableCreatureEntity implements Enemy {
                 }
             }
         }
-        super.die(damageSource);
     }
 
 

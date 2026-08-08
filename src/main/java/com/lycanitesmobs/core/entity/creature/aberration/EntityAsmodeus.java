@@ -491,6 +491,14 @@ public class EntityAsmodeus extends BaseCreatureEntity implements Enemy, IGroupH
     // ==================================================
     @Override
     public void die(DamageSource damageSource) {
+        // Vanilla guards its own death handling behind `dead`, but this override ran
+        // BEFORE super.die(), so a re-entered die() would spawn/explode a second time.
+        // Run super first and act only on the not-dead -> dead transition.
+        boolean wasDead = this.dead;
+        super.die(damageSource);
+        if (wasDead || !this.dead) {
+            return;
+        }
         if (!this.getCommandSenderWorld().isClientSide && CreatureManager.getInstance().getCreature("trite").isEnabled()) {
             int j = 6 + this.random.nextInt(20) + (getCommandSenderWorld().getDifficulty().getId() * 4);
             for (int k = 0; k < j; ++k) {
@@ -508,7 +516,6 @@ public class EntityAsmodeus extends BaseCreatureEntity implements Enemy, IGroupH
                 });
             }
         }
-        super.die(damageSource);
     }
 
     // ========== Minion Death ==========

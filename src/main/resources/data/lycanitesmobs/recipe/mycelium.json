@@ -8,8 +8,7 @@
       "item": "lycanitesmobs:propolis"
     },
     {
-      "item": "minecraft:dirt",
-      "data": 0
+      "item": "minecraft:dirt"
     }
   ],
   "type": "minecraft:crafting_shapeless"

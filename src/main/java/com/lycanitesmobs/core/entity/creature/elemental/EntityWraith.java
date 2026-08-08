@@ -111,6 +111,14 @@ public class EntityWraith extends TameableCreatureEntity implements Enemy {
    	// ==================================================
     @Override
     public void die(DamageSource par1DamageSource) {
+        // Vanilla guards its own death handling behind `dead`, but this override ran
+        // BEFORE super.die(), so a re-entered die() would spawn/explode a second time.
+        // Run super first and act only on the not-dead -> dead transition.
+        boolean wasDead = this.dead;
+        super.die(par1DamageSource);
+        if (wasDead || !this.dead) {
+            return;
+        }
 		if(!this.getCommandSenderWorld().isClientSide && this.getCommandSenderWorld().getGameRules().getBoolean(GameRules.RULE_MOBGRIEFING)) {
 			int explosionRadius = 1;
 			if(this.subspecies != null)
@@ -118,7 +126,6 @@ public class EntityWraith extends TameableCreatureEntity implements Enemy {
 			explosionRadius = Math.max(1, Math.round((float)explosionRadius * (float)this.sizeScale));
 			this.getCommandSenderWorld().explode(this, this.position().x(), this.position().y(), this.position().z(), explosionRadius, Level.ExplosionInteraction.TNT);
 		}
-        super.die(par1DamageSource);
     }
     // ==================================================
     //                     Equipment
