@@ -1,5 +1,6 @@
 package com.lycanitesmobs.client.renderer.entity.projectile;
 
+import com.lycanitesmobs.client.manager.ClientManager;
 import com.lycanitesmobs.client.renderer.util.CustomRenderStates;
 import com.lycanitesmobs.core.entity.base.BaseProjectileEntity;
 import com.lycanitesmobs.core.entity.projectile.generic.CustomProjectileEntity;
@@ -64,7 +65,7 @@ public class ProjectileSpriteRenderer extends EntityRenderer<BaseProjectileEntit
 
         if (entity instanceof CustomProjectileEntity && ((CustomProjectileEntity) entity).getLaserEnd() != null) {
             matrixStack.pushPose();
-            this.renderLaser((CustomProjectileEntity) entity, matrixStack, renderTypeBuffer, ((CustomProjectileEntity) entity).getLaserWidth() / 4, loop);
+            this.renderLaser((CustomProjectileEntity) entity, matrixStack, renderTypeBuffer, ((CustomProjectileEntity) entity).getLaserWidth() / 4, loop, brightness);
             matrixStack.popPose();
             return;
         }
@@ -75,13 +76,14 @@ public class ProjectileSpriteRenderer extends EntityRenderer<BaseProjectileEntit
         matrixStack.translate(0, entity.getTextureOffsetY(), 0);
         matrixStack.scale(scale, scale, scale);
         Identifier texture = this.getTextureLocation(entity);
-        RenderType rendertype = CustomRenderStates.getSpriteRenderType(texture);
-        this.renderSprite(entity, matrixStack, renderTypeBuffer, rendertype, entity.getTextureScale());
+        boolean emissive = this.isEmissive(entity);
+        RenderType rendertype = CustomRenderStates.getSpriteRenderType(texture, emissive);
+        this.renderSprite(entity, matrixStack, renderTypeBuffer, rendertype, entity.getTextureScale(), emissive ? ClientManager.FULL_BRIGHT : brightness);
         matrixStack.popPose();
     }
 
 
-    public void renderSprite(BaseProjectileEntity entity, PoseStack matrixStack, MultiBufferSource renderTypeBuffer, RenderType rendertype, float scale) {
+    public void renderSprite(BaseProjectileEntity entity, PoseStack matrixStack, MultiBufferSource renderTypeBuffer, RenderType rendertype, float scale, int brightness) {
         float textureWidth = 0.25F;
         float textureHeight = 0.25F;
         float minU = 0;
@@ -102,36 +104,46 @@ public class ProjectileSpriteRenderer extends EntityRenderer<BaseProjectileEntit
                 .addVertex(matrix4f, -textureWidth, -textureHeight + (textureHeight / 2), 0.0F) // pos
                 .setColor(255, 255, 255, 255) // color
                 .setUv(minU, maxV) // texture
+                .setOverlay(net.minecraft.client.renderer.texture.OverlayTexture.NO_OVERLAY)
+                .setLight(brightness)
                 .setNormal(0.0F, 1.0F, 0.0F) // normal
                 ;
         vertexBuilder
                 .addVertex(matrix4f, textureWidth, -textureHeight + (textureHeight / 2), 0.0F)
                 .setColor(255, 255, 255, 255) // color
                 .setUv(maxU, maxV)
+                .setOverlay(net.minecraft.client.renderer.texture.OverlayTexture.NO_OVERLAY)
+                .setLight(brightness)
                 .setNormal(0.0F, 1.0F, 0.0F)
                 ;
         vertexBuilder
                 .addVertex(matrix4f, textureWidth, textureHeight + (textureHeight / 2), 0.0F)
                 .setColor(255, 255, 255, 255) // color
                 .setUv(maxU, minV)
+                .setOverlay(net.minecraft.client.renderer.texture.OverlayTexture.NO_OVERLAY)
+                .setLight(brightness)
                 .setNormal(0.0F, 1.0F, 0.0F)
                 ;
         vertexBuilder
                 .addVertex(matrix4f, -textureWidth, textureHeight + (textureHeight / 2), 0.0F)
                 .setColor(255, 255, 255, 255) // color
                 .setUv(minU, minV)
+                .setOverlay(net.minecraft.client.renderer.texture.OverlayTexture.NO_OVERLAY)
+                .setLight(brightness)
                 .setNormal(0.0F, 1.0F, 0.0F)
                 ;
     }
 
-    public void renderLaser(CustomProjectileEntity entity, PoseStack matrixStack, MultiBufferSource renderTypeBuffer, float scale, float loop) {
+    public void renderLaser(CustomProjectileEntity entity, PoseStack matrixStack, MultiBufferSource renderTypeBuffer, float scale, float loop, int brightness) {
         double laserSize = entity.position().distanceTo(entity.getLaserEnd());
         float spacing = 1;
         double factor = spacing / laserSize;
         if (laserSize <= 0) return;
 
         Identifier texture = this.getTextureLocation(entity);
-        RenderType rendertype = CustomRenderStates.getSpriteRenderType(texture);
+        boolean emissive = this.isEmissive(entity);
+        RenderType rendertype = CustomRenderStates.getSpriteRenderType(texture, emissive);
+        int spriteBrightness = emissive ? ClientManager.FULL_BRIGHT : brightness;
         Vec3 direction = entity.getLaserEnd().subtract(entity.position()).normalize();
 
         for (float segment = 0; segment <= laserSize; segment += factor) {
@@ -141,11 +153,19 @@ public class ProjectileSpriteRenderer extends EntityRenderer<BaseProjectileEntit
             matrixStack.mulPose(this.entityRenderDispatcher.camera.rotation());
             matrixStack.mulPose(Axis.YP.rotationDegrees(180.0F));
             matrixStack.scale(scale, scale, scale);
-            this.renderSprite(entity, matrixStack, renderTypeBuffer, rendertype, scale);
+            this.renderSprite(entity, matrixStack, renderTypeBuffer, rendertype, scale, spriteBrightness);
             matrixStack.popPose();
         }
     }
 
+
+    /** Glowing projectiles render full bright and skip the lightmap, matching upstream 0.1.0. */
+    protected boolean isEmissive(BaseProjectileEntity entity) {
+        if (entity instanceof CustomProjectileEntity customProjectile && customProjectile.hasProjectileInfo()) {
+            return customProjectile.getProjectileInfo().glows();
+        }
+        return entity.getBrightness() >= 1.0F;
+    }
 
         public Identifier getTextureLocation(BaseProjectileEntity entity) {
         Identifier tex = entity.getTexture();

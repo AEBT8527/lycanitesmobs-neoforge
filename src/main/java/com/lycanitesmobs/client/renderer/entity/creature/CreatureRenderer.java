@@ -153,7 +153,10 @@ public class CreatureRenderer<T extends BaseCreatureEntity> extends MobRenderer<
 
         int blending = this.getMainModel().getBlending(entity, layer);
         boolean glow = this.getMainModel().getGlow(entity, layer);
-        VertexConsumer vertexConsumer = renderTypeBuffer.getBuffer(CustomRenderStates.getObjRenderType(texture, blending, glow));
+        net.minecraft.client.renderer.rendertype.RenderType lycRt = layer == null
+                ? CustomRenderStates.getObjRenderType(texture, blending, glow)
+                : CustomRenderStates.getObjLayerRenderType(texture, blending, glow);
+        VertexConsumer vertexConsumer = renderTypeBuffer.getBuffer(lycRt);
         this.getMainModel().render(entity, matrixStack, vertexConsumer, layer, time, distance, loop, lookY, lookX, 1, brightness, fade);
     }
 

@@ -16,9 +16,11 @@ import javax.annotation.Nullable;
  * through vanilla entity render types (RenderPipeline-backed), mapping the mod's blend/glow
  * flags onto the closest vanilla pipelines — the same mapping the Iris compatibility path
  * already used:
- * NORMAL -> entityCutout (no-cull, alpha-tested); NORMAL+glow -> entityTranslucentEmissive;
+ * Base models: NORMAL and NORMAL+glow -> entityCutout (no-cull, alpha-tested, depth-writing);
  * ADD -> eyes (additive); SUB -> entityTranslucent (closest available; true subtractive
  * blending would need a custom RenderPipeline, revisit if it looks wrong in game).
+ * Layers go through {@link #getObjLayerRenderType} instead so they land in the translucent pass,
+ * which runs after the base and therefore draws on top of it.
  */
 public class CustomRenderStates {
     public static final Vector4f WHITE = new Vector4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -46,15 +48,45 @@ public class CustomRenderStates {
         if (blending == BLEND.SUB.getValue()) {
             return RenderTypes.entityTranslucent(texture);
         }
-        if (glow) {
-            return RenderTypes.entityTranslucentEmissive(texture);
-        }
+        // A glowing BASE deliberately does NOT use entityTranslucentEmissive. That type is drawn in
+        // the translucent pass with depth writes off, so the base and its own detail layers ended up
+        // in passes whose relative order is not submission order - the base could be painted over
+        // its layers, which made every glow model (nymph, cinder, sylph, volcan, wisp, cherufe,
+        // khalk, salamander) render as a flat untextured silhouette. The models already report
+        // FULL_BRIGHT for glowing parts, and entityCutout samples the lightmap, so the emissive look
+        // survives while the base stays opaque and depth-writing, exactly as vanilla does it.
         return RenderTypes.entityCutout(texture);
     }
 
     /** Old VBO path took no texture (relied on bound-texture state); now texture-explicit. */
     public static RenderType getObjVBORenderType(@Nullable Identifier texture, int blending, boolean glow) {
         return getObjRenderType(texture, blending, glow);
+    }
+
+    /**
+     * Render type for a model LAYER, which has to end up in the same pass as the base it sits on.
+     *
+     * A glowing base maps to entity_translucent_emissive, which vanilla draws in the translucent
+     * pass with depth writes disabled, while a plain layer maps to entity_cutout - an earlier pass
+     * that writes depth. The base was therefore drawn after, and straight over, its own detail
+     * layer: every glow model (nymph, cinder, sylph, volcan, wisp, cherufe, khalk, salamander)
+     * rendered as a flat untextured silhouette with its head/hair/wing detail hidden underneath.
+     *
+     * Keeping such a layer translucent puts it back in the same pass as the base, where submission
+     * order decides - which is exactly what the single no-cull translucent family used on 1.21.1 did.
+     */
+    public static RenderType getObjLayerRenderType(@Nullable Identifier texture, int blending, boolean glow) {
+        if (texture == null) {
+            texture = MissingTextureAtlasSprite.getLocation();
+        }
+        if (blending == BLEND.ADD.getValue()) {
+            return RenderTypes.eyes(texture);
+        }
+        // Layers always sit on top of the base, so they belong in the translucent pass: that runs
+        // after the opaque/cutout pass the base is drawn in, tests depth with LEQUAL and does not
+        // write depth. Ordering is then decided by the passes themselves rather than by whichever
+        // draw call happened to be grouped first, which is what made the old mapping flaky.
+        return glow ? RenderTypes.entityTranslucentEmissive(texture) : RenderTypes.entityTranslucent(texture);
     }
 
     /** Translucent, colour-tintable pass used by ghost/fear style effects. */
@@ -77,9 +109,13 @@ public class CustomRenderStates {
     }
 
     public static RenderType getSpriteRenderType(@Nullable Identifier texture) {
+        return getSpriteRenderType(texture, false);
+    }
+
+    public static RenderType getSpriteRenderType(@Nullable Identifier texture, boolean emissive) {
         if (texture == null) {
             texture = MissingTextureAtlasSprite.getLocation();
         }
-        return RenderTypes.entityTranslucent(texture);
+        return emissive ? RenderTypes.entityTranslucentEmissive(texture) : RenderTypes.entityTranslucent(texture);
     }
 }

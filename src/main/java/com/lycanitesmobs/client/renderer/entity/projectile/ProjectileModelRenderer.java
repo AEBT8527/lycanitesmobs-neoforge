@@ -5,15 +5,14 @@ import com.lycanitesmobs.LycanitesMobs;
 import com.lycanitesmobs.client.manager.ModelManager;
 import com.lycanitesmobs.client.model.projectile.base.ProjectileModel;
 import com.lycanitesmobs.client.model.projectile.base.ProjectileObjModel;
-import com.lycanitesmobs.client.obj.model.VBOObjModel;
 import com.lycanitesmobs.client.renderer.util.CustomRenderStates;
-import com.lycanitesmobs.client.renderer.util.VBOBatcher;
 import com.lycanitesmobs.client.renderer.layer.projectile.LayerProjectileBase;
 import com.lycanitesmobs.core.entity.base.BaseProjectileEntity;
 import com.lycanitesmobs.core.data.info.projectile.ProjectileInfo;
 import com.lycanitesmobs.core.manager.ProjectileManager;
 import com.lycanitesmobs.core.util.helpers.LMHelperClass;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.rendertype.RenderType;
@@ -115,8 +114,6 @@ public class ProjectileModelRenderer extends EntityRenderer<BaseProjectileEntity
                     this.renderModel(entity, matrixStack, renderTypeBuffer, layerCreatureBase, time, distance, loop, lookYaw, lookPitch, scale, brightness, invisible, allyInvisible);
                 }
                 this.getModel().clearAnimationFrames();
-
-                VBOBatcher.getInstance().endBatches();
             }
         } catch (Exception exception) {
             exception.printStackTrace();
@@ -145,22 +142,19 @@ public class ProjectileModelRenderer extends EntityRenderer<BaseProjectileEntity
         if (texture == null) {
             return;
         }
+        if (invisible && !allyInvisible) {
+            return;
+        }
 
-        // Render Model
-        // TODO allyInvisible lower color alpha
-        if (!invisible || allyInvisible) {
-            VBOObjModel.renderType = CustomRenderStates.getObjVBORenderType(texture, this.getModel().getBlending(entity, layer), this.getModel().getGlow(entity, layer));
-            VBOObjModel.renderNormal = true;
-        }
-        if (entity.isCurrentlyGlowing()) {
-            VBOObjModel.renderOutline = true;
-        }
-        VBOObjModel.tex = texture;
-        this.getModel().render(entity, matrixStack, null, layer, time, distance, loop, lookY, lookX, 1, brightness);
-        VBOObjModel.tex = null;
-        VBOObjModel.renderOutline = false;
-        VBOObjModel.renderNormal = false;
-        VBOObjModel.renderType = null;
+        // Same path CreatureRenderer uses. This used to set the VBOObjModel statics and pass a null
+        // VertexConsumer, which was the old GL batching fast path - that path is gone on 26.x, the
+        // statics are inert and ObjModel.renderPart returns immediately on a null consumer, so every
+        // obj-model projectile (lightball, chaosorb, aetherwave, crystalshard, lobdarklings) drew
+        // nothing at all.
+        int blending = this.getModel().getBlending(entity, layer);
+        boolean glow = this.getModel().getGlow(entity, layer);
+        VertexConsumer vertexConsumer = renderTypeBuffer.getBuffer(CustomRenderStates.getObjRenderType(texture, blending, glow));
+        this.getModel().render(entity, matrixStack, vertexConsumer, layer, time, distance, loop, lookY, lookX, 1, brightness);
     }
 
 
