@@ -213,6 +213,12 @@ public class ItemManager extends JSONLoader {
         //if (true) return;
         //.tab(this.itemsGroup)
         // Summoning Staves:
+        // TODO 26.x: repairability moved to the REPAIRABLE data component. Upstream 0.1.0 puts the
+        // staffs' repair material on lycanitesmobs:summoning_staff_repair, but neither Properties
+        // overload is usable from a mod here: repairable(Item) and repairable(TagKey) both go
+        // through BuiltInRegistries.acquireBootstrapRegistrationLookup(), which throws
+        // "Registry is already frozen" outside vanilla's own bootstrap (verified in game).
+        // Needs the component to be attached later, once tags have bound.
         Item.Properties summoningStaffProperties = new Item.Properties().stacksTo(1).durability(500);
         ObjectManager.addItem("summoningstaff", () -> new ItemStaffSummoning(com.lycanitesmobs.core.util.helpers.LMHelperClass.itemId(summoningStaffProperties, "summoningstaff"), "summoningstaff", "summoningstaff"));
         ObjectManager.addItem("stablesummoningstaff", () -> new ItemStaffStable(com.lycanitesmobs.core.util.helpers.LMHelperClass.itemId(summoningStaffProperties, "stablesummoningstaff"), "stablesummoningstaff", "staffstable"));

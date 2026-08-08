@@ -9,9 +9,6 @@
   ],
   "type": "minecraft:crafting_shaped",
   "key": {
-    "B": {
-      "item": "lycanitesmobs:desertstone_slab",
-      "data": 0
-    }
+    "B": "lycanitesmobs:desertstone_slab"
   }
 }

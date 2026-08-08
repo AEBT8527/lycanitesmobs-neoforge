@@ -4,10 +4,7 @@
     "count": 9
   },
   "ingredients": [
-    {
-      "item": "minecraft:sandstone",
-      "data": 0
-    },
+    "minecraft:sandstone",
     "#lycanitesmobs:stone_crafting_base",
     "#lycanitesmobs:stone_crafting_base",
     "#lycanitesmobs:stone_crafting_base",

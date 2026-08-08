@@ -95,6 +95,14 @@ public class EntityGeist extends AgeableCreatureEntity implements Enemy {
 
     @Override
     public void die(DamageSource damageSource) {
+        // Vanilla guards its own death handling behind `dead`, but this override ran
+        // BEFORE super.die(), so a re-entered die() would spawn/explode a second time.
+        // Run super first and act only on the not-dead -> dead transition.
+        boolean wasDead = this.dead;
+        super.die(damageSource);
+        if (wasDead || !this.dead) {
+            return;
+        }
         try {
             int shadowfireWidth = (int) Math.floor(this.getDimensions(this.getPose()).width()) + 1;
             int shadowfireHeight = (int) Math.floor(this.getDimensions(this.getPose()).height()) + 1;
@@ -122,7 +130,6 @@ public class EntityGeist extends AgeableCreatureEntity implements Enemy {
             }
         } catch (Exception e) {
         }
-        super.die(damageSource);
     }
 
     @Override

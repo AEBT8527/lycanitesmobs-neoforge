@@ -9,9 +9,6 @@
   ],
   "type": "minecraft:crafting_shaped",
   "key": {
-    "B": {
-      "item": "lycanitesmobs:streamstone_slab",
-      "data": 0
-    }
+    "B": "lycanitesmobs:streamstone_slab"
   }
 }

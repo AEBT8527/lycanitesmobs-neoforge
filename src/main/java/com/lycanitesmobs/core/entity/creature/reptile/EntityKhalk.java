@@ -115,6 +115,14 @@ public class EntityKhalk extends TameableCreatureEntity implements Enemy, IGroup
     // ==================================================
     @Override
     public void die(DamageSource damageSource) {
+        // Vanilla guards its own death handling behind `dead`, but this override ran
+        // BEFORE super.die(), so a re-entered die() would spawn/explode a second time.
+        // Run super first and act only on the not-dead -> dead transition.
+        boolean wasDead = this.dead;
+        super.die(damageSource);
+        if (wasDead || !this.dead) {
+            return;
+        }
         if (!this.level().isClientSide()
                 && LMHelperClass.getGameRuleBool(this.level(), GameRules.MOB_GRIEFING, true)
                 && this.lavaDeath
@@ -145,7 +153,6 @@ public class EntityKhalk extends TameableCreatureEntity implements Enemy, IGroup
                 }
             }
         }
-        super.die(damageSource);
     }
 
 

@@ -5,10 +5,7 @@
   },
   "ingredients": [
     "lycanitesmobs:propolis",
-    {
-      "item": "minecraft:dirt",
-      "data": 0
-    }
+    "minecraft:dirt"
   ],
   "type": "minecraft:crafting_shapeless"
 }
