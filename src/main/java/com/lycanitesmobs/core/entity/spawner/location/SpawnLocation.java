@@ -161,9 +161,18 @@ public class SpawnLocation {
      * Returns true when the X/Z column is already available for safe spawn probing.
      * Spawn locations run from tick/worldgen-adjacent paths, so they must not force
      * synchronous chunk work while sampling candidates near a loaded boundary.
+     *
+     * ChunkSource.hasChunk() is NOT a safe test for that: it only compares the holder's
+     * ticket level against FULL, so it answers true for a chunk that is merely *scheduled*
+     * to become full and is still generating. The following world.getBlockState() then goes
+     * through getChunk(..., load = true) and parks the server thread in getChunkBlocking()
+     * until that generation finishes - observed as a 40 second stall (ModernFix watchdog)
+     * while a Chunky pre-generation task held the worker pool. getLoadedChunk() uses
+     * getChunkNow(), which hands back a chunk only once it is actually ticking, so the
+     * getBlockState() below it is always served from cache and can never block.
      */
     protected boolean isColumnLoaded(Level world, int x, int z) {
-        return world != null && world.getChunkSource().hasChunk(x >> 4, z >> 4);
+        return this.getLoadedChunk(world, x, z) != null;
     }
 
     protected boolean isBlockLoaded(Level world, BlockPos blockPos) {
