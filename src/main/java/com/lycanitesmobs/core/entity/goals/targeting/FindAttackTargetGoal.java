@@ -212,15 +212,17 @@ public class FindAttackTargetGoal extends TargetingGoal {
             try {
                 List<? extends Player> players = this.host.getCommandSenderWorld().players();
                 if (!players.isEmpty()) {
-                    List<Player> possibleTargets = new ArrayList<>();
+                    // Single pass for the nearest match - the old code collected every valid
+                    // player into a list and sorted it just to read element 0.
+                    double nearestDistance = Double.MAX_VALUE;
                     for (Player player : players) {
                         if (this.targetSelector.test(player)) {
-                            possibleTargets.add(player);
+                            double distance = this.host.distanceToSqr(player);
+                            if (distance < nearestDistance) {
+                                nearestDistance = distance;
+                                newTarget = player;
+                            }
                         }
-                    }
-                    if (!possibleTargets.isEmpty()) {
-                        Collections.sort(possibleTargets, this.nearestSorter);
-                        newTarget = possibleTargets.get(0);
                     }
                 }
             } catch (Exception e) {
