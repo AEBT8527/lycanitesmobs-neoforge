@@ -38,6 +38,10 @@ public class TemptGoal extends Goal {
     private double targetZ;
     private double targetPitch;
     private double targetYaw;
+    private double lastMoveTargetX = Double.NaN;
+    private double lastMoveTargetY = Double.NaN;
+    private double lastMoveTargetZ = Double.NaN;
+    private int moveTargetRefreshTime;
     private boolean canSwim;
     private boolean isRunning;
 	
@@ -114,6 +118,12 @@ public class TemptGoal extends Goal {
         }
         
         if(this.host.isTamed()) {
+            return false;
+        }
+
+        // Drop a player who left the world or the dimension instead of chasing a stale reference.
+        if(this.player != null && (this.player.isRemoved() || this.player.level() != this.host.level())) {
+            this.player = null;
             return false;
         }
 
@@ -210,6 +220,7 @@ public class TemptGoal extends Goal {
         this.targetX = this.player.position().x();
         this.targetY = this.player.position().y();
         this.targetZ = this.player.position().z();
+        this.resetMoveTargetMemory();
         this.isRunning = true;
         if (this.host.getNavigation() instanceof GroundPathNavigation || this.host.getNavigation() instanceof CreaturePathNavigator) {
             PathNavigation navigateGround = this.host.getNavigation();
@@ -229,6 +240,7 @@ public class TemptGoal extends Goal {
     public void stop() {
         this.player = null;
         this.host.getNavigation().stop();
+        this.resetMoveTargetMemory();
         this.retemptTime = this.retemptTimeMax;
         if(this.host instanceof AgeableCreatureEntity) {
             AgeableCreatureEntity ageable = (AgeableCreatureEntity)this.host;
@@ -255,14 +267,16 @@ public class TemptGoal extends Goal {
         this.host.getLookControl().setLookAt(this.player, 30.0F, (float)this.host.getMaxHeadXRot());
         if(this.host.distanceToSqr(this.player) < this.temptDistanceMin * this.temptDistanceMin) {
             this.host.clearMovement();
+            this.resetMoveTargetMemory();
         }
-        else {
+        else if(this.shouldRefreshMoveTarget()) {
         	if(!this.host.useDirectNavigator()) {
                 this.host.getNavigation().moveTo(this.player, this.speed);
             }
         	else {
                 this.host.setDirectNavigationTarget(new BlockPos((int) this.player.position().x(), (int) this.player.position().y(), (int) this.player.position().z()), speed);
             }
+            this.rememberMoveTarget();
         }
     }
     
@@ -271,5 +285,35 @@ public class TemptGoal extends Goal {
      */
     public boolean isRunning() {
         return this.isRunning;
+    }
+
+    /** Repath only every 10 ticks, or sooner once the player has actually moved a block. */
+    private boolean shouldRefreshMoveTarget() {
+        double moveTargetRefreshDistanceSq = 1.0;
+        if (this.moveTargetRefreshTime > 0) {
+            this.moveTargetRefreshTime--;
+        }
+        if (this.moveTargetRefreshTime <= 0) {
+            return true;
+        }
+        if (Double.isNaN(this.lastMoveTargetX)) {
+            return true;
+        }
+        return this.player.distanceToSqr(this.lastMoveTargetX, this.lastMoveTargetY, this.lastMoveTargetZ) >= moveTargetRefreshDistanceSq;
+    }
+
+    private void rememberMoveTarget() {
+        int moveTargetRefreshInterval = 10;
+        this.lastMoveTargetX = this.player.position().x();
+        this.lastMoveTargetY = this.player.position().y();
+        this.lastMoveTargetZ = this.player.position().z();
+        this.moveTargetRefreshTime = moveTargetRefreshInterval;
+    }
+
+    private void resetMoveTargetMemory() {
+        this.lastMoveTargetX = Double.NaN;
+        this.lastMoveTargetY = Double.NaN;
+        this.lastMoveTargetZ = Double.NaN;
+        this.moveTargetRefreshTime = 0;
     }
 }

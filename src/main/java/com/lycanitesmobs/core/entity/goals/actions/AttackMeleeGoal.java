@@ -80,7 +80,8 @@ public class AttackMeleeGoal extends Goal {
     }
 
     public AttackMeleeGoal setMaxChaseDistance(float distance) {
-        this.maxChaseDistance = distance;
+        // compared against distanceToSqr, so it has to be squared here too
+        this.maxChaseDistance = distance * distance;
         return this;
     }
 
@@ -220,14 +221,15 @@ public class AttackMeleeGoal extends Goal {
         if (this.longMemory || this.host.getSensing().hasLineOfSight(this.attackTarget)) {
             if (!this.host.useDirectNavigator() && --this.repathTime <= 0) {
                 this.repathTime = this.failedPathFindingPenalty + 4 + this.host.getRandom().nextInt(7);
+                boolean moved;
                 if (this.host.isFlying()) {
-                    this.host.getNavigation().moveTo(this.attackTarget.position().x(), this.attackTarget.getBoundingBox().minY + this.host.getFlightOffset(), this.attackTarget.position().z(), this.speed);
+                    moved = this.host.getNavigation().moveTo(this.attackTarget.position().x(), this.attackTarget.getBoundingBox().minY + this.host.getFlightOffset(), this.attackTarget.position().z(), this.speed);
                 } else {
-                    this.host.getNavigation().moveTo(this.attackTarget, this.speed);
+                    moved = this.host.getNavigation().moveTo(this.attackTarget, this.speed);
                 }
-                if (this.host.getNavigation().getPath() != null) {
-                    Node finalPathPoint = this.host.getNavigation().getPath().getEndNode();
-                    if (finalPathPoint != null && this.attackTarget.distanceToSqr(finalPathPoint.x, finalPathPoint.y, finalPathPoint.z) < 1) {
+                Path currentPath = this.host.getNavigation().getPath();
+                if (moved && currentPath != null) {
+                    if (this.pathCanReachAttackTarget(currentPath.getEndNode())) {
                         this.failedPathFindingPenalty = 0;
                     } else {
                         this.failedPathFindingPenalty += this.getFailedPathFindingPenalty();
@@ -276,5 +278,26 @@ public class AttackMeleeGoal extends Goal {
             return this.failedPathFindingPenaltyPlayerMax;
         }
         return this.failedPathFindingPenaltyMax;
+    }
+
+    /**
+     * Whether a path's end node actually lands within melee reach of the target. The old test
+     * ("end node within 1 block of the target") counted a path that merely stopped short as a
+     * failure, so the repath penalty accumulated on perfectly usable paths.
+     */
+    private boolean pathCanReachAttackTarget(Node node) {
+        if (node == null || this.attackTarget == null) {
+            return false;
+        }
+        double xDistance = this.attackTarget.position().x() - ((double) node.x + 0.5);
+        double zDistance = this.attackTarget.position().z() - ((double) node.z + 0.5);
+        double horizontalDistanceSq = xDistance * xDistance + zDistance * zDistance;
+        double attackReach = Math.sqrt(this.host.getMeleeAttackRange(this.attackTarget, this.attackRange)) + 1.0;
+        double targetPathY = this.attackTarget.getBoundingBox().minY;
+        if (this.host.isFlying()) {
+            targetPathY += this.host.getFlightOffset();
+        }
+        double verticalReach = Math.max(2.0, (this.host.getBbHeight() + this.attackTarget.getBbHeight()) + Math.abs(this.host.getFlightOffset()));
+        return horizontalDistanceSq <= attackReach * attackReach && Math.abs(node.y - targetPathY) <= verticalReach;
     }
 }
