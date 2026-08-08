@@ -13,6 +13,9 @@ import net.minecraft.world.level.Level;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import net.minecraft.world.level.chunk.LevelChunk;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.levelgen.Heightmap;
 
 public class SpawnLocation {
     /** Spawn Locations define where spawns will take place, how these work can vary based on the type of Spawn Trigger. **/
@@ -165,5 +168,30 @@ public class SpawnLocation {
 
     protected boolean isBlockLoaded(Level world, BlockPos blockPos) {
         return blockPos != null && this.isColumnLoaded(world, blockPos.getX(), blockPos.getZ());
+    }
+
+    /**
+     * Height of the column WITHOUT forcing the chunk to load; Integer.MIN_VALUE when it isn't
+     * loaded. Level.getHeight()/getHeightmapPos() will generate the chunk, which turns a cheap
+     * spawn probe into a chunk-load cascade.
+     */
+    protected int getLoadedHeight(Level world, Heightmap.Types heightmapType, int x, int z) {
+        LevelChunk chunk = this.getLoadedChunk(world, x, z);
+        if (chunk == null) {
+            return Integer.MIN_VALUE;
+        }
+        return chunk.getHeight(heightmapType, x & 15, z & 15) + 1;
+    }
+
+    protected LevelChunk getLoadedChunk(Level world, int x, int z) {
+        if (world == null) {
+            return null;
+        }
+        int chunkX = x >> 4;
+        int chunkZ = z >> 4;
+        if (world instanceof ServerLevel serverLevel) {
+            return serverLevel.getChunkSource().getChunkNow(chunkX, chunkZ);
+        }
+        return world.getChunkSource().hasChunk(chunkX, chunkZ) ? world.getChunk(chunkX, chunkZ) : null;
     }
 }

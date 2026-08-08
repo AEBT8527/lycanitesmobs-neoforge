@@ -185,7 +185,10 @@ public class BlockSpawnLocation extends SpawnLocation {
             return false;
         }
         if (!this.surface || !this.underground) {
-            int surfaceY = world.getHeight(Heightmap.Types.OCEAN_FLOOR, blockPos.getX(), blockPos.getZ());
+            int surfaceY = this.getLoadedHeight(world, Heightmap.Types.OCEAN_FLOOR, blockPos.getX(), blockPos.getZ());
+            if (surfaceY == Integer.MIN_VALUE) {
+                return false;
+            }
             boolean isSurface = blockPos.getY() >= surfaceY;
             if (isSurface) {
                 if (!this.surface) {

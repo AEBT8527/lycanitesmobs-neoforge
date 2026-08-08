@@ -36,6 +36,8 @@ import net.neoforged.bus.api.Event;
 import net.neoforged.bus.api.SubscribeEvent;
 
 import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Injects Lycanites Mobs into vanilla/modded structure spawn pools at server start.
@@ -51,6 +53,7 @@ public class StructureSpawnInjector extends JSONLoader {
     private static StructureSpawnInjector INSTANCE;
 
     private final List<StructureSpawnConfig> configs = new ArrayList<>();
+    private final Map<EntityType<?>, List<StructureSpawnConfig>> cappedConfigsByType = new HashMap<>();
 
     public static StructureSpawnInjector getInstance() {
         if (INSTANCE == null) {
@@ -149,6 +152,11 @@ public class StructureSpawnInjector extends JSONLoader {
 
         LMHelperClass.logDebug("structurespawners",
                 "=== Structure spawn injection complete. " + injectedCount + " structure(s) modified. ===");
+
+        // Must run here, not at load time: resolvedTypes is only populated by
+        // buildSpawnerData() above, so indexing earlier would build an empty map and
+        // silently disable every structure spawn cap.
+        this.indexCappedConfigsByType();
     }
 
     /**
@@ -166,21 +174,17 @@ public class StructureSpawnInjector extends JSONLoader {
         EntityType<?> type = mob.getType();
         BlockPos pos = mob.blockPosition();
 
-        boolean relevant = false;
-        for (StructureSpawnConfig config : this.configs) {
-            if (config.enabled && config.maxInStructure >= 0 && config.resolvedTypes.contains(type)) {
-                relevant = true;
-                break;
-            }
-        }
-        if (!relevant) return;
+        // Indexed by entity type; this fires for every mob spawn attempt, and the old form
+        // walked every config comparing resolved type sets each time.
+        List<StructureSpawnConfig> relevantConfigs = this.cappedConfigsByType.get(type);
+        if (relevantConfigs == null || relevantConfigs.isEmpty()) return;
 
         Map<Structure, LongSet> structuresAtPos = level.structureManager().getAllStructuresAt(pos);
         if (structuresAtPos.isEmpty()) return;
 
         Registry<Structure> structureRegistry = level.registryAccess().lookupOrThrow(Registries.STRUCTURE);
 
-        for (StructureSpawnConfig config : this.configs) {
+        for (StructureSpawnConfig config : relevantConfigs) {
             if (!config.enabled || config.maxInStructure < 0) continue;
             if (!config.resolvedTypes.contains(type)) continue;
 
@@ -367,6 +371,18 @@ public class StructureSpawnInjector extends JSONLoader {
                 this.minCount = json.get("minCount").getAsInt();
             if (json.has("maxCount"))
                 this.maxCount = json.get("maxCount").getAsInt();
+        }
+    }
+
+    /** Rebuilt whenever configs are (re)loaded. */
+    private void indexCappedConfigsByType() {
+        this.cappedConfigsByType.clear();
+        for (StructureSpawnConfig config : this.configs) {
+            if (config.enabled && config.maxInStructure >= 0) {
+                for (EntityType<?> entityType : config.resolvedTypes) {
+                    this.cappedConfigsByType.computeIfAbsent(entityType, ignored -> new ArrayList<>()).add(config);
+                }
+            }
         }
     }
 }
