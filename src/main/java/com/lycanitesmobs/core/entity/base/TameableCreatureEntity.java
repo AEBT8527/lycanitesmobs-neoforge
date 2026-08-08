@@ -1505,4 +1505,22 @@ public abstract class TameableCreatureEntity extends AgeableCreatureEntity {
     public void playEatSound() {
         this.playSound(ObjectManager.getSound(this.getSoundName() + "_eat"), 1.0F, 1.0F / (this.getRandom().nextFloat() * 0.4F + 0.8F));
     }
+
+    /**
+     * A sitting pet should stand up when something actually lands a hit on it.
+     *
+     * Upstream gates this on a hurtCallDepth counter because Forge's LivingAttackEvent is global
+     * and it needs to know the event belongs to this entity's own in-progress hurt(). NeoForge's
+     * LivingIncomingDamageEvent is fired from inside the damage pipeline of the entity it names,
+     * so that condition is already implied and the counter is unnecessary here.
+     */
+    public void wakeFromAcceptedAttack(DamageSource damageSource) {
+        if (this.isPassive()) {
+            return;
+        }
+        if (this.isInvulnerableTo(damageSource)) {
+            return;
+        }
+        this.setSitting(false);
+    }
 }

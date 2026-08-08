@@ -60,6 +60,8 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
 
 import static com.lycanitesmobs.core.util.helpers.LMHelperClass.cast;
+import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
+import com.lycanitesmobs.core.entity.base.TameableCreatureEntity;
 
 public class GameEventListener {
 
@@ -539,6 +541,13 @@ public class GameEventListener {
         ExtendedPlayer extendedPlayer = ExtendedPlayer.getForPlayer(player);
         if (extendedPlayer != null) {
             extendedPlayer.sendFullStateToClient();
+        }
+    }
+
+    @SubscribeEvent
+    public void onAcceptedLivingAttack(LivingIncomingDamageEvent event) {
+        if (event.getEntity() instanceof TameableCreatureEntity tameableCreature) {
+            tameableCreature.wakeFromAcceptedAttack(event.getSource());
         }
     }
 }

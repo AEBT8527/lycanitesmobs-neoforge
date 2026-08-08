@@ -26,8 +26,11 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.ArrayList;
 import java.util.List;
+import net.minecraft.world.entity.LivingEntity;
 
 public class EntityGrue extends TameableCreatureEntity implements Enemy {
+    private static final double ATTACK_TELEPORT_RANGE_SQ = 32.0D * 32.0D;
+
     public static final byte ATTACK_NONE = 0, ATTACK_SWIPE = 1, ATTACK_BITE = 2;
     private static final EntityDataAccessor<Byte> ATTACK_ANIM = SynchedEntityData.defineId(EntityGrue.class, EntityDataSerializers.BYTE);
 
@@ -66,10 +69,11 @@ public class EntityGrue extends TameableCreatureEntity implements Enemy {
         super.aiStep();
 
         // Random Target Teleporting:
-        if (!this.getCommandSenderWorld().isClientSide && this.hasAttackTarget()) {
+        LivingEntity teleportTarget = this.getTarget();
+        if (!this.getCommandSenderWorld().isClientSide && this.canTeleportBehindTarget(teleportTarget)) {
             if (this.teleportTime-- <= 0) {
                 this.teleportTime = 60 + this.getRandom().nextInt(40);
-                BlockPos teleportPosition = this.getFacingPosition(this.getTarget(), -this.getTarget().getDimensions(Pose.STANDING).width() - 1D, 0);
+                BlockPos teleportPosition = this.getFacingPosition(teleportTarget, -teleportTarget.getDimensions(Pose.STANDING).width() - 1D, 0);
                 if (this.canTeleportTo(teleportPosition)) {
                     this.playJumpSound();
                     this.setPos(teleportPosition.getX(), teleportPosition.getY(), teleportPosition.getZ());
@@ -246,5 +250,14 @@ public class EntityGrue extends TameableCreatureEntity implements Enemy {
             textureName += "_" + suffix;
         }
         return AssetHelper.entityTexture(textureName);
+    }
+
+    /**
+     * Only blink behind a target that is still alive and within range. hasAttackTarget() can be
+     * true for a target that just died or teleported away, and every call below dereferenced
+     * getTarget() unguarded.
+     */
+    private boolean canTeleportBehindTarget(LivingEntity target) {
+        return target != null && target.isAlive() && this.distanceToSqr(target) <= ATTACK_TELEPORT_RANGE_SQ;
     }
 }
