@@ -603,4 +603,15 @@ public class CreatureObjModel extends CreatureModel {
         float offsetZ = toPart.centerZ - fromPart.centerZ;
         this.translate(-offsetX, -offsetY, -offsetZ);
     }
+
+    /** Frees this entity's cached animation state; called when it leaves the client level. */
+    public void removeModelState(Entity entity) {
+        if (entity == null) {
+            return;
+        }
+        this.modelStates.remove(entity);
+        if (this.currentModelState != null && this.currentModelState.entity == entity) {
+            this.currentModelState = null;
+        }
+    }
 }

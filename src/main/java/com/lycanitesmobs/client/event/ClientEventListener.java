@@ -69,6 +69,8 @@ import org.lwjgl.glfw.GLFW;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Objects;
+import net.neoforged.neoforge.event.entity.EntityLeaveLevelEvent;
+import com.lycanitesmobs.client.manager.ModelManager;
 
 @EventBusSubscriber(
         modid = LycanitesMobs.MODID,
@@ -350,6 +352,20 @@ public class ClientEventListener {
                     }
                 }
             }
+        }
+    }
+
+    /**
+     * Frees cached per-entity model animation state when a creature or projectile leaves the
+     * client level; otherwise those maps grow for the whole session.
+     */
+    public void onEntityLeaveLevel(EntityLeaveLevelEvent event) {
+        if (!event.getLevel().isClientSide()) {
+            return;
+        }
+        Entity entity = event.getEntity();
+        if (entity instanceof BaseCreatureEntity || entity instanceof BaseProjectileEntity) {
+            ModelManager.getInstance().removeEntityModelState(entity);
         }
     }
 }
