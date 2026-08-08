@@ -73,6 +73,10 @@ public class WorldGenManager {
             list.add(Holder.direct(Blocks.GRANITE));
             list.add(Holder.direct(Blocks.DIORITE));
             list.add(Holder.direct(Blocks.ANDESITE));
+            // Springs also generate in the deepslate layer now; the data JSONs list these too,
+            // but this code path builds its own configuration and would otherwise ignore them.
+            list.add(Holder.direct(Blocks.DEEPSLATE));
+            list.add(Holder.direct(Blocks.TUFF));
             SpringConfiguration springConfig = new SpringConfiguration(
                     state.getFluidState(),
                     true,

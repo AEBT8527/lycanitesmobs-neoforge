@@ -100,6 +100,7 @@ public class EntityRoa extends RideableCreatureEntity implements Enemy {
                                 0,
                                 zDist / xzDist * factor + entity.getDeltaMovement().z() * factor
                         );
+                        entity.hurtMarked = true;
                     }
                     if (player != null)
                         player.connection.send(new ClientboundSetEntityMotionPacket(entity));
