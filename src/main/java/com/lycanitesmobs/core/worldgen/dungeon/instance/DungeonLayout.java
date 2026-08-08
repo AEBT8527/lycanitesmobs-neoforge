@@ -11,6 +11,9 @@ import net.minecraft.world.level.ChunkPos;
 import java.util.*;
 
 public class DungeonLayout {
+    private static final int MIN_UNDERGROUND_SNAKE_LENGTH = 3;
+    private static final int MAX_BOUNDED_UNDERGROUND_SNAKE_LENGTH = 3;
+
     /** A Dungeon Layout is a procedurally generated collection of connecting Sectors with Structures and a Theme as well as other properties. **/
 
     /**
@@ -182,8 +185,12 @@ public class DungeonLayout {
             int sectorCount = this.getRandomSectorCount(random);
             LMHelperClass.logDebug("Dungeon", "Starting Underground Level -" + level + " - Sector Count: " + sectorCount);
 
-            int snakeCount = Math.round((float) sectorCount * 0.4f);
-            exitSector = this.snake(random, exitSector, Math.max(3, snakeCount));
+            // Clamped to exactly MIN/MAX (3): long snakes produced sprawling underground
+            // levels. Note the old code passed max(3, n) to snake() but subtracted the
+            // UNCLAMPED n below, so the sector budget drifted.
+            int snakeCount = Math.min(Math.max(MIN_UNDERGROUND_SNAKE_LENGTH, Math.round((float) sectorCount * 0.4f)),
+                    MAX_BOUNDED_UNDERGROUND_SNAKE_LENGTH);
+            exitSector = this.snake(random, exitSector, snakeCount);
             LMHelperClass.logDebug("Dungeon", "Snake Sectors: " + snakeCount + " - From Sector: " + exitSector);
             if (exitSector == null) {
                 onLastLevel = true;
