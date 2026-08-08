@@ -106,7 +106,7 @@ public class RandomSpawnLocation extends BlockSpawnLocation {
         int heightmapY = Integer.MIN_VALUE;
         if (this.surface || this.underground) {
             if (this.surface) {
-                heightmapY = world.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, new BlockPos(x, 0, z)).getY();
+                heightmapY = this.getLoadedHeight(world, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, x, z);
             }
         }
 
@@ -281,7 +281,11 @@ public class RandomSpawnLocation extends BlockSpawnLocation {
 
         BlockPos.MutableBlockPos spawnPos = new BlockPos.MutableBlockPos(originX, minY, originZ);
         BlockPos.MutableBlockPos headPos = new BlockPos.MutableBlockPos(originX, minY + 1, originZ);
-        int heightmapSurfaceY = world.getHeight(Heightmap.Types.OCEAN_FLOOR, originX, originZ);
+        int heightmapSurfaceY = this.getLoadedHeight(world, Heightmap.Types.OCEAN_FLOOR, originX, originZ);
+        if (heightmapSurfaceY == Integer.MIN_VALUE) {
+            // column not loaded - refuse rather than force the chunk in
+            return Integer.MIN_VALUE;
+        }
 
         for (int nextY = minY; nextY <= maxY; nextY++) {
             if (nextY > originY - rangeMinY && nextY < originY + rangeMinY)
