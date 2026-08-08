@@ -5,11 +5,8 @@ import com.lycanitesmobs.core.entity.base.BaseCreatureEntity;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import org.joml.Vector4f;
 
-@OnlyIn(Dist.CLIENT)
 public class LayerCreatureEquipment extends LayerCreatureBase {
     public String equipmentSlot;
 

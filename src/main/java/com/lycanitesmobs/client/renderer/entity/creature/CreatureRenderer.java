@@ -20,14 +20,11 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.client.event.RenderLivingEvent;
 import net.neoforged.neoforge.client.event.RenderNameTagEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.bus.api.Event;
 
-@OnlyIn(Dist.CLIENT)
 public class CreatureRenderer<T extends BaseCreatureEntity> extends MobRenderer<T, CreatureModel<T>> {
     public CreatureRenderer(String entityID, EntityRendererProvider.Context renderManager, float shadowSize) {
         super(renderManager, ModelManager.getInstance().getCreatureModel(CreatureManager.getInstance().getCreature(entityID), null), shadowSize);

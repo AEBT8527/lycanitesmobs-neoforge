@@ -5,15 +5,12 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.server.packs.resources.PreparableReloadListener;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.util.profiling.ProfilerFiller;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 
-@OnlyIn(Dist.CLIENT)
 public class LanguageLoader implements PreparableReloadListener {
     public static LanguageLoader INSTANCE;
 

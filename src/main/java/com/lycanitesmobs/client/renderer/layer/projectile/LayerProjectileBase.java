@@ -7,12 +7,9 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.resources.ResourceLocation;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 
-@OnlyIn(Dist.CLIENT)
 public class LayerProjectileBase extends RenderLayer<BaseProjectileEntity, ProjectileModel> {
     public ProjectileModelRenderer renderer;
     public String name;

@@ -8,11 +8,8 @@ import com.lycanitesmobs.client.renderer.layer.creature.LayerCreatureBase;
 import com.lycanitesmobs.client.renderer.layer.creature.LayerCreatureEffect;
 import com.lycanitesmobs.core.entity.base.BaseCreatureEntity;
 import net.minecraft.world.entity.Entity;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import org.joml.Vector2f;
 
-@OnlyIn(Dist.CLIENT)
 public class ModelCinder extends ModelTemplateElemental {
     public ModelCinder() {
         this(1.0F);

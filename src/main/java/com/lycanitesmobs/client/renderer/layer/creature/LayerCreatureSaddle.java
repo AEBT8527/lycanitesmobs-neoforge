@@ -4,10 +4,7 @@ import com.lycanitesmobs.client.renderer.entity.creature.CreatureRenderer;
 import com.lycanitesmobs.core.entity.base.BaseCreatureEntity;
 import com.lycanitesmobs.core.entity.base.RideableCreatureEntity;
 import net.minecraft.resources.ResourceLocation;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
-@OnlyIn(Dist.CLIENT)
 public class LayerCreatureSaddle extends LayerCreatureBase {
     public LayerCreatureSaddle(CreatureRenderer renderer) {
         super(renderer);

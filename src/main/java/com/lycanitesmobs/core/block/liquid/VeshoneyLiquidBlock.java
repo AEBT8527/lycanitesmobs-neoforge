@@ -14,8 +14,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
 import java.util.function.Supplier;
 
@@ -57,7 +55,6 @@ public class VeshoneyLiquidBlock extends BaseLiquidBlock {
         super.entityInside(blockState, world, pos, entity);
     }
 
-    @OnlyIn(Dist.CLIENT)
     public void animateTick(BlockState state, Level world, BlockPos pos, RandomSource random) {
         float f;
         float f1;

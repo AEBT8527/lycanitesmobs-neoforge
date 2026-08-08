@@ -10,8 +10,6 @@ import com.lycanitesmobs.core.entity.LycanitesMobType;
 import net.minecraft.world.entity.monster.Skeleton;
 import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.level.Level;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import org.joml.Vector3d;
 
 import java.util.List;
@@ -199,7 +197,6 @@ public class EntityWisp extends TameableCreatureEntity {
 		return 1.0F;
 	}
 
-	@OnlyIn(Dist.CLIENT)
 	public int getBrightnessForRender() {
 		return 15728880;
 	}

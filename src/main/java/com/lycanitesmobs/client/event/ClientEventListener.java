@@ -60,7 +60,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.client.event.*;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 import com.lycanitesmobs.client.event.OverlayEvents;
@@ -225,7 +224,6 @@ public class ClientEventListener {
         event.register(KeyManager.minionSelection);
     }
 
-        @OnlyIn(Dist.CLIENT)
     public void onItemTooltip(ItemTooltipEvent event) {
         int sharpness = ItemManager.getInstance().getEquipmentSharpnessRepair(event.getItemStack());
         int mana = ItemManager.getInstance().getEquipmentManaRepair(event.getItemStack());
@@ -247,7 +245,6 @@ public class ClientEventListener {
         }
     }
 
-        @OnlyIn(Dist.CLIENT)
     public void onFogDensity(ViewportEvent.RenderFog event) {
         GameRenderer fogRenderer = event.getRenderer();
         LivingEntity entityLiving = Minecraft.getInstance().player;
@@ -260,14 +257,12 @@ public class ClientEventListener {
         }
     }
 
-        @OnlyIn(Dist.CLIENT)
     public void onBlockOverlay(RenderBlockScreenEffectEvent event) {
         if (event.getBlockState().getBlock() == Blocks.FIRE && (!event.getPlayer().isOnFire() || event.getPlayer().hasEffect(MobEffects.FIRE_RESISTANCE))) {
             event.setCanceled(true);
         }
     }
 
-        @OnlyIn(Dist.CLIENT)
     public void onRenderLevelStage(RenderLevelStageEvent event) {
         if (event.getStage() == RenderLevelStageEvent.Stage.AFTER_SKY) {
             FearVisualHandler.uploadDimmedForWorld();
@@ -278,7 +273,6 @@ public class ClientEventListener {
         }
     }
 
-        @OnlyIn(Dist.CLIENT)
     public void onPlaySound(PlaySoundEvent event) {
         if (!FearAudioHandler.isActive()) return;
         SoundInstance sound = event.getSound();

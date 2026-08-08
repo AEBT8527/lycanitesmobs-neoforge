@@ -8,12 +8,9 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.resources.ResourceLocation;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 
-@OnlyIn(Dist.CLIENT)
 public class LayerCreatureBase<T extends BaseCreatureEntity> extends RenderLayer<T, CreatureModel<T>> {
     public CreatureRenderer renderer;
     public String name;

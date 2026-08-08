@@ -22,14 +22,11 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.resources.ResourceLocation;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import org.joml.AxisAngle4f;
 import org.joml.Quaternionf;
 
 import java.util.List;
 
-@OnlyIn(Dist.CLIENT)
 public class ProjectileModelRenderer extends EntityRenderer<BaseProjectileEntity> implements RenderLayerParent<BaseProjectileEntity, ProjectileModel> {
     protected final List<RenderLayer<BaseProjectileEntity, ProjectileModel>> renderLayers = Lists.newArrayList(); // TODO Layers for projectiles.
     protected ProjectileModel renderModel;

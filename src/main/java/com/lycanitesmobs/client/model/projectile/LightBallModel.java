@@ -8,11 +8,8 @@ import com.lycanitesmobs.client.renderer.entity.projectile.ProjectileModelRender
 import com.lycanitesmobs.client.renderer.layer.projectile.LayerProjectileBase;
 import com.lycanitesmobs.client.renderer.layer.projectile.LayerProjectileEffect;
 import com.lycanitesmobs.core.entity.base.BaseProjectileEntity;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import org.joml.Vector4f;
 
-@OnlyIn(Dist.CLIENT)
 public class LightBallModel extends ProjectileObjModel {
     LayerProjectileBase ballGlowLayer;
 

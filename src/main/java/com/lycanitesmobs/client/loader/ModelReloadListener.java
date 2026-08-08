@@ -6,14 +6,11 @@ import com.lycanitesmobs.core.util.helpers.LMHelperClass;
 import net.minecraft.server.packs.resources.PreparableReloadListener;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.util.profiling.ProfilerFiller;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 
-@OnlyIn(Dist.CLIENT)
 public class ModelReloadListener implements PreparableReloadListener {
     public static final ModelReloadListener INSTANCE = new ModelReloadListener();
 

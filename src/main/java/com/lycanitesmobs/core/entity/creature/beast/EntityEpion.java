@@ -19,8 +19,6 @@ import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import org.joml.Vector3d;
 
 public class EntityEpion extends RideableCreatureEntity implements Enemy {
@@ -228,7 +226,6 @@ public class EntityEpion extends RideableCreatureEntity implements Enemy {
     /**
      * Returns a larger bounding box for rendering this large entity.
      **/
-    @OnlyIn(Dist.CLIENT)
     public AABB getBoundingBoxForCulling() {
         return this.getBoundingBox().inflate(10, 10, 10).move(0, -5, 0);
     }

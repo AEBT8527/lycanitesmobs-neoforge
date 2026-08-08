@@ -9,8 +9,6 @@ import net.minecraft.util.Mth;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.player.Player;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
 /**
  * Looping, tickable sound instance for the fear heartbeat.
@@ -23,7 +21,6 @@ import net.neoforged.api.distmarker.OnlyIn;
  * Marks itself stopped when the fear effect is removed. Exempt from global
  * muffling. Pitch can be updated live when the fear amplifier changes.
  */
-@OnlyIn(Dist.CLIENT)
 public class FearHeartbeatSound extends AbstractSoundInstance implements TickableSoundInstance {
 
     private static final float BASE_VOLUME = 2F;

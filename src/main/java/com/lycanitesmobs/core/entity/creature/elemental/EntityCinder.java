@@ -18,8 +18,6 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.level.Level;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -221,7 +219,6 @@ public class EntityCinder extends TameableCreatureEntity implements Enemy, IFusa
         return 1.0F;
     }
 
-    @OnlyIn(Dist.CLIENT)
     public int getBrightnessForRender() {
         return 15728880;
     }

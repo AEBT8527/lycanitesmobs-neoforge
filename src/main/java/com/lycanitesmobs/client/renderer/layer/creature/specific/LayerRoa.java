@@ -6,11 +6,8 @@ import com.lycanitesmobs.core.entity.base.BaseCreatureEntity;
 
 import com.lycanitesmobs.core.entity.creature.aquatic.EntityRoa;
 import net.minecraft.resources.ResourceLocation;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import org.joml.Vector4f;
 
-@OnlyIn(Dist.CLIENT)
 public class LayerRoa extends LayerCreatureBase {
 
     // ==================================================

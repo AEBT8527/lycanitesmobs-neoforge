@@ -6,8 +6,6 @@ import com.lycanitesmobs.core.capabilities.entity.ExtendedPlayer;
 import com.lycanitesmobs.core.data.info.creature.CreatureInfo;
 import com.lycanitesmobs.core.manager.CreatureManager;
 import net.minecraft.client.gui.GuiGraphics;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
 public class SummoningPedestalList extends BaseList<SummoningPedestalScreen> {
 	public ExtendedPlayer playerExt;
@@ -34,7 +32,6 @@ public class SummoningPedestalList extends BaseList<SummoningPedestalScreen> {
 		return this.screen.getSelectedMinionName() != null && this.screen.getSelectedMinionName().equals(((SummoningPedestalEntry)this.getEntry(index)).minionName);
 	}
 
-	@OnlyIn(Dist.CLIENT)
 	public class SummoningPedestalEntry extends BaseListEntry {
 		SummoningPedestalList parentGUI;
 		String minionName;

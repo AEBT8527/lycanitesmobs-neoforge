@@ -30,8 +30,6 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
@@ -180,7 +178,6 @@ public class OverlayEvents {
     // ==================================================
     //                 Debug Overlay
     // ==================================================
-    @OnlyIn(Dist.CLIENT)
     public static void onGameOverlay(OverlayManager.Text event) {
         if (!ConfigDebug.INSTANCE.creatureOverlay.get()) {
             return;

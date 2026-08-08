@@ -10,10 +10,7 @@ import com.lycanitesmobs.core.entity.creature.elemental.EntitySpectre;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
-@OnlyIn(Dist.CLIENT)
 public class ModelSpectre extends ModelTemplateElemental {
 
 	// ==================================================

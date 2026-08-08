@@ -38,8 +38,6 @@ import net.minecraft.world.entity.projectile.ThrowableProjectile;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.scores.Team;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
 import javax.annotation.Nonnull;
 import java.util.HashMap;
@@ -978,7 +976,6 @@ public abstract class TameableCreatureEntity extends AgeableCreatureEntity {
     }
 
 
-    @OnlyIn(Dist.CLIENT)
     public void handleEntityEvent(byte status) {
         if (status == 7)
             this.playTameEffect(true);

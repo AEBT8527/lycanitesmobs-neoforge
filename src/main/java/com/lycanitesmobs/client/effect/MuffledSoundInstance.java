@@ -7,8 +7,6 @@ import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.client.sounds.WeighedSoundEvents;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
 /**
  * A delegating wrapper around a {@link SoundInstance} that applies volume and pitch
@@ -17,7 +15,6 @@ import net.neoforged.api.distmarker.OnlyIn;
  * Use the static {@link #wrap(SoundInstance, float, float)} factory to automatically
  * produce the correct subtype (regular or {@link TickableSoundInstance}).
  */
-@OnlyIn(Dist.CLIENT)
 public class MuffledSoundInstance implements SoundInstance {
 
     protected final SoundInstance wrapped;

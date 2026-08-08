@@ -10,12 +10,9 @@ import com.lycanitesmobs.client.renderer.layer.creature.LayerCreatureScrolling;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 
-@OnlyIn(Dist.CLIENT)
 public class ModelXaphan extends ModelTemplateElemental {
 
     // ==================================================

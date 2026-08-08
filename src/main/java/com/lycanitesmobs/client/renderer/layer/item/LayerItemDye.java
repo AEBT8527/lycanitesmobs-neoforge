@@ -4,12 +4,9 @@ import com.lycanitesmobs.client.renderer.item.IItemModelRenderer;
 import com.lycanitesmobs.core.item.equipment.ItemEquipmentPart;
 
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import org.joml.Vector3d;
 import org.joml.Vector4f;
 
-@OnlyIn(Dist.CLIENT)
 public class LayerItemDye extends LayerItem {
 
     public LayerItemDye(IItemModelRenderer renderer, String name) {

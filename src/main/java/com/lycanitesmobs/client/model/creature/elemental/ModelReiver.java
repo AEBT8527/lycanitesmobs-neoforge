@@ -8,11 +8,8 @@ import com.lycanitesmobs.client.renderer.layer.creature.LayerCreatureBase;
 import com.lycanitesmobs.client.renderer.layer.creature.LayerCreatureEffect;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import org.joml.Vector4f;
 
-@OnlyIn(Dist.CLIENT)
 public class ModelReiver extends ModelTemplateElemental {
 	
 	// ==================================================

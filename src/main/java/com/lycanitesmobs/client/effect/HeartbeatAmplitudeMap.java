@@ -4,8 +4,6 @@ import com.lycanitesmobs.LycanitesMobs;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.Resource;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import org.lwjgl.stb.STBVorbis;
 import org.lwjgl.stb.STBVorbisInfo;
 import org.lwjgl.system.MemoryStack;
@@ -28,7 +26,6 @@ import java.util.Optional;
  * Playback-time lookups account for pitch scaling (faster pitch = faster traversal)
  * and wrap around the duration for seamless looping.
  */
-@OnlyIn(Dist.CLIENT)
 public class HeartbeatAmplitudeMap {
 
     private static final float WINDOW_SECONDS = 0.02F;

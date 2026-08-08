@@ -90,8 +90,6 @@ import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import org.joml.Vector3d;
 import org.joml.Vector3f;
 
@@ -5733,7 +5731,6 @@ public abstract class BaseCreatureEntity extends PathfinderMob {
     /**
      * Gets whether this mob should always display its nametag client side.
      **/
-    @OnlyIn(Dist.CLIENT)
     @Override
     public boolean shouldShowName() {
         if (this.getVariant() != null && !this.hasCustomName()) {

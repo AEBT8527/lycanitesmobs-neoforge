@@ -17,8 +17,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
 public class BlockSmitefire extends BlockFireBase {
 
@@ -80,7 +78,6 @@ public class BlockSmitefire extends BlockFireBase {
     }
 
     @Override
-    @OnlyIn(Dist.CLIENT)
     public void animateTick(BlockState state, Level world, BlockPos pos, RandomSource random) {
         double x = pos.getX();
         double y = pos.getY();

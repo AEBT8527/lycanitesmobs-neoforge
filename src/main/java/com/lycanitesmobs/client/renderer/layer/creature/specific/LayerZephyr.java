@@ -6,12 +6,9 @@ import com.lycanitesmobs.client.renderer.layer.creature.LayerCreatureBase;
 import com.lycanitesmobs.core.entity.base.BaseCreatureEntity;
 
 import net.minecraft.resources.ResourceLocation;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 
-@OnlyIn(Dist.CLIENT)
 public class LayerZephyr extends LayerCreatureBase {
 
     // ==================================================

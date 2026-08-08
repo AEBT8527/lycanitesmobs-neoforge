@@ -2,10 +2,7 @@ package com.lycanitesmobs.client.model.creature.elemental;
 
 import com.lycanitesmobs.LycanitesMobs;
 import com.lycanitesmobs.client.model.template.ModelTemplateElemental;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
-@OnlyIn(Dist.CLIENT)
 public class ModelGeonach extends ModelTemplateElemental {
 	
 	// ==================================================

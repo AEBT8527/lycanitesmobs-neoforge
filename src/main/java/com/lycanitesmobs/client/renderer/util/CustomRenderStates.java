@@ -12,8 +12,6 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.ShaderInstance;
 import net.minecraft.client.renderer.texture.MissingTextureAtlasSprite;
 import net.minecraft.resources.ResourceLocation;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import org.joml.Vector4f;
 import org.lwjgl.opengl.GL11;
 
@@ -167,41 +165,35 @@ public class CustomRenderStates extends RenderStateShard {
     /**
      * The lengths I go to to keep old rendering logic...
      */
-    @OnlyIn(Dist.CLIENT)
     public static void assertThread(Supplier<Boolean> p_assertThread_0_) {
         if (!(Boolean) p_assertThread_0_.get()) {
             throw new IllegalStateException("Rendersystem called from wrong thread");
         }
     }
 
-    @OnlyIn(Dist.CLIENT)
     public static void setupOutline() {
         RenderSystem.assertOnRenderThread();
         _texEnv(8960, 8704, 34160);
         color1arg(7681, 34168);
     }
 
-    @OnlyIn(Dist.CLIENT)
     public static void _texEnv(int p_227643_0_, int p_227643_1_, int p_227643_2_) {
         RenderSystem.assertOnRenderThread();
         GL11.glTexEnvi(p_227643_0_, p_227643_1_, p_227643_2_);
     }
 
-    @OnlyIn(Dist.CLIENT)
     private static void color1arg(int p_227751_0_, int p_227751_1_) {
         _texEnv(8960, 34161, p_227751_0_);
         _texEnv(8960, 34176, p_227751_1_);
         _texEnv(8960, 34192, 768);
     }
 
-    @OnlyIn(Dist.CLIENT)
     public static void teardownOutline() {
         RenderSystem.assertOnRenderThread();
         _texEnv(8960, 8704, 8448);
         color3arg(8448, 5890, 34168, 34166);
     }
 
-    @OnlyIn(Dist.CLIENT)
     private static void color3arg(int p_227720_0_, int p_227720_1_, int p_227720_2_, int p_227720_3_) {
         _texEnv(8960, 34161, p_227720_0_);
         _texEnv(8960, 34176, p_227720_1_);
@@ -212,7 +204,6 @@ public class CustomRenderStates extends RenderStateShard {
         _texEnv(8960, 34194, 770);
     }
 
-    @OnlyIn(Dist.CLIENT)
     public static final TexturingStateShard OUTLINE_TEXTURING = new TexturingStateShard("outline_texturing", () -> {
         assertThread(RenderSystem::isOnRenderThread);
         setupOutline();

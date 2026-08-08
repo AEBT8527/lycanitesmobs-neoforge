@@ -9,14 +9,11 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import net.minecraft.client.model.EntityModel;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import org.joml.AxisAngle4f;
 import org.joml.Quaternionf;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 
-@OnlyIn(Dist.CLIENT)
 public class ProjectileModel extends EntityModel<BaseProjectileEntity> implements IAnimationModel {
     public PoseStack matrixStack;
 

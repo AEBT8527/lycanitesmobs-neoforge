@@ -3,10 +3,7 @@ package com.lycanitesmobs.client.model.creature.biped;
 import com.lycanitesmobs.LycanitesMobs;
 import com.lycanitesmobs.client.model.template.ModelTemplateBiped;
 import net.minecraft.world.entity.LivingEntity;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
-@OnlyIn(Dist.CLIENT)
 public class ModelGrigori extends ModelTemplateBiped {
     public ModelGrigori() {
         this(1.0F);

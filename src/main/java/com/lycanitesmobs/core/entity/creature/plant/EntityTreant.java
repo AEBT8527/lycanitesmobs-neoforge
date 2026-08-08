@@ -20,8 +20,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
 public class EntityTreant extends BaseCreatureEntity implements Enemy, IGroupHeavy {
 
@@ -170,7 +168,6 @@ public class EntityTreant extends BaseCreatureEntity implements Enemy, IGroupHea
     /**
      * Returns a larger bounding box for rendering this large entity.
      **/
-    @OnlyIn(Dist.CLIENT)
     public AABB getBoundingBoxForCulling() {
         return this.getBoundingBox().inflate(50, 20, 50).move(0, -10, 0);
     }

@@ -5,11 +5,8 @@ import com.lycanitesmobs.LycanitesMobs;
 import com.lycanitesmobs.client.model.projectile.base.ProjectileObjModel;
 import com.lycanitesmobs.client.renderer.layer.projectile.LayerProjectileBase;
 import com.lycanitesmobs.core.entity.base.BaseProjectileEntity;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import org.joml.Vector4f;
 
-@OnlyIn(Dist.CLIENT)
 public class ChaosOrbModel extends ProjectileObjModel {
     public ChaosOrbModel() {
         this(1.0F);
