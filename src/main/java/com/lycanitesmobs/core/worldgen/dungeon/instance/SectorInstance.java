@@ -835,7 +835,11 @@ public class SectorInstance {
         }
 
         worldWriter.setBlock(blockPos, blockState, flags);
-        this.applyPlacedBlockRuntimeData(worldWriter, blockPos, blockState, random);
+        // Only these two carry runtime data; the old code ran the whole roll for every block
+        // placed in the dungeon.
+        if (blockState.getBlock() == Blocks.SPAWNER || blockState.getBlock() == Blocks.CHEST) {
+            this.applyPlacedBlockRuntimeData(worldWriter, blockPos, blockState, random);
+        }
     }
 
     private int getPlacementFlags(BlockState blockState) {

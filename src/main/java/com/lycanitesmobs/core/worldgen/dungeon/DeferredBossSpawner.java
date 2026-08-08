@@ -46,11 +46,13 @@ public class DeferredBossSpawner {
     private static final Map<Long, List<BossSpawnRequest>> PENDING = new ConcurrentHashMap<>();
     private static final Map<ResourceKey<Level>, List<BossSpawnRequest>> READY = new ConcurrentHashMap<>();
     private static final Set<Long> SPAWNED = ConcurrentHashMap.newKeySet();
+    /** Positions already queued but not yet spawned - stops the same boss being enqueued twice. */
+    private static final Set<Long> QUEUED = ConcurrentHashMap.newKeySet();
 
     public static void enqueue(ResourceKey<Level> dimension, BlockPos pos, MobSpawn mobSpawn, int roomRadius,
                                @Nullable ServerLevel level) {
         long posKey = pos.asLong();
-        if (SPAWNED.contains(posKey)) {
+        if (SPAWNED.contains(posKey) || !QUEUED.add(posKey)) {
             return;
         }
 
@@ -123,6 +125,7 @@ public class DeferredBossSpawner {
     private static void spawnBoss(ServerLevel level, BossSpawnRequest request) {
         long posKey = request.pos.asLong();
         if (!SPAWNED.add(posKey)) {
+            QUEUED.remove(posKey);
             return;
         }
 
@@ -131,6 +134,7 @@ public class DeferredBossSpawner {
         LivingEntity entity = request.mobSpawn.createEntity(level);
         if (entity == null) {
             SPAWNED.remove(posKey);
+            QUEUED.remove(posKey);
             return;
         }
 
@@ -140,6 +144,8 @@ public class DeferredBossSpawner {
             creature.setHome(request.pos.getX(), request.pos.getY(), request.pos.getZ(), request.roomRadius);
             creature.markSpawnedAsBoss();
         }
+
+        QUEUED.remove(posKey);
 
         request.mobSpawn.onSpawned(entity, null);
         DeferredLevelActionManager.spawnEntityNow(level, entity);

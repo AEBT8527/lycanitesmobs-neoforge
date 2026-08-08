@@ -95,23 +95,37 @@ final class SectorBuildSequence {
 
                 int frontZ = worldArea.minZ() + layerIndex;
                 int backZ = worldArea.maxZ() - layerIndex;
+                boolean frontInChunk = frontZ >= area.minZ() && frontZ <= area.maxZ();
+                boolean backInChunk = backZ >= area.minZ() && backZ <= area.maxZ();
                 for (int x = area.minX(); x <= area.maxX(); x++) {
                     char buildChar = layer.getColumn(progressY, fullY, x - worldArea.minX(), worldArea.widthX(), row);
                     BlockState blockState = sector.getWallBlock(buildChar, random);
                     if (blockState.getBlock() != Blocks.CAVE_AIR) {
-                        sink.place(new SectorBuildStep(new BlockPos(x, y, frontZ), blockState, Direction.SOUTH));
-                        sink.place(new SectorBuildStep(new BlockPos(x, y, backZ), blockState, Direction.NORTH));
+                        // frontZ/backZ come from the UNCLIPPED area, so they can fall outside the
+                        // chunk being generated even though the x loop is clipped.
+                        if (frontInChunk) {
+                            sink.place(new SectorBuildStep(new BlockPos(x, y, frontZ), blockState, Direction.SOUTH));
+                        }
+                        if (backInChunk) {
+                            sink.place(new SectorBuildStep(new BlockPos(x, y, backZ), blockState, Direction.NORTH));
+                        }
                     }
                 }
 
                 int leftX = worldArea.minX() + layerIndex;
                 int rightX = worldArea.maxX() - layerIndex;
+                boolean leftInChunk = leftX >= area.minX() && leftX <= area.maxX();
+                boolean rightInChunk = rightX >= area.minX() && rightX <= area.maxX();
                 for (int z = area.minZ(); z <= area.maxZ(); z++) {
                     char buildChar = layer.getColumn(progressY, fullY, z - worldArea.minZ(), worldArea.widthZ(), row);
                     BlockState blockState = sector.getWallBlock(buildChar, random);
                     if (blockState.getBlock() != Blocks.CAVE_AIR) {
-                        sink.place(new SectorBuildStep(new BlockPos(leftX, y, z), blockState, Direction.EAST));
-                        sink.place(new SectorBuildStep(new BlockPos(rightX, y, z), blockState, Direction.WEST));
+                        if (leftInChunk) {
+                            sink.place(new SectorBuildStep(new BlockPos(leftX, y, z), blockState, Direction.EAST));
+                        }
+                        if (rightInChunk) {
+                            sink.place(new SectorBuildStep(new BlockPos(rightX, y, z), blockState, Direction.WEST));
+                        }
                     }
                 }
             }
