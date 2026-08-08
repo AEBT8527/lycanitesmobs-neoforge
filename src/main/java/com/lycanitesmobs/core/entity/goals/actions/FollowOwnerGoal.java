@@ -7,6 +7,10 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class FollowOwnerGoal extends FollowGoal {
+    private static final int FOLLOW_TELEPORT_RADIUS = 2;
+    private static final int[] AIRBORNE_TELEPORT_Y_OFFSETS = {1, 0, 2, -1, 3};
+    private static final int[] GROUNDED_TELEPORT_Y_OFFSETS = {0, 1, -1};
+
 	// Targets:
 	TameableCreatureEntity host;
 	
@@ -108,25 +112,7 @@ public class FollowOwnerGoal extends FollowGoal {
 				return;
 			}
 
-	    	int i = Mth.floor(this.getTarget().position().x()) - 2;
-	        int j = Mth.floor(this.getTarget().getBoundingBox().minY);
-	        int k = Mth.floor(this.getTarget().position().z()) - 2;
-
-            if(this.host.isFlying() || this.getTarget().isInWater()) {
-                this.host.moveTo(i, j + 1, k, this.host.yRotO, this.host.xRotO);
-                this.host.clearMovement();
-                return;
-            }
-	
-	        for(int x = -2; x <= 2; ++x) {
-	            for(int z = -2; z <= 2; ++z) {
-	                if(this.canTeleportTo(this.getTarget().blockPosition().offset(x, 0, z))) {
-                        this.host.moveTo((float)(i + x) + 0.5F, j, (float)(k + z) + 0.5F, this.host.yRotO, this.host.xRotO);
-	                    this.host.clearMovement();
-	                    return;
-	                }
-	            }
-	        }
+            this.tryTeleportNearTarget(this.getTarget(), this.host.isFlying() || this.getTarget().isInWater());
     	}
     }
 
@@ -136,4 +122,53 @@ public class FollowOwnerGoal extends FollowGoal {
 	}
     
     //TODO Wait on the ChunkUnload Chunk event, if this mob is not sitting and the unloading chunk is what it's in, then teleport this mob to it's owner away from the unloaded chunk, unless it's player has disconnected.
+
+    /**
+     * Searches outward from the target for a spot the host can actually occupy, and moves it to
+     * the SAME position it validated. Airborne hosts prefer to arrive slightly above the owner.
+     */
+    private boolean tryTeleportNearTarget(Entity target, boolean airborne) {
+        BlockPos targetPos = target.blockPosition();
+        int targetY = Mth.floor(target.getBoundingBox().minY);
+        int[] yOffsets = airborne ? AIRBORNE_TELEPORT_Y_OFFSETS : GROUNDED_TELEPORT_Y_OFFSETS;
+
+        for (int radius = 1; radius <= FOLLOW_TELEPORT_RADIUS; radius++) {
+            for (int yOffset : yOffsets) {
+                for (int xOffset = -radius; xOffset <= radius; xOffset++) {
+                    for (int zOffset = -radius; zOffset <= radius; zOffset++) {
+                        // ring only - the inner positions were covered by a smaller radius
+                        if (Math.max(Math.abs(xOffset), Math.abs(zOffset)) != radius) {
+                            continue;
+                        }
+                        BlockPos blockPos = targetPos.offset(xOffset, yOffset, zOffset);
+                        if (airborne) {
+                            double x = blockPos.getX() + 0.5D;
+                            double y = targetY + yOffset;
+                            double z = blockPos.getZ() + 0.5D;
+                            if (this.canTeleportToPosition(x, y, z)) {
+                                this.moveHostTo(x, y, z);
+                                return true;
+                            }
+                        }
+                        else if (this.canTeleportTo(blockPos)) {
+                            this.moveHostTo(blockPos.getX() + 0.5D, blockPos.getY(), blockPos.getZ() + 0.5D);
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    /** Airborne hosts only need clear space, not a valid spawn surface below. */
+    private boolean canTeleportToPosition(double x, double y, double z) {
+        BlockPos blockPos = BlockPos.containing(x, y, z);
+        return this.host.getCommandSenderWorld().isEmptyBlock(blockPos) && this.host.getCommandSenderWorld().isEmptyBlock(blockPos.above());
+    }
+
+    private void moveHostTo(double x, double y, double z) {
+        this.host.moveTo(x, y, z, this.host.yRotO, this.host.xRotO);
+        this.host.clearMovement();
+    }
 }
