@@ -34,6 +34,8 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Iterator;
+import net.minecraft.server.level.ServerLevel;
 
 /**
  * Runtime owner for JSON spawner trigger registration and dispatch state.
@@ -54,7 +56,8 @@ public class SpawnerTriggerDispatcher {
     private final List<MobEventSpawnTrigger> mobEventSpawnTriggers = new ArrayList<>();
     private final List<MixBlockSpawnTrigger> mixBlockSpawnTriggers = new ArrayList<>();
 
-    private final Map<String, List<ChunkPos>> freshChunks = new HashMap<>();
+    private static final int MAX_CHUNK_PROBES_PER_TICK = 64;
+    private final Map<String, Set<ChunkPos>> freshChunks = new HashMap<>();
     private final Map<Player, Long> playerUpdateTicks = new HashMap<>();
     @SuppressWarnings("unused")
     private final List<BlockReference> mixingWatchList = new ArrayList<>();
@@ -240,8 +243,8 @@ public class SpawnerTriggerDispatcher {
         if (dimensionId == null || chunkPos == null) {
             return;
         }
-        List<ChunkPos> chunks = this.freshChunks.computeIfAbsent(dimensionId, key -> new ArrayList<>());
-        if (!chunks.contains(chunkPos)) {
+        Set<ChunkPos> chunks = this.getFreshChunkSet(dimensionId);
+        synchronized (chunks) {
             chunks.add(chunkPos);
         }
     }
@@ -323,35 +326,65 @@ public class SpawnerTriggerDispatcher {
 
     private void checkFreshChunks(Level world) {
         String dimensionId = world.dimension().location().toString();
-        List<ChunkPos> chunks = this.freshChunks.computeIfAbsent(dimensionId, key -> new ArrayList<>());
-        if (chunks.isEmpty()) {
-            return;
-        }
-        if (chunks.size() > 1000) {
-            chunks.clear();
-            return;
+        Set<ChunkPos> chunks = this.getFreshChunkSet(dimensionId);
+        List<ChunkPos> chunksToProcess = new ArrayList<>(MAX_CHUNKS_PER_TICK);
+        synchronized (chunks) {
+            if (chunks.isEmpty()) {
+                return;
+            }
+            if (chunks.size() > 1000) {
+                chunks.clear();
+                return;
+            }
+
+            // Probing is budgeted separately from processing: a long backlog of chunks that are
+            // not loaded yet must not consume the slots reserved for the ones that are ready.
+            List<ChunkPos> deferredChunks = new ArrayList<>();
+            Iterator<ChunkPos> iterator = chunks.iterator();
+            int probes = 0;
+            while (iterator.hasNext() && probes < MAX_CHUNK_PROBES_PER_TICK) {
+                ChunkPos chunkPos = iterator.next();
+                if (chunkPos == null) {
+                    iterator.remove();
+                    continue;
+                }
+                if (chunksToProcess.size() >= MAX_CHUNKS_PER_TICK) {
+                    break;
+                }
+                probes++;
+                iterator.remove();
+                if (this.isChunkReadyForSpawnProbe(world, chunkPos)) {
+                    chunksToProcess.add(chunkPos);
+                }
+                else {
+                    deferredChunks.add(chunkPos);
+                }
+            }
+            chunks.addAll(deferredChunks);
         }
 
-        List<ChunkPos> snapshot = new ArrayList<>(chunks);
-        chunks.clear();
-
-        int processed = 0;
-        for (ChunkPos chunkPos : snapshot) {
-            if (chunkPos == null) {
-                continue;
-            }
-            if (!world.getChunkSource().hasChunk(chunkPos.x, chunkPos.z)) {
-                chunks.add(chunkPos);
-                continue;
-            }
-            if (processed >= MAX_CHUNKS_PER_TICK) {
-                chunks.add(chunkPos);
-                continue;
-            }
+        // Run the triggers outside the lock - they spawn entities and can take arbitrarily long.
+        for (ChunkPos chunkPos : chunksToProcess) {
             for (ChunkSpawnTrigger spawnTrigger : this.chunkSpawnTriggers) {
                 spawnTrigger.onChunkPopulate(world, chunkPos);
             }
-            processed++;
         }
+    }
+
+    private Set<ChunkPos> getFreshChunkSet(String dimensionId) {
+        synchronized (this.freshChunks) {
+            return this.freshChunks.computeIfAbsent(dimensionId, key -> new LinkedHashSet<>());
+        }
+    }
+
+    /**
+     * A non-blocking readiness test. getChunkNow returns null rather than generating the chunk,
+     * so probing a not-yet-loaded chunk cannot stall the server tick.
+     */
+    private boolean isChunkReadyForSpawnProbe(Level world, ChunkPos chunkPos) {
+        if (world instanceof ServerLevel serverLevel) {
+            return serverLevel.getChunkSource().getChunkNow(chunkPos.x, chunkPos.z) != null;
+        }
+        return world.getChunkSource().hasChunk(chunkPos.x, chunkPos.z);
     }
 }
