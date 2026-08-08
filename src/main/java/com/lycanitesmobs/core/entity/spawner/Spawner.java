@@ -555,12 +555,15 @@ public class Spawner {
      **/
     public boolean trigger(Level world, Player player, SpawnTrigger spawnTrigger, BlockPos triggerPos, int level, int countAmount, int chain) {
         if (!this.isEnabled(world, player)) {
+            LMHelperClass.logDebug("JSONSpawner", this.name + ": trigger blocked, spawner not enabled.");
             return false;
         }
         if (!this.canSpawn(world, player, triggerPos)) {
+            LMHelperClass.logDebug("JSONSpawner", this.name + ": trigger blocked, conditions not met.");
             return false;
         }
         if (!this.shouldExecuteSpawn(player, countAmount)) {
+            LMHelperClass.logDebug("JSONSpawner", this.name + ": trigger blocked, trigger count not reached.");
             return false;
         }
         return this.doSpawn(world, player, spawnTrigger, triggerPos, level, chain);
@@ -630,8 +633,10 @@ public class Spawner {
             );
         }
         if (spawnPositions.isEmpty()) {
+            LMHelperClass.logDebug("JSONSpawner", this.name + ": no valid spawn positions found around " + triggerPos + ".");
             return false;
         }
+        LMHelperClass.logDebug("JSONSpawner", this.name + ": found " + spawnPositions.size() + " spawn positions, mob count target " + mobCount + ".");
         Collections.shuffle(spawnPositions);
 
         List<Biome> biomes = null;
@@ -648,6 +653,7 @@ public class Spawner {
 
         Map<Biome, List<MobSpawn>> availableMobSpawns = this.getMobSpawns(world, player, spawnPositions.size(), biomes);
         if (availableMobSpawns.isEmpty()) {
+            LMHelperClass.logDebug("JSONSpawner", this.name + ": no available mob spawns for these positions/biomes.");
             return false;
         }
 
@@ -661,6 +667,7 @@ public class Spawner {
             Biome spawnBiome = positionBiomeCache.getOrDefault(spawnPos, world.getBiomeManager().getBiome(spawnPos).value());
             MobSpawn mobSpawn = this.chooseSpawnForBiome(world, availableMobSpawns, spawnBiome);
             if (mobSpawn == null) {
+                LMHelperClass.logDebug("JSONSpawner", this.name + ": no mob spawn chosen for biome at " + spawnPos + ".");
                 continue;
             }
             if (this.exceedsBatchGroupLimit(mobSpawn, spawnGroupCounts)) {
@@ -669,6 +676,7 @@ public class Spawner {
 
             LivingEntity entityLiving = mobSpawn.createEntity(world);
             if (entityLiving == null) {
+                LMHelperClass.logDebug("JSONSpawner", this.name + ": createEntity returned null for " + mobSpawn + ".");
                 continue;
             }
 

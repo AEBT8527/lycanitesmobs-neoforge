@@ -117,12 +117,14 @@ public class BlockSpawnLocation extends SpawnLocation {
                     }
                     BlockState blockState = world.getBlockState(mutablePos);
 
-                    // Ignore Flowing Liquids:
-                    if (blockState.getBlock() instanceof net.minecraft.world.level.block.LiquidBlock) {
-                        float filled = blockState.getFluidState().getOwnHeight();
-                        if (filled != 1 && filled != -1) {
-                            continue;
-                        }
+                    // Ignore Flowing Liquids. Upstream tested Forge's IFluidBlock.getFilledPercentage()
+                    // against 1, which is only ever true for a completely filled block. getOwnHeight()
+                    // is NOT that value - it is amount/9, so even a source block reads 0.888 and the
+                    // old comparison rejected every water and lava block in the world, silently
+                    // disabling every liquid-based spawner (lava, acid, ooze, poison, fishing).
+                    if (blockState.getBlock() instanceof net.minecraft.world.level.block.LiquidBlock
+                            && !blockState.getFluidState().isSource()) {
+                        continue;
                     }
 
                     // Check Block:

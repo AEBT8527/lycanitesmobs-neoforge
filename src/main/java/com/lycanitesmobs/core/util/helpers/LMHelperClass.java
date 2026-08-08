@@ -91,7 +91,10 @@ public class LMHelperClass {
      */
     public static void logDebug(String key, String message) {
         if ("".equals(key) || (!configReady && earlyDebug) || ConfigDebug.INSTANCE.isEnabled(key.toLowerCase())) {
-            LOGGER.debug("[LycanitesMobs] [Debug] [" + key + "] " + message);
+            // Explicitly enabled debug channels log at INFO so they show on production servers too.
+            // At DEBUG the default log4j config filters them out, so turning a channel on in the
+            // config produced no output at all and the diagnostics looked broken.
+            LOGGER.info("[LycanitesMobs] [Debug] [" + key + "] " + message);
         }
     }
 
