@@ -450,6 +450,11 @@ public class MobEventListener {
                 );
                 LycanitesMobs.PACKET_MANAGER.sendToPlayer(messageEntityVelocity, player);
             }
+            else {
+                // Non-players get no velocity packet of their own; without this the server
+                // never syncs the shove and the client rubber-bands them back.
+                entity.hurtMarked = true;
+            }
         } catch (Exception e) {
             LMHelperClass.logWarningMessage("Failed to create and send a network packet for instability velocity!");
             e.printStackTrace();
@@ -668,6 +673,7 @@ public class MobEventListener {
             double zVel = zDist / xzDist * knockback;
             if (attacker.getDeltaMovement().x() < motionCap && attacker.getDeltaMovement().x() > -motionCap && attacker.getDeltaMovement().z() < motionCap && attacker.getDeltaMovement().z() > -motionCap) {
                 attacker.push(xVel, 0, zVel);
+                attacker.hurtMarked = true;
             }
         }
     }

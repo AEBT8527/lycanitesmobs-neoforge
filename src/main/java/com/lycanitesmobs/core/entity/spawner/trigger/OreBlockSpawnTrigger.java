@@ -115,16 +115,13 @@ public class OreBlockSpawnTrigger extends BlockSpawnTrigger {
 
 	@Override
 	public int getBlockLevel(BlockState blockState, Level world, BlockPos blockPos) {
-		Block block = blockState.getBlock();
-		if(block == Blocks.DIAMOND_ORE)
+		// Tag-driven so packs can tier modded ores; the old list only knew the five
+		// overworld vanilla ores and silently rated everything else level 0.
+		if(blockState.is(com.lycanitesmobs.core.data.tag.LycanitesBlockTags.SPAWNER_ORE_LEVEL_3))
 			return 3;
-		if(block == Blocks.EMERALD_ORE)
-			return 3;
-		if(block == Blocks.LAPIS_ORE)
+		if(blockState.is(com.lycanitesmobs.core.data.tag.LycanitesBlockTags.SPAWNER_ORE_LEVEL_2))
 			return 2;
-		if(block == Blocks.GOLD_ORE)
-			return 2;
-		if(block == Blocks.IRON_ORE)
+		if(blockState.is(com.lycanitesmobs.core.data.tag.LycanitesBlockTags.SPAWNER_ORE_LEVEL_1))
 			return 1;
 		return 0;
 	}
