@@ -100,6 +100,7 @@ public class EntityThresher extends RideableCreatureEntity implements Enemy, IGr
                             factor,
                             zDist / xzDist * factor + entity.getDeltaMovement().z() * factor
                     );
+                    entity.hurtMarked = true;
                     if (player != null)
                         player.connection.send(new ClientboundSetEntityMotionPacket(entity));
                 }
