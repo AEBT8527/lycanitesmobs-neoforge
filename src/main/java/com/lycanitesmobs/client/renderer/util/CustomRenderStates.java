@@ -354,22 +354,22 @@ public class CustomRenderStates extends RenderStateShard {
 
 
     public static RenderType getSpriteRenderType(@Nullable ResourceLocation texture) {
-        if (texture == null) texture = MissingTextureAtlasSprite.getLocation();
-        RenderType.CompositeState state = RenderType.CompositeState.builder()
-                .setShaderState(new ShaderStateShard(GameRenderer::getPositionTexColorShader))
-                .setTextureState(new TextureStateShard(texture, false, false))
-                .setTransparencyState(TRANSLUCENT_TRANSPARENCY)
-                .setLightmapState(LIGHTMAP)
-                .setOverlayState(OVERLAY)
-                .setCullState(NO_CULL)
-                .createCompositeState(true);
+        return getSpriteRenderType(texture, false);
+    }
 
-        return RenderType.create(
-                "lm_sprite",
-                DefaultVertexFormat.POSITION_TEX_COLOR,
-                VertexFormat.Mode.QUADS,
-                256, true, false, state
-        );
+    /**
+     * Projectile sprites are drawn with vanilla's entity render type rather than a hand built one.
+     *
+     * The 1.20.1 version composed its own state around POSITION_COLOR_TEX, and that format no
+     * longer exists: 1.21 only keeps POSITION_TEX_COLOR, whose core shader has neither the lightmap
+     * nor the overlay sampler this state binds. Drawing through it left every sprite projectile a
+     * dark, wrongly sampled smear - Amalgalich's spectral bolt came out a near black ring instead
+     * of a cyan orb. entityTranslucent has exactly the pieces the sprite needs (translucency, no
+     * cull, lightmap, overlay) and its NEW_ENTITY format is what the vertices are now written for.
+     */
+    public static RenderType getSpriteRenderType(@Nullable ResourceLocation texture, boolean emissive) {
+        if (texture == null) texture = MissingTextureAtlasSprite.getLocation();
+        return emissive ? RenderType.entityTranslucentEmissive(texture) : RenderType.entityTranslucent(texture);
     }
 
 }
